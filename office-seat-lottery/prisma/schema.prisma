@@ -8,26 +8,17 @@ datasource db {
 }
 
 model Seat {
-  id          Int     @id @default(autoincrement())
+  Seatid          Int     @id @default(autoincrement())
   tableId     Int
   seatNumber  String
   isFixed     Boolean // 固定席: true, 流動席: false
   imageX      Int     // 画像上のX座標
   imageY      Int     // 画像上のY座標
-
-  // リレーション
-  table       Table   @relation(fields: [tableId], references: [id])
-  todayPositions TodayPosition[]
-  pastPositions  PastPosition[]
 }
 
 model Table {
-  id          Int     @id @default(autoincrement())
+  Tableid          Int     @id @default(autoincrement())
   name        String
-  seats       Seat[]
-  // 隣接テーブル
-  adjacentTables AdjacentTable[] @relation("TableAdjacentTables")
-  adjacentToTables AdjacentTable[] @relation("AdjacentTableTables")
 }
 
 model AdjacentTable {
@@ -35,9 +26,6 @@ model AdjacentTable {
   tableId         Int
   adjacentTableId Int
 
-  // リレーション
-  table           Table @relation("TableAdjacentTables", fields: [tableId], references: [id])
-  adjacentTable   Table @relation("AdjacentTableTables", fields: [adjacentTableId], references: [id])
 }
 
 model TodayPosition {
@@ -46,9 +34,6 @@ model TodayPosition {
   seatId      Int
   lotteryNumber Int
   userId      Int
-
-  // リレーション
-  seat        Seat    @relation(fields: [seatId], references: [id])
 }
 
 model PastPosition {
@@ -57,7 +42,11 @@ model PastPosition {
   seatId      Int
   lotteryNumber Int
   userId      Int
+}
 
-  // リレーション
-  seat        Seat    @relation(fields: [seatId], references: [id])
+model User {
+  userId             Int      @id @default(autoincrement())
+  employeeNumber String
+  adminFlag      Boolean
+  deleteFlag     Boolean
 }
