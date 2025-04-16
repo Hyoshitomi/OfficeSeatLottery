@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Seat {
+  id          Int     @id @default(autoincrement())
+  tableId     Int
+  seatNumber  String
+  isFixed     Boolean // 固定席: true, 流動席: false
+  imageX      Int     // 画像上のX座標
+  imageY      Int     // 画像上のY座標
+
+  // リレーション
+  table       Table   @relation(fields: [tableId], references: [id])
+  todayPositions TodayPosition[]
+  pastPositions  PastPosition[]
+}
+
+model Table {
+  id          Int     @id @default(autoincrement())
+  name        String
+  seats       Seat[]
+  // 隣接テーブル
+  adjacentTables AdjacentTable[] @relation("TableAdjacentTables")
+  adjacentToTables AdjacentTable[] @relation("AdjacentTableTables")
+}
+
+model AdjacentTable {
+  id              Int   @id @default(autoincrement())
+  tableId         Int
+  adjacentTableId Int
+
+  // リレーション
+  table           Table @relation("TableAdjacentTables", fields: [tableId], references: [id])
+  adjacentTable   Table @relation("AdjacentTableTables", fields: [adjacentTableId], references: [id])
+}
+
+model TodayPosition {
+  id          Int     @id @default(autoincrement())
+  date        DateTime
+  seatId      Int
+  lotteryNumber Int
+  userId      Int
+
+  // リレーション
+  seat        Seat    @relation(fields: [seatId], references: [id])
+}
+
+model PastPosition {
+  id          Int     @id @default(autoincrement())
+  date        DateTime
+  seatId      Int
+  lotteryNumber Int
+  userId      Int
+
+  // リレーション
+  seat        Seat    @relation(fields: [seatId], references: [id])
+}
