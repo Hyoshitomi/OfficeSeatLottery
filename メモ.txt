@@ -1,0 +1,3 @@
+githubにリポジトリを作成して、VSCode内でクローンした。
+VScodeからmainブランチを切ってdevelopとDev-01ブランチの作成を行い、プッシュ。
+Dev-01ブランチにスタッシュ。
