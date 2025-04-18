@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
+import { signIn } from "next-auth/react";
 
 export function LoginForm({ className, ...props }) {
   const [employeeNumber, setEmployeeNumber] = useState("");
@@ -17,7 +18,8 @@ export function LoginForm({ className, ...props }) {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const debouncedSubmit = useDebouncedCallback(async (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
@@ -36,19 +38,24 @@ export function LoginForm({ className, ...props }) {
     }
 
     try {
-      await signIn('credentials', {
+      const res = await signIn('credentials', {
+        redirect: false,
         employeeNumber,
         password,
         callbackUrl: '/',
       });
 
-      router.push('/');
+      if (res?.error) {
+        setError("社員番号またはパスワードが正しくありません");
+      } else if (res?.ok) {
+        router.push(res.url || '/');
+      }
     } catch (err) {
-      setError(err.message || "予期せぬエラーが発生しました");
+      setError("認証エラーが発生しました");
     } finally {
       setIsLoading(false);
     }
-  }, 200);
+  };
 
   // パスワード表示トグル
   const togglePasswordVisibility = useCallback(() => {
@@ -63,7 +70,7 @@ export function LoginForm({ className, ...props }) {
           <CardDescription>Login with your account</CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={debouncedSubmit}>
+          <form onSubmit={handleSubmit}>
             <div className="grid gap-6">
               <div className="grid gap-6">
                 <div className="grid gap-3">
@@ -83,9 +90,6 @@ export function LoginForm({ className, ...props }) {
                 <div className="grid gap-3">
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
-                    <a href="#" className="ml-auto text-sm underline-offset-4 hover:underline">
-                      Forgot your password?
-                    </a>
                   </div>
                   <div className="relative">
                     <Input
@@ -109,6 +113,9 @@ export function LoginForm({ className, ...props }) {
                       )}
                     </button>
                   </div>
+                  <a href="#" className="mr-auto text-sm underline-offset-4 hover:underline">
+                      Forgot your password?
+                  </a>
                 </div>
 
                 {error && <div className="text-sm text-red-500 text-center">{error}</div>}
