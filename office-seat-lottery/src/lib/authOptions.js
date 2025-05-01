@@ -28,6 +28,7 @@ const authOptions = {
             id: user.id,
             employeeNumber: user.employeeNumber,
             isAdmin: user.isAdmin,
+            lastName: user.lastName, 
           };
         }
         return null;
@@ -41,6 +42,7 @@ const authOptions = {
         session.user.id = token.sub;
         session.user.employeeNumber = token.employeeNumber;
         session.user.isAdmin = token.isAdmin;
+        session.user.lastName = token.lastName; 
       }
       return session;
     },
@@ -48,6 +50,7 @@ const authOptions = {
       if (user) {
         token.employeeNumber = user.employeeNumber;
         token.isAdmin = user.isAdmin;
+        token.lastName = user.lastName; 
       }
       return token;
     },

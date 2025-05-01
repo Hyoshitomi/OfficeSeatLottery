@@ -47,6 +47,8 @@ model PastPosition {
 model User {
   userId             Int      @id @default(autoincrement())
   employeeNumber String @unique
+  lastName       String
+  firstName      String
   password       String
   adminFlag      Boolean
   deleteFlag     Boolean
