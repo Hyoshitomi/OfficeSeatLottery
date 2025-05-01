@@ -7,7 +7,7 @@ export function NavData({ items }) {
     <SidebarNav
       items={items}
       groupClassName="group-data-[collapsible=icon]:hidden"
-      label="Data"
+      label="管理者"
     />
   );
 }
