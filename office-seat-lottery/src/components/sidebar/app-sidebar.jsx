@@ -5,6 +5,7 @@ import {
   IconArmchair,
   IconArmchair2,
   IconDatabase,
+  IconDice,
   IconEdit,
   IconMail,
   IconUsers,
@@ -35,7 +36,11 @@ export function AppSidebar({
   // データ構造
   const data = {
     navMain: [
-      // 「抽選開始」はnav-mainに記載
+      {
+        name: "抽選",
+        url: "/",
+        icon: IconDice,
+      },
       {
         name: "座席表",
         url: "/map",
@@ -49,7 +54,7 @@ export function AppSidebar({
     ],
     dataList: [
       {
-        name: "座席図　編集",
+        name: "座席図 編集",
         url: "/map-edit",
         icon: IconEdit,
       },
