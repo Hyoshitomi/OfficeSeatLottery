@@ -1,0 +1,3 @@
+Postgresであれば、環境変数を更新して以下の実行をするとスキーマからテーブルが作成される。
+データの引継ぎはその時に調べてほしい。
+    npx prisma migrate dev --name init
