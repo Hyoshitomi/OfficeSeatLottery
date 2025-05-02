@@ -1,9 +1,7 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import eslint from '@eslint/js';
 import importPlugin from 'eslint-plugin-import';
 import unusedImports from 'eslint-plugin-unused-imports';
-import eslintConfigPrettier from 'eslint-config-prettier';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);

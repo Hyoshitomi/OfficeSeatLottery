@@ -6,7 +6,7 @@
     "devt": "next dev --turbopack",
     "dev": "next dev",
     "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
@@ -47,7 +47,6 @@
     "react-dom": "^19.0.0",
     "react-dropzone": "^14.3.8",
     "react-textarea-autosize": "^8.5.9",
-    "react-textfit": "^1.1.1",
     "recharts": "^2.15.3",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.2.0",
