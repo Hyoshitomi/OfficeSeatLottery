@@ -186,7 +186,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
+    "rootEnvPath": "../../../.env",
     "schemaEnvPath": "../../../.env"
   },
   "relativePath": "../../../prisma",
@@ -196,17 +196,18 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "DATABASE_DATABASE_URL",
-        "value": "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiN2ZjMjlkZDgtYTdmNy00ZGY1LTlmMTItM2U1YzE5OGY1MzY1IiwidGVuYW50X2lkIjoiM2Y4OGVjYTE4YWZkZmJhZWEyNmVmOWExZTUzOTc3YzAxZDUzYjVmZWE4NzAyNDliZGIyZWY0NzgyODMzMTA3OCIsImludGVybmFsX3NlY3JldCI6ImYwOGY2NjgyLTJlMjktNDM2My04MWFjLTk3ZDI1OGY5ZGQ0YiJ9.edMIjJv-BWcEXrm5CWV_b4Qn0YWxEMQL0ocpoX57iCM"
+        "fromEnvVar": "POSTGRES_PRISMA_URL",
+        "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_DATABASE_URL\")\n}\n\n// 固定席・流動席の座席テーブル\nmodel Seat {\n  Seatid     Int     @id @default(autoincrement())\n  tableId    Int\n  seatNumber String\n  isFixed    Boolean // 固定席: true, 流動席: false\n  imageX     Int // 画像上のX座標\n  imageY     Int // 画像上のY座標\n}\n\n// 会議テーブル\nmodel Table {\n  Tableid Int    @id @default(autoincrement())\n  name    String\n}\n\n// 隣接テーブル情報\nmodel AdjacentTable {\n  AdjacentTableId Int @id @default(autoincrement())\n  tableId         Int\n  adjacentTableId Int\n}\n\n// 当日の座席抽選結果\nmodel TodayPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// 過去の座席抽選結果\nmodel PastPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// ユーザー情報\nmodel User {\n  userId         Int     @id @default(autoincrement())\n  employeeNumber String  @unique\n  lastName       String\n  firstName      String\n  password       String\n  adminFlag      Boolean\n  deleteFlag     Boolean\n}\n",
-  "inlineSchemaHash": "c6a5eb9e8af3b666e8d3745968ee122a482cf06088d6c2cd3bca75a6f1f08899",
-  "copyEngine": false
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"POSTGRES_PRISMA_URL\")\n}\n\n// 固定席・流動席の座席テーブル\nmodel Seat {\n  Seatid     Int     @id @default(autoincrement())\n  tableId    Int\n  seatNumber String\n  isFixed    Boolean // 固定席: true, 流動席: false\n  imageX     Int // 画像上のX座標\n  imageY     Int // 画像上のY座標\n}\n\n// 会議テーブル\nmodel Table {\n  Tableid Int    @id @default(autoincrement())\n  name    String\n}\n\n// 隣接テーブル情報\nmodel AdjacentTable {\n  AdjacentTableId Int @id @default(autoincrement())\n  tableId         Int\n  adjacentTableId Int\n}\n\n// 当日の座席抽選結果\nmodel TodayPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// 過去の座席抽選結果\nmodel PastPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// ユーザー情報\nmodel User {\n  userId         Int     @id @default(autoincrement())\n  employeeNumber String  @unique\n  lastName       String\n  firstName      String\n  password       String\n  adminFlag      Boolean\n  deleteFlag     Boolean\n}\n",
+  "inlineSchemaHash": "6078d433c88f7dcdbc91d4f9e9361a8202ca59556ff785167d4619d2b6c0c044",
+  "copyEngine": true
 }
 config.dirname = '/'
 
@@ -217,7 +218,7 @@ config.compilerWasm = undefined
 
 config.injectableEdgeEnv = () => ({
   parsed: {
-    DATABASE_DATABASE_URL: typeof globalThis !== 'undefined' && globalThis['DATABASE_DATABASE_URL'] || typeof process !== 'undefined' && process.env && process.env.DATABASE_DATABASE_URL || undefined
+    POSTGRES_PRISMA_URL: typeof globalThis !== 'undefined' && globalThis['POSTGRES_PRISMA_URL'] || typeof process !== 'undefined' && process.env && process.env.POSTGRES_PRISMA_URL || undefined
   }
 })
 
