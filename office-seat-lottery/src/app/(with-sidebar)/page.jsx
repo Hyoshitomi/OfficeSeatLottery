@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/sidebar/site-header";
+import ResizableBox from '@/components/namebox/ResizableNameBox';
 
 export default async function Home() {
   return (
@@ -9,6 +10,7 @@ export default async function Home() {
           <h1>抽選ページ</h1>
           <p>ここは抽選ページです。ナビゲーションバーが表示されます。</p>
         </div>
+
       </main>
     </>
   );
