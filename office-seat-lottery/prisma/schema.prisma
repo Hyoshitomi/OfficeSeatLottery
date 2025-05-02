@@ -22,7 +22,7 @@ model Table {
 }
 
 model AdjacentTable {
-  id              Int   @id @default(autoincrement())
+  AdjacentTableId              Int   @id @default(autoincrement())
   tableId         Int
   adjacentTableId Int
 
