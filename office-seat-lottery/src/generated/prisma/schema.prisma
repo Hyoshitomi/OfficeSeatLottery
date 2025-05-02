@@ -13,12 +13,12 @@ datasource db {
 
 // 固定席・流動席の座席テーブル
 model Seat {
-  Seatid      Int    @id @default(autoincrement())
-  tableId     Int
-  seatNumber  String
-  isFixed     Boolean // 固定席: true, 流動席: false
-  imageX      Int     // 画像上のX座標
-  imageY      Int     // 画像上のY座標
+  Seatid     Int     @id @default(autoincrement())
+  tableId    Int
+  seatNumber String
+  isFixed    Boolean // 固定席: true, 流動席: false
+  imageX     Int // 画像上のX座標
+  imageY     Int // 画像上のY座標
 }
 
 // 会議テーブル
@@ -54,8 +54,8 @@ model PastPosition {
 
 // ユーザー情報
 model User {
-  userId         Int    @id @default(autoincrement())
-  employeeNumber String @unique
+  userId         Int     @id @default(autoincrement())
+  employeeNumber String  @unique
   lastName       String
   firstName      String
   password       String
