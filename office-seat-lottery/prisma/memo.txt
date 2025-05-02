@@ -1,0 +1,4 @@
+反映方法
+    npx prisma db push
+NULL制約に引っかかる場合、一時的に
+String?　に変更して値を入れた後Stringで再度実行

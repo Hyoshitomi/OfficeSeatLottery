@@ -1,14 +1,34 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+import importPlugin from 'eslint-plugin-import';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
 
-const eslintConfig = [...compat.extends("next/core-web-vitals")];
-
-export default eslintConfig;
+export default {
+  files: ["src/**/*.{js,jsx,ts,tsx}"],
+  ignores: ["**/.next/**/*"],
+  extends: [
+    "next/core-web-vitals",
+    "prettier",
+  ],
+  plugins: {
+    import: importPlugin,
+    "unused-imports": unusedImports,
+  },
+  rules: {
+    "import/order": [
+      "error",
+      {
+        groups: ["builtin", "external", "internal"],
+        alphabetize: { order: "asc", caseInsensitive: true },
+        "newlines-between": "always",
+      },
+    ],
+    "import/newline-after-import": "error",
+    "import/no-duplicates": "error",
+    "unused-imports/no-unused-imports": "error",
+  },
+};
