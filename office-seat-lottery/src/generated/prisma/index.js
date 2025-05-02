@@ -201,13 +201,13 @@ const config = {
   "inlineDatasources": {
     "db": {
       "url": {
-        "fromEnvVar": "POSTGRES_URL_NON_POOLING",
+        "fromEnvVar": "POSTGRES_PRISMA_URL",
         "value": null
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"POSTGRES_URL_NON_POOLING\")\n}\n\n// 固定席・流動席の座席テーブル\nmodel Seat {\n  Seatid     Int     @id @default(autoincrement())\n  tableId    Int\n  seatNumber String\n  isFixed    Boolean // 固定席: true, 流動席: false\n  imageX     Int // 画像上のX座標\n  imageY     Int // 画像上のY座標\n}\n\n// 会議テーブル\nmodel Table {\n  Tableid Int    @id @default(autoincrement())\n  name    String\n}\n\n// 隣接テーブル情報\nmodel AdjacentTable {\n  AdjacentTableId Int @id @default(autoincrement())\n  tableId         Int\n  adjacentTableId Int\n}\n\n// 当日の座席抽選結果\nmodel TodayPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// 過去の座席抽選結果\nmodel PastPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// ユーザー情報\nmodel User {\n  userId         Int     @id @default(autoincrement())\n  employeeNumber String  @unique\n  lastName       String\n  firstName      String\n  password       String\n  adminFlag      Boolean\n  deleteFlag     Boolean\n}\n",
-  "inlineSchemaHash": "2087ce46e95281d42778a9416640cfb2f25671eca1a5b4870e2a796350c32434",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"POSTGRES_PRISMA_URL\")\n}\n\n// 固定席・流動席の座席テーブル\nmodel Seat {\n  Seatid     Int     @id @default(autoincrement())\n  tableId    Int\n  seatNumber String\n  isFixed    Boolean // 固定席: true, 流動席: false\n  imageX     Int // 画像上のX座標\n  imageY     Int // 画像上のY座標\n}\n\n// 会議テーブル\nmodel Table {\n  Tableid Int    @id @default(autoincrement())\n  name    String\n}\n\n// 隣接テーブル情報\nmodel AdjacentTable {\n  AdjacentTableId Int @id @default(autoincrement())\n  tableId         Int\n  adjacentTableId Int\n}\n\n// 当日の座席抽選結果\nmodel TodayPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// 過去の座席抽選結果\nmodel PastPosition {\n  id            Int      @id @default(autoincrement())\n  date          DateTime\n  seatId        Int\n  lotteryNumber Int\n  userId        Int\n}\n\n// ユーザー情報\nmodel User {\n  userId         Int     @id @default(autoincrement())\n  employeeNumber String  @unique\n  lastName       String\n  firstName      String\n  password       String\n  adminFlag      Boolean\n  deleteFlag     Boolean\n}\n",
+  "inlineSchemaHash": "6078d433c88f7dcdbc91d4f9e9361a8202ca59556ff785167d4619d2b6c0c044",
   "copyEngine": true
 }
 
