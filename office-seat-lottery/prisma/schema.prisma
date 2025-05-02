@@ -1,0 +1,55 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Seat {
+  Seatid          Int     @id @default(autoincrement())
+  tableId     Int
+  seatNumber  String
+  isFixed     Boolean // 固定席: true, 流動席: false
+  imageX      Int     // 画像上のX座標
+  imageY      Int     // 画像上のY座標
+}
+
+model Table {
+  Tableid          Int     @id @default(autoincrement())
+  name        String
+}
+
+model AdjacentTable {
+  id              Int   @id @default(autoincrement())
+  tableId         Int
+  adjacentTableId Int
+
+}
+
+model TodayPosition {
+  id          Int     @id @default(autoincrement())
+  date        DateTime
+  seatId      Int
+  lotteryNumber Int
+  userId      Int
+}
+
+model PastPosition {
+  id          Int     @id @default(autoincrement())
+  date        DateTime
+  seatId      Int
+  lotteryNumber Int
+  userId      Int
+}
+
+model User {
+  userId             Int      @id @default(autoincrement())
+  employeeNumber String @unique
+  lastName       String
+  firstName      String
+  password       String
+  adminFlag      Boolean
+  deleteFlag     Boolean
+}
