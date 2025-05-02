@@ -14,24 +14,29 @@ const authOptions = {
         employeeNumber: { label: "社員番号", type: "text" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials) {
-        if (!credentials) return null;
-        const user = await prisma.user.findUnique({
-          where: { employeeNumber: credentials.employeeNumber },
-        });
-        if (
-          user &&
-          !user.isDeleted &&
-          (await bcrypt.compare(credentials.password, user.password))
-        ) {
-          return {
-            id: user.id,
-            employeeNumber: user.employeeNumber,
-            isAdmin: user.isAdmin,
-            lastName: user.lastName, 
-          };
-        }
+    async authorize(credentials) {
+      if (!credentials) return null;
+      try {
+          const user = await prisma.user.findUnique({
+            where: { employeeNumber: credentials.employeeNumber },
+          });
+          if (
+            user &&
+            !user.isDeleted &&
+            (await bcrypt.compare(credentials.password, user.password))
+          ) {
+            return {
+              id: user.id,
+              employeeNumber: user.employeeNumber,
+              isAdmin: user.isAdmin,
+              lastName: user.lastName, 
+            };
+          }
+          return null;
+      } catch (error) {
+        console.error("Authentication error:", error);
         return null;
+      }
       },
     }),
   ],
