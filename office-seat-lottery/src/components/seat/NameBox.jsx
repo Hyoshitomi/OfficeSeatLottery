@@ -1,85 +1,68 @@
-// components/seat/NameBox.jsx
 'use client'
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import {
   Popover,
   PopoverTrigger,
   PopoverContent,
 } from '@/components/ui/popover'
+import NameBoxPopOver from './NameBoxPopOver'
 
 export default function NameBox({
   id,
   name,
   isFixed,
-  position,     // controlled で渡す x,y
+  position,
   onDragStop,
   onUpdate,
 }) {
   const nodeRef = useRef(null)
   const [open, setOpen] = useState(false)
-  const [editName, setEditName] = useState(name)
-  const [editFixed, setEditFixed] = useState(isFixed)
-
-  useEffect(() => {
-    const t = setTimeout(() => onUpdate?.(id, editName, editFixed), 300)
-    return () => clearTimeout(t)
-  }, [id, editName, editFixed, onUpdate])
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Draggable
-          nodeRef={nodeRef}
-          bounds="parent"
-          position={position}                  // ← controlled
-          onStop={(_, d) => onDragStop(id, d.x, d.y)}
+    <Draggable
+      nodeRef={nodeRef}
+      axis="both"
+      bounds="parent"
+      position={position}
+      onStop={(_, data) => onDragStop(id, data.x, data.y)}
+    >
+      <div ref={nodeRef} className="relative w-[70px] h-[40px] cursor-grab">
+        <Popover
+          open={open}
+          onOpenChange={(next) => {
+            if (!next) setOpen(false)  // 左クリック等による開を無視
+          }}
         >
-          <div
-            ref={nodeRef}
-            onClickCapture={e => e.button===0 && e.stopPropagation()}
-            onContextMenu={e => (e.preventDefault(), setOpen(true))}
-            className="relative w-[70px] h-[40px] bg-white cursor-grab"
-          >
-            <div className="absolute inset-0 flex items-center justify-center
-                            text-[clamp(14px,2.5vw,20px)] break-words">
-              {editName}
+          <PopoverTrigger asChild>
+            <div
+              onContextMenu={e => {
+                e.preventDefault()     // ブラウザのコンテキストメニュー抑制
+                setOpen(true)          // 右クリックでだけ開く
+              }}
+              className={`
+                w-full h-full flex items-center justify-center
+                bg-white rounded-[7px] border-3
+                ${isFixed ? 'border-black' : 'border-[#1AA7FF]'}
+              `}
+            >
+              <span className="text-[clamp(14px,2.5vw,20px)] break-words">
+                {name}
+              </span>
             </div>
-            <div className={`absolute inset-0 rounded-[7px] border-3 pointer-events-none
-                             ${editFixed ? 'border-black' : 'border-[#1AA7FF]'}`}/>
-          </div>
-        </Draggable>
-      </PopoverTrigger>
-      <PopoverContent side="right" className="w-40 p-2">
-        <label className="block mb-2">
-          <span className="text-sm">表示名</span>
-          <input
-            type="text"
-            value={editName}
-            onChange={e => setEditName(e.target.value)}
-            className="mt-1 w-full border rounded px-2 py-1 text-sm"
-          />
-        </label>
-        <div className="mb-2 text-sm">固定／流動</div>
-        <div className="flex items-center space-x-2">
-          <label className="flex items-center">
-            <input
-              type="radio" name={`fixed-${id}`}
-              checked={editFixed}
-              onChange={() => setEditFixed(true)}
+          </PopoverTrigger>
+
+          <PopoverContent side="right" className="w-40 p-2">
+            <NameBoxPopOver
+              id={id}
+              name={name}
+              isFixed={isFixed}
+              onUpdate={onUpdate}
+              onClose={() => setOpen(false)}
             />
-            <span className="ml-1">固定</span>
-          </label>
-          <label className="flex items-center">
-            <input
-              type="radio" name={`fixed-${id}`}
-              checked={!editFixed}
-              onChange={() => setEditFixed(false)}
-            />
-            <span className="ml-1">流動</span>
-          </label>
-        </div>
-      </PopoverContent>
-    </Popover>
+          </PopoverContent>
+        </Popover>
+      </div>
+    </Draggable>
   )
 }
