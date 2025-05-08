@@ -161,6 +161,7 @@ exports.Prisma.UserScalarFieldEnum = {
   employeeNumber: 'employeeNumber',
   lastName: 'lastName',
   firstName: 'firstName',
+  showName: 'showName',
   password: 'password',
   adminFlag: 'adminFlag',
   deleteFlag: 'deleteFlag'
@@ -174,6 +175,11 @@ exports.Prisma.SortOrder = {
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
+};
+
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
 };
 
 

@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from '@/components/ui/popover'
-import NameBoxPopOver from './NameBoxPopOver'
+import NameBoxPopOver from '@/components/seat/NameBoxPopOver'
 
 export default function NameBox({
   id,

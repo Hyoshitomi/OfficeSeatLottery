@@ -54,10 +54,11 @@ model PastPosition {
 
 // ユーザー情報
 model User {
-  userId         Int    @id @default(autoincrement())
-  employeeNumber String @unique
+  userId         Int     @id @default(autoincrement())
+  employeeNumber String  @unique
   lastName       String
   firstName      String
+  showName       String?          
   password       String
   adminFlag      Boolean
   deleteFlag     Boolean

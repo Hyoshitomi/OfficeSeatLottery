@@ -58,6 +58,7 @@ model User {
   employeeNumber String  @unique
   lastName       String
   firstName      String
+  showName       String?
   password       String
   adminFlag      Boolean
   deleteFlag     Boolean

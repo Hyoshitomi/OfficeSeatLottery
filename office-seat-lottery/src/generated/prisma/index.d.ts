@@ -6486,6 +6486,7 @@ export namespace Prisma {
     employeeNumber: string | null
     lastName: string | null
     firstName: string | null
+    showName: string | null
     password: string | null
     adminFlag: boolean | null
     deleteFlag: boolean | null
@@ -6496,6 +6497,7 @@ export namespace Prisma {
     employeeNumber: string | null
     lastName: string | null
     firstName: string | null
+    showName: string | null
     password: string | null
     adminFlag: boolean | null
     deleteFlag: boolean | null
@@ -6506,6 +6508,7 @@ export namespace Prisma {
     employeeNumber: number
     lastName: number
     firstName: number
+    showName: number
     password: number
     adminFlag: number
     deleteFlag: number
@@ -6526,6 +6529,7 @@ export namespace Prisma {
     employeeNumber?: true
     lastName?: true
     firstName?: true
+    showName?: true
     password?: true
     adminFlag?: true
     deleteFlag?: true
@@ -6536,6 +6540,7 @@ export namespace Prisma {
     employeeNumber?: true
     lastName?: true
     firstName?: true
+    showName?: true
     password?: true
     adminFlag?: true
     deleteFlag?: true
@@ -6546,6 +6551,7 @@ export namespace Prisma {
     employeeNumber?: true
     lastName?: true
     firstName?: true
+    showName?: true
     password?: true
     adminFlag?: true
     deleteFlag?: true
@@ -6643,6 +6649,7 @@ export namespace Prisma {
     employeeNumber: string
     lastName: string
     firstName: string
+    showName: string | null
     password: string
     adminFlag: boolean
     deleteFlag: boolean
@@ -6672,6 +6679,7 @@ export namespace Prisma {
     employeeNumber?: boolean
     lastName?: boolean
     firstName?: boolean
+    showName?: boolean
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
@@ -6682,6 +6690,7 @@ export namespace Prisma {
     employeeNumber?: boolean
     lastName?: boolean
     firstName?: boolean
+    showName?: boolean
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
@@ -6692,6 +6701,7 @@ export namespace Prisma {
     employeeNumber?: boolean
     lastName?: boolean
     firstName?: boolean
+    showName?: boolean
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
@@ -6702,12 +6712,13 @@ export namespace Prisma {
     employeeNumber?: boolean
     lastName?: boolean
     firstName?: boolean
+    showName?: boolean
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "employeeNumber" | "lastName" | "firstName" | "password" | "adminFlag" | "deleteFlag", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "employeeNumber" | "lastName" | "firstName" | "showName" | "password" | "adminFlag" | "deleteFlag", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -6717,6 +6728,7 @@ export namespace Prisma {
       employeeNumber: string
       lastName: string
       firstName: string
+      showName: string | null
       password: string
       adminFlag: boolean
       deleteFlag: boolean
@@ -7147,6 +7159,7 @@ export namespace Prisma {
     readonly employeeNumber: FieldRef<"User", 'String'>
     readonly lastName: FieldRef<"User", 'String'>
     readonly firstName: FieldRef<"User", 'String'>
+    readonly showName: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly adminFlag: FieldRef<"User", 'Boolean'>
     readonly deleteFlag: FieldRef<"User", 'Boolean'>
@@ -7586,6 +7599,7 @@ export namespace Prisma {
     employeeNumber: 'employeeNumber',
     lastName: 'lastName',
     firstName: 'firstName',
+    showName: 'showName',
     password: 'password',
     adminFlag: 'adminFlag',
     deleteFlag: 'deleteFlag'
@@ -7608,6 +7622,14 @@ export namespace Prisma {
   };
 
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
+
+
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -7939,6 +7961,7 @@ export namespace Prisma {
     employeeNumber?: StringFilter<"User"> | string
     lastName?: StringFilter<"User"> | string
     firstName?: StringFilter<"User"> | string
+    showName?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     adminFlag?: BoolFilter<"User"> | boolean
     deleteFlag?: BoolFilter<"User"> | boolean
@@ -7949,6 +7972,7 @@ export namespace Prisma {
     employeeNumber?: SortOrder
     lastName?: SortOrder
     firstName?: SortOrder
+    showName?: SortOrderInput | SortOrder
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
@@ -7962,6 +7986,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     lastName?: StringFilter<"User"> | string
     firstName?: StringFilter<"User"> | string
+    showName?: StringNullableFilter<"User"> | string | null
     password?: StringFilter<"User"> | string
     adminFlag?: BoolFilter<"User"> | boolean
     deleteFlag?: BoolFilter<"User"> | boolean
@@ -7972,6 +7997,7 @@ export namespace Prisma {
     employeeNumber?: SortOrder
     lastName?: SortOrder
     firstName?: SortOrder
+    showName?: SortOrderInput | SortOrder
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
@@ -7990,6 +8016,7 @@ export namespace Prisma {
     employeeNumber?: StringWithAggregatesFilter<"User"> | string
     lastName?: StringWithAggregatesFilter<"User"> | string
     firstName?: StringWithAggregatesFilter<"User"> | string
+    showName?: StringNullableWithAggregatesFilter<"User"> | string | null
     password?: StringWithAggregatesFilter<"User"> | string
     adminFlag?: BoolWithAggregatesFilter<"User"> | boolean
     deleteFlag?: BoolWithAggregatesFilter<"User"> | boolean
@@ -8236,6 +8263,7 @@ export namespace Prisma {
     employeeNumber: string
     lastName: string
     firstName: string
+    showName?: string | null
     password: string
     adminFlag: boolean
     deleteFlag: boolean
@@ -8246,6 +8274,7 @@ export namespace Prisma {
     employeeNumber: string
     lastName: string
     firstName: string
+    showName?: string | null
     password: string
     adminFlag: boolean
     deleteFlag: boolean
@@ -8255,6 +8284,7 @@ export namespace Prisma {
     employeeNumber?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
@@ -8265,6 +8295,7 @@ export namespace Prisma {
     employeeNumber?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
@@ -8275,6 +8306,7 @@ export namespace Prisma {
     employeeNumber: string
     lastName: string
     firstName: string
+    showName?: string | null
     password: string
     adminFlag: boolean
     deleteFlag: boolean
@@ -8284,6 +8316,7 @@ export namespace Prisma {
     employeeNumber?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
@@ -8294,6 +8327,7 @@ export namespace Prisma {
     employeeNumber?: StringFieldUpdateOperationsInput | string
     lastName?: StringFieldUpdateOperationsInput | string
     firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
@@ -8567,11 +8601,32 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type UserCountOrderByAggregateInput = {
     userId?: SortOrder
     employeeNumber?: SortOrder
     lastName?: SortOrder
     firstName?: SortOrder
+    showName?: SortOrder
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
@@ -8586,6 +8641,7 @@ export namespace Prisma {
     employeeNumber?: SortOrder
     lastName?: SortOrder
     firstName?: SortOrder
+    showName?: SortOrder
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
@@ -8596,6 +8652,7 @@ export namespace Prisma {
     employeeNumber?: SortOrder
     lastName?: SortOrder
     firstName?: SortOrder
+    showName?: SortOrder
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
@@ -8603,6 +8660,24 @@ export namespace Prisma {
 
   export type UserSumOrderByAggregateInput = {
     userId?: SortOrder
+  }
+
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -8623,6 +8698,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -8730,6 +8809,48 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedStringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
 
