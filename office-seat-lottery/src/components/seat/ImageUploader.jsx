@@ -15,7 +15,7 @@ export default function ImageUploader({ onChange }) {
 
   return (
     <>
-      <Button onClick={handleButtonClick}>画像を変更</Button>
+      <Button variant="outline" className="w-[90%]" onClick={handleButtonClick}>画像を変更</Button>
       <input
         ref={fileInputRef}
         type="file"

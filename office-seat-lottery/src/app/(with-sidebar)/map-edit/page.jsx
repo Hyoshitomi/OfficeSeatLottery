@@ -2,7 +2,7 @@
 import { useState, useRef } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
-import ImageUploader from '@/components/seat/ImageUploader'
+import SidebarRight from '@/components/sidebar/right-sidebar'
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
@@ -47,20 +47,23 @@ export default function Page() {
   }
 
   return (
-    <>
-      <SiteHeader title="座席図編集" />
-      <main className="flex-1 p-4 flex flex-col items-center space-y-4">
-        <SeatCanvas
-          src={previewImage}
-          imgSize={imgSize}
-          boxes={boxes}
-          onImgLoad={handleImgLoad}
-          onDragStop={handleStop}
-          onUpdate={handleUpdate}
-          onAddBox={handleAddBox}
-        />
-        <ImageUploader onChange={handleFileChange} />
+  <>
+    <SiteHeader title="座席図編集" />
+    <div className="flex flex-row flex-1">
+      <main className="flex-1 p-4 flex flex-row justify-center space-x-4">
+      <SeatCanvas
+        src={previewImage}
+        imgSize={imgSize}
+        boxes={boxes}
+        onImgLoad={handleImgLoad}
+        onDragStop={handleStop}
+        onUpdate={handleUpdate}
+        onAddBox={handleAddBox}
+      />
       </main>
-    </>
+      <SidebarRight onFileChange={handleFileChange} />
+    </div>
+  </>
   )
+
 }
