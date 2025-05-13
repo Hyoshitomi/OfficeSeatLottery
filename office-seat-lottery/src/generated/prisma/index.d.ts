@@ -2119,20 +2119,18 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONAvgAggregateOutputType = {
     id: number | null
-    seatId: number | null
     userId: number | null
   }
 
   export type T_SEAT_POSITIONSumAggregateOutputType = {
     id: number | null
-    seatId: number | null
     userId: number | null
   }
 
   export type T_SEAT_POSITIONMinAggregateOutputType = {
     id: number | null
     date: Date | null
-    seatId: number | null
+    seatId: string | null
     userId: number | null
     created: Date | null
     updated: Date | null
@@ -2141,7 +2139,7 @@ export namespace Prisma {
   export type T_SEAT_POSITIONMaxAggregateOutputType = {
     id: number | null
     date: Date | null
-    seatId: number | null
+    seatId: string | null
     userId: number | null
     created: Date | null
     updated: Date | null
@@ -2160,13 +2158,11 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONAvgAggregateInputType = {
     id?: true
-    seatId?: true
     userId?: true
   }
 
   export type T_SEAT_POSITIONSumAggregateInputType = {
     id?: true
-    seatId?: true
     userId?: true
   }
 
@@ -2287,10 +2283,10 @@ export namespace Prisma {
   export type T_SEAT_POSITIONGroupByOutputType = {
     id: number
     date: Date
-    seatId: number
+    seatId: string
     userId: number
     created: Date
-    updated: Date
+    updated: Date | null
     _count: T_SEAT_POSITIONCountAggregateOutputType | null
     _avg: T_SEAT_POSITIONAvgAggregateOutputType | null
     _sum: T_SEAT_POSITIONSumAggregateOutputType | null
@@ -2356,10 +2352,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: number
       date: Date
-      seatId: number
+      seatId: string
       userId: number
       created: Date
-      updated: Date
+      updated: Date | null
     }, ExtArgs["result"]["t_SEAT_POSITION"]>
     composites: {}
   }
@@ -2785,7 +2781,7 @@ export namespace Prisma {
   interface T_SEAT_POSITIONFieldRefs {
     readonly id: FieldRef<"T_SEAT_POSITION", 'Int'>
     readonly date: FieldRef<"T_SEAT_POSITION", 'DateTime'>
-    readonly seatId: FieldRef<"T_SEAT_POSITION", 'Int'>
+    readonly seatId: FieldRef<"T_SEAT_POSITION", 'String'>
     readonly userId: FieldRef<"T_SEAT_POSITION", 'Int'>
     readonly created: FieldRef<"T_SEAT_POSITION", 'DateTime'>
     readonly updated: FieldRef<"T_SEAT_POSITION", 'DateTime'>
@@ -4435,10 +4431,10 @@ export namespace Prisma {
     NOT?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
     id?: IntFilter<"T_SEAT_POSITION"> | number
     date?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
-    seatId?: IntFilter<"T_SEAT_POSITION"> | number
+    seatId?: StringFilter<"T_SEAT_POSITION"> | string
     userId?: IntFilter<"T_SEAT_POSITION"> | number
     created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
-    updated?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    updated?: DateTimeNullableFilter<"T_SEAT_POSITION"> | Date | string | null
   }
 
   export type T_SEAT_POSITIONOrderByWithRelationInput = {
@@ -4447,7 +4443,7 @@ export namespace Prisma {
     seatId?: SortOrder
     userId?: SortOrder
     created?: SortOrder
-    updated?: SortOrder
+    updated?: SortOrderInput | SortOrder
   }
 
   export type T_SEAT_POSITIONWhereUniqueInput = Prisma.AtLeast<{
@@ -4456,10 +4452,10 @@ export namespace Prisma {
     OR?: T_SEAT_POSITIONWhereInput[]
     NOT?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
     date?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
-    seatId?: IntFilter<"T_SEAT_POSITION"> | number
+    seatId?: StringFilter<"T_SEAT_POSITION"> | string
     userId?: IntFilter<"T_SEAT_POSITION"> | number
     created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
-    updated?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    updated?: DateTimeNullableFilter<"T_SEAT_POSITION"> | Date | string | null
   }, "id">
 
   export type T_SEAT_POSITIONOrderByWithAggregationInput = {
@@ -4468,7 +4464,7 @@ export namespace Prisma {
     seatId?: SortOrder
     userId?: SortOrder
     created?: SortOrder
-    updated?: SortOrder
+    updated?: SortOrderInput | SortOrder
     _count?: T_SEAT_POSITIONCountOrderByAggregateInput
     _avg?: T_SEAT_POSITIONAvgOrderByAggregateInput
     _max?: T_SEAT_POSITIONMaxOrderByAggregateInput
@@ -4482,10 +4478,10 @@ export namespace Prisma {
     NOT?: T_SEAT_POSITIONScalarWhereWithAggregatesInput | T_SEAT_POSITIONScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"T_SEAT_POSITION"> | number
     date?: DateTimeWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string
-    seatId?: IntWithAggregatesFilter<"T_SEAT_POSITION"> | number
+    seatId?: StringWithAggregatesFilter<"T_SEAT_POSITION"> | string
     userId?: IntWithAggregatesFilter<"T_SEAT_POSITION"> | number
     created?: DateTimeWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string
-    updated?: DateTimeWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string
+    updated?: DateTimeNullableWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string | null
   }
 
   export type M_USERWhereInput = {
@@ -4622,62 +4618,62 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONCreateInput = {
     date: Date | string
-    seatId: number
+    seatId: string
     userId: number
     created: Date | string
-    updated: Date | string
+    updated?: Date | string | null
   }
 
   export type T_SEAT_POSITIONUncheckedCreateInput = {
     id?: number
     date: Date | string
-    seatId: number
+    seatId: string
     userId: number
     created: Date | string
-    updated: Date | string
+    updated?: Date | string | null
   }
 
   export type T_SEAT_POSITIONUpdateInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     created?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type T_SEAT_POSITIONUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     created?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type T_SEAT_POSITIONCreateManyInput = {
     id?: number
     date: Date | string
-    seatId: number
+    seatId: string
     userId: number
     created: Date | string
-    updated: Date | string
+    updated?: Date | string | null
   }
 
   export type T_SEAT_POSITIONUpdateManyMutationInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     created?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type T_SEAT_POSITIONUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     created?: DateTimeFieldUpdateOperationsInput | Date | string
-    updated?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type M_USERCreateInput = {
@@ -4866,6 +4862,22 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type T_SEAT_POSITIONCountOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
@@ -4877,7 +4889,6 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONAvgOrderByAggregateInput = {
     id?: SortOrder
-    seatId?: SortOrder
     userId?: SortOrder
   }
 
@@ -4901,7 +4912,6 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONSumOrderByAggregateInput = {
     id?: SortOrder
-    seatId?: SortOrder
     userId?: SortOrder
   }
 
@@ -4917,6 +4927,20 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -4937,11 +4961,6 @@ export namespace Prisma {
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type M_USERCountOrderByAggregateInput = {
@@ -5025,6 +5044,10 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
+  }
+
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -5115,6 +5138,17 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -5127,6 +5161,31 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedIntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -5163,17 +5222,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntNullableFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel> | null
-    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {

@@ -21,14 +21,14 @@ model M_SEAT {
   imageY      Int
 }
 
-// 当日の座席抽選結果
+// 座席抽選結果
 model T_SEAT_POSITION {
   id            Int      @id @default(autoincrement())
   date          DateTime
-  seatId        Int
+  seatId        String
   userId        Int
   created       DateTime
-  updated       DateTime
+  updated       DateTime?
 }
 
 // ユーザー情報
