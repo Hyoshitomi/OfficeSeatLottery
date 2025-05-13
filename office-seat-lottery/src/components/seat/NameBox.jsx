@@ -1,4 +1,5 @@
 'use client'
+
 import { useRef, useState } from 'react'
 import Draggable from 'react-draggable'
 import {
@@ -8,13 +9,21 @@ import {
 } from '@/components/ui/popover'
 import NameBoxPopOver from '@/components/seat/NameBoxPopOver'
 
+const statusStyle = {
+  movable: 'border-[#1AA7FF] bg-[#FFFFFF] text-black',
+  fixed: 'border-black bg-[#FFFFFF] text-black',
+  unused: 'border-gray-400 bg-gray-200 text-gray-500',
+  reserved: 'border-red-500 bg-red-100 text-red-600',
+}
+
 export default function NameBox({
   id,
   name,
-  isFixed,
+  status,
   position,
   onDragStop,
   onUpdate,
+  onDelete,
 }) {
   const nodeRef = useRef(null)
   const [open, setOpen] = useState(false)
@@ -22,42 +31,31 @@ export default function NameBox({
   return (
     <Draggable
       nodeRef={nodeRef}
-      axis="both"
-      bounds="parent"
-      position={position}
-      onStop={(_, data) => onDragStop(id, data.x, data.y)}
+      position={{ x: 0, y: 0 }}
+      onStop={(_, data) => onDragStop(id, position.x + data.x, position.y + data.y)}
+      // disabled={status === 'fixed' || status === 'unused' || status === 'reserved'}
     >
-      <div ref={nodeRef} className="relative w-[70px] h-[40px] cursor-grab">
-        <Popover
-          open={open}
-          onOpenChange={(next) => {
-            if (!next) setOpen(false)  // 左クリック等による開を無視
-          }}
-        >
+      <div
+        ref={nodeRef}
+        className={`w-[70px] h-[40px] flex items-center justify-center rounded-[7px] border-3 cursor-pointer select-none ${statusStyle[status]}`}
+        onContextMenu={e => {
+          e.preventDefault()
+          setOpen(true)
+        }}
+      >
+        <Popover open={open} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
-            <div
-              onContextMenu={e => {
-                e.preventDefault()     // ブラウザのコンテキストメニュー抑制
-                setOpen(true)          // 右クリックでだけ開く
-              }}
-              className={`
-                w-full h-full flex items-center justify-center
-                bg-white rounded-[7px] border-3
-                ${isFixed ? 'border-black' : 'border-[#1AA7FF]'}
-              `}
-            >
-              <span className="text-[clamp(14px,2.5vw,20px)] break-words">
-                {name}
-              </span>
-            </div>
+            <div>{name}</div>
           </PopoverTrigger>
-
-          <PopoverContent side="right" className="w-40 p-2">
+          <PopoverContent side="right" align="center" className="p-0 bg-transparent border-0 shadow-none">
             <NameBoxPopOver
               id={id}
               name={name}
-              isFixed={isFixed}
+              status={status}
+              x={position.x}
+              y={position.y}
               onUpdate={onUpdate}
+              onDelete={onDelete}
               onClose={() => setOpen(false)}
             />
           </PopoverContent>

@@ -1,4 +1,5 @@
 'use client'
+
 import NameBox from './NameBox'
 import AddBoxButton from './AddBoxButton'
 
@@ -9,29 +10,38 @@ export default function SeatCanvas({
   onImgLoad,
   onDragStop,
   onUpdate,
+  onDelete,
   onAddBox,
 }) {
   return (
-    <div
-      className="relative"
-      style={{ width: imgSize.width, height: imgSize.height }}
-    >
+    <div className="relative">
       <img
         src={src}
-        alt="プレビュー画像"
         onLoad={onImgLoad}
-        className="absolute top-0 left-0"
+        style={{ width: imgSize.width, height: imgSize.height }}
+        alt="座席表"
       />
-      {boxes.map(b => (
-        <NameBox
-          key={b.id}
-          id={b.id}
-          name={b.name}
-          isFixed={b.isFixed}
-          position={{ x: b.x, y: b.y }}
-          onDragStop={onDragStop}
-          onUpdate={onUpdate}
-        />
+      {boxes.map(box => (
+        <div
+          key={box.id}
+          style={{
+            position: 'absolute',
+            left: box.x,
+            top: box.y,
+            width: 70,
+            height: 40,
+          }}
+        >
+          <NameBox
+            id={box.id}
+            name={box.name}
+            status={box.status}
+            position={{ x: box.x, y: box.y }}
+            onDragStop={onDragStop}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+          />
+        </div>
       ))}
       <AddBoxButton onClick={onAddBox} />
     </div>
