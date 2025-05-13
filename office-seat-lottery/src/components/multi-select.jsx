@@ -148,13 +148,15 @@ export const MultiSelect = React.forwardRef(
                           <IconComponent className="h-4 w-4 mr-2" />
                         )}
                         {option && option.label}
-                        <XCircle
+                        <span
                           className="ml-2 h-4 w-4 cursor-pointer"
                           onClick={(event) => {
                             event.stopPropagation();
                             toggleOption(value);
                           }}
-                        />
+                        >
+                          <XCircle />
+                        </span>
                       </Badge>
                     );
                   })}
@@ -168,13 +170,6 @@ export const MultiSelect = React.forwardRef(
                       style={{ animationDuration: `${animation}s` }}
                     >
                       {`+ ${selectedValues.length - maxCount} more`}
-                      <XCircle
-                        className="ml-2 h-4 w-4 cursor-pointer"
-                        onClick={(event) => {
-                          event.stopPropagation();
-                          clearExtraOptions();
-                        }}
-                      />
                     </Badge>
                   )}
                 </div>
@@ -287,7 +282,7 @@ export const MultiSelect = React.forwardRef(
             </CommandList>
           </Command>
         </PopoverContent>
-        {animation > 0 && selectedValues.length > 0 && (
+        {/* {animation > 0 && selectedValues.length > 0 && (
           <WandSparkles
             className={cn(
               "cursor-pointer my-2 text-foreground bg-background w-3 h-3",
@@ -295,7 +290,7 @@ export const MultiSelect = React.forwardRef(
             )}
             onClick={() => setIsAnimating(!isAnimating)}
           />
-        )}
+        )} */}
       </Popover>
     );
   }
