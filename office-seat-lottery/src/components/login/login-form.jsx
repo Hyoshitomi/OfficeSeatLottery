@@ -113,8 +113,8 @@ export function LoginForm({ className, ...props }) {
                       )}
                     </button>
                   </div>
-                  <a href="#" className="mr-auto text-sm underline-offset-4 hover:underline">
-                      Forgot your password?
+                  <a href="/contact" className="mr-auto text-sm underline-offset-4 hover:underline">
+                      管理者に連絡してパスワードをリセット
                   </a>
                 </div>
 
