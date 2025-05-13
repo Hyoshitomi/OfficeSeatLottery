@@ -1,27 +1,25 @@
-import { PrismaClient } from '@prisma/client';
+import { NextResponse } from 'next/server'
+import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Method not allowed' });
-    return;
-  }
+export async function POST(request) {
+  // bodyの取得
+  const body = await request.json();
+  const { employeeNumbers } = body;
 
-  const { employeeNumbers } = req.body;
   if (!Array.isArray(employeeNumbers) || employeeNumbers.length === 0) {
-    res.status(400).json({ error: 'employeeNumbers is required' });
-    return;
+    return NextResponse.json({ error: 'employeeNumbers is required' }, { status: 400 });
   }
 
   // 今日の日付（00:00:00に揃える）
   const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
   try {
     // 1. employeeNumberからuserIdを取得
     const users = await prisma.m_USER.findMany({
-      where: { employeeNumber: { in: employeeNumbers } },
+      where: { employeeNumber: { in: employeeNumbers.map(String) } },
       select: { userId: true }
     });
     const userIds = users.map(u => u.userId);
@@ -34,8 +32,15 @@ export default async function handler(req, res) {
     const allSeatIds = seats.map(s => s.seatId);
 
     // 3. 今日既に割り当てられているseatIdを取得
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
     const usedSeats = await prisma.t_SEAT_POSITION.findMany({
-      where: { date: today },
+      where: {
+        date: {
+          gte: today,
+          lt: tomorrow
+        }
+      },
       select: { seatId: true }
     });
     const usedSeatIds = usedSeats.map(s => s.seatId);
@@ -50,8 +55,7 @@ export default async function handler(req, res) {
     }
 
     if (availableSeatIds.length < userIds.length) {
-      res.status(400).json({ error: '空き座席が足りません' });
-      return;
+      return NextResponse.json({ error: '空き座席が足りません' }, { status: 400 });
     }
 
     // 6. 登録データ作成
@@ -64,11 +68,11 @@ export default async function handler(req, res) {
     }));
 
     // 7. 登録
-    await prisma.t_SEAT_POSITION.createMany({ data: createData });
+    const result = await prisma.t_SEAT_POSITION.createMany({ data: createData });
 
-    res.status(200).json({ result: createData });
+    return NextResponse.json({ result: createData, dbResult: result }, { status: 200 });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    console.error("[API] DB登録エラー:", error);
+    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
 }

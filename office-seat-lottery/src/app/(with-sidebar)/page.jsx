@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SiteHeader } from '@/components/sidebar/site-header'
 import { MultiSelect } from "@/components/multi-select"
 import { Cat, Dog, Fish, Rabbit, Turtle, Ticket } from "lucide-react"
@@ -7,18 +7,30 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 
-const employeeList = [
-  { value: "10001", label: "山田太郎", icon: Turtle },
-  { value: "10002", label: "佐藤花子", icon: Cat },
-  { value: "10003", label: "鈴木一郎", icon: Dog },
-  { value: "10004", label: "田中美咲", icon: Rabbit },
-  { value: "10005", label: "伊藤健太", icon: Fish },
-]
+// const employeeList = [
+//   { value: "10001", label: "山田太郎", icon: Turtle },
+//   { value: "10002", label: "佐藤花子", icon: Cat },
+//   { value: "10003", label: "鈴木一郎", icon: Dog },
+//   { value: "10004", label: "田中美咲", icon: Rabbit },
+//   { value: "10005", label: "伊藤健太", icon: Fish },
+// ]
 
 export default function Home() {
+  const [employeeList, setEmployeeList] = useState([])
   const [selectedEmployees, setSelectedEmployees] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [result, setResult] = useState(null)
+
+  // APIから社員リストを取得
+  useEffect(() => {
+    fetch("/api/user")
+      .then(res => res.json())
+      .then(data => setEmployeeList(data))
+      .catch(e => {
+        alert("社員リストの取得に失敗しました")
+        setEmployeeList([])
+      })
+  }, [])
 
   // 抽選処理を実行する関数
   async function handleLottery() {
@@ -42,7 +54,7 @@ export default function Home() {
       const data = await res.json()
 
       if (res.ok) {
-        setResult(`当選者: ${data.result}`)
+        setResult(`抽選が終了しました。座席表タブから結果を確認してください。`)
       } else {
         alert(data.error || "抽選処理中にエラーが発生しました")
       }
