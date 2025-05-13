@@ -8,17 +8,17 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
+  url      = env("POSTGRES_URL_NON_POOLING")
 }
 
 // 座席テーブル
 model M_SEAT {
-  seatId      Int    @id @default(autoincrement()) //A1
-  tableId     Int    //A
-  seatNumber  Int //1
-  status      Int // 1:流動 2:固定 3:不使用 4:予約
-  imageX      Int     // 画像上のX座標
-  imageY      Int     // 画像上のY座標
+  seatId      String  @id           // 例: "A1"
+  tableId     String               // 例: "A"
+  seatNumber  Int                  // 例: 1
+  status      Int                  // 1:流動 2:固定 3:不使用 4:予約
+  imageX      Int
+  imageY      Int
 }
 
 // // 会議テーブル

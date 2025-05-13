@@ -1155,8 +1155,6 @@ export namespace Prisma {
   }
 
   export type M_SEATAvgAggregateOutputType = {
-    seatId: number | null
-    tableId: number | null
     seatNumber: number | null
     status: number | null
     imageX: number | null
@@ -1164,8 +1162,6 @@ export namespace Prisma {
   }
 
   export type M_SEATSumAggregateOutputType = {
-    seatId: number | null
-    tableId: number | null
     seatNumber: number | null
     status: number | null
     imageX: number | null
@@ -1173,8 +1169,8 @@ export namespace Prisma {
   }
 
   export type M_SEATMinAggregateOutputType = {
-    seatId: number | null
-    tableId: number | null
+    seatId: string | null
+    tableId: string | null
     seatNumber: number | null
     status: number | null
     imageX: number | null
@@ -1182,8 +1178,8 @@ export namespace Prisma {
   }
 
   export type M_SEATMaxAggregateOutputType = {
-    seatId: number | null
-    tableId: number | null
+    seatId: string | null
+    tableId: string | null
     seatNumber: number | null
     status: number | null
     imageX: number | null
@@ -1202,8 +1198,6 @@ export namespace Prisma {
 
 
   export type M_SEATAvgAggregateInputType = {
-    seatId?: true
-    tableId?: true
     seatNumber?: true
     status?: true
     imageX?: true
@@ -1211,8 +1205,6 @@ export namespace Prisma {
   }
 
   export type M_SEATSumAggregateInputType = {
-    seatId?: true
-    tableId?: true
     seatNumber?: true
     status?: true
     imageX?: true
@@ -1334,8 +1326,8 @@ export namespace Prisma {
   }
 
   export type M_SEATGroupByOutputType = {
-    seatId: number
-    tableId: number
+    seatId: string
+    tableId: string
     seatNumber: number
     status: number
     imageX: number
@@ -1403,8 +1395,8 @@ export namespace Prisma {
     name: "M_SEAT"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
-      seatId: number
-      tableId: number
+      seatId: string
+      tableId: string
       seatNumber: number
       status: number
       imageX: number
@@ -1832,8 +1824,8 @@ export namespace Prisma {
    * Fields of the M_SEAT model
    */
   interface M_SEATFieldRefs {
-    readonly seatId: FieldRef<"M_SEAT", 'Int'>
-    readonly tableId: FieldRef<"M_SEAT", 'Int'>
+    readonly seatId: FieldRef<"M_SEAT", 'String'>
+    readonly tableId: FieldRef<"M_SEAT", 'String'>
     readonly seatNumber: FieldRef<"M_SEAT", 'Int'>
     readonly status: FieldRef<"M_SEAT", 'Int'>
     readonly imageX: FieldRef<"M_SEAT", 'Int'>
@@ -5446,6 +5438,20 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'String'
+   */
+  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
+    
+
+
+  /**
+   * Reference to a field of type 'String[]'
+   */
+  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -5470,20 +5476,6 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'String'
-   */
-  export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
-    
-
-
-  /**
-   * Reference to a field of type 'String[]'
-   */
-  export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
     
 
 
@@ -5515,8 +5507,8 @@ export namespace Prisma {
     AND?: M_SEATWhereInput | M_SEATWhereInput[]
     OR?: M_SEATWhereInput[]
     NOT?: M_SEATWhereInput | M_SEATWhereInput[]
-    seatId?: IntFilter<"M_SEAT"> | number
-    tableId?: IntFilter<"M_SEAT"> | number
+    seatId?: StringFilter<"M_SEAT"> | string
+    tableId?: StringFilter<"M_SEAT"> | string
     seatNumber?: IntFilter<"M_SEAT"> | number
     status?: IntFilter<"M_SEAT"> | number
     imageX?: IntFilter<"M_SEAT"> | number
@@ -5533,11 +5525,11 @@ export namespace Prisma {
   }
 
   export type M_SEATWhereUniqueInput = Prisma.AtLeast<{
-    seatId?: number
+    seatId?: string
     AND?: M_SEATWhereInput | M_SEATWhereInput[]
     OR?: M_SEATWhereInput[]
     NOT?: M_SEATWhereInput | M_SEATWhereInput[]
-    tableId?: IntFilter<"M_SEAT"> | number
+    tableId?: StringFilter<"M_SEAT"> | string
     seatNumber?: IntFilter<"M_SEAT"> | number
     status?: IntFilter<"M_SEAT"> | number
     imageX?: IntFilter<"M_SEAT"> | number
@@ -5562,8 +5554,8 @@ export namespace Prisma {
     AND?: M_SEATScalarWhereWithAggregatesInput | M_SEATScalarWhereWithAggregatesInput[]
     OR?: M_SEATScalarWhereWithAggregatesInput[]
     NOT?: M_SEATScalarWhereWithAggregatesInput | M_SEATScalarWhereWithAggregatesInput[]
-    seatId?: IntWithAggregatesFilter<"M_SEAT"> | number
-    tableId?: IntWithAggregatesFilter<"M_SEAT"> | number
+    seatId?: StringWithAggregatesFilter<"M_SEAT"> | string
+    tableId?: StringWithAggregatesFilter<"M_SEAT"> | string
     seatNumber?: IntWithAggregatesFilter<"M_SEAT"> | number
     status?: IntWithAggregatesFilter<"M_SEAT"> | number
     imageX?: IntWithAggregatesFilter<"M_SEAT"> | number
@@ -5748,7 +5740,8 @@ export namespace Prisma {
   }
 
   export type M_SEATCreateInput = {
-    tableId: number
+    seatId: string
+    tableId: string
     seatNumber: number
     status: number
     imageX: number
@@ -5756,8 +5749,8 @@ export namespace Prisma {
   }
 
   export type M_SEATUncheckedCreateInput = {
-    seatId?: number
-    tableId: number
+    seatId: string
+    tableId: string
     seatNumber: number
     status: number
     imageX: number
@@ -5765,7 +5758,8 @@ export namespace Prisma {
   }
 
   export type M_SEATUpdateInput = {
-    tableId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
+    tableId?: StringFieldUpdateOperationsInput | string
     seatNumber?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
     imageX?: IntFieldUpdateOperationsInput | number
@@ -5773,8 +5767,8 @@ export namespace Prisma {
   }
 
   export type M_SEATUncheckedUpdateInput = {
-    seatId?: IntFieldUpdateOperationsInput | number
-    tableId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
+    tableId?: StringFieldUpdateOperationsInput | string
     seatNumber?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
     imageX?: IntFieldUpdateOperationsInput | number
@@ -5782,8 +5776,8 @@ export namespace Prisma {
   }
 
   export type M_SEATCreateManyInput = {
-    seatId?: number
-    tableId: number
+    seatId: string
+    tableId: string
     seatNumber: number
     status: number
     imageX: number
@@ -5791,7 +5785,8 @@ export namespace Prisma {
   }
 
   export type M_SEATUpdateManyMutationInput = {
-    tableId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
+    tableId?: StringFieldUpdateOperationsInput | string
     seatNumber?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
     imageX?: IntFieldUpdateOperationsInput | number
@@ -5799,8 +5794,8 @@ export namespace Prisma {
   }
 
   export type M_SEATUncheckedUpdateManyInput = {
-    seatId?: IntFieldUpdateOperationsInput | number
-    tableId?: IntFieldUpdateOperationsInput | number
+    seatId?: StringFieldUpdateOperationsInput | string
+    tableId?: StringFieldUpdateOperationsInput | string
     seatNumber?: IntFieldUpdateOperationsInput | number
     status?: IntFieldUpdateOperationsInput | number
     imageX?: IntFieldUpdateOperationsInput | number
@@ -5987,6 +5982,21 @@ export namespace Prisma {
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
   }
 
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -6008,8 +6018,6 @@ export namespace Prisma {
   }
 
   export type M_SEATAvgOrderByAggregateInput = {
-    seatId?: SortOrder
-    tableId?: SortOrder
     seatNumber?: SortOrder
     status?: SortOrder
     imageX?: SortOrder
@@ -6035,12 +6043,28 @@ export namespace Prisma {
   }
 
   export type M_SEATSumOrderByAggregateInput = {
-    seatId?: SortOrder
-    tableId?: SortOrder
     seatNumber?: SortOrder
     status?: SortOrder
     imageX?: SortOrder
     imageY?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type IntWithAggregatesFilter<$PrismaModel = never> = {
@@ -6160,21 +6184,6 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
-  export type StringFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringFilter<$PrismaModel> | string
-  }
-
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6241,24 +6250,6 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
-  export type StringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
-  }
-
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6285,6 +6276,10 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -6297,16 +6292,26 @@ export namespace Prisma {
     set?: Date | string
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -6318,6 +6323,23 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[] | ListStringFieldRefInput<$PrismaModel>
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -6372,20 +6394,6 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedStringFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringFilter<$PrismaModel> | string
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6403,23 +6411,6 @@ export namespace Prisma {
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
-  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel>
-    in?: string[] | ListStringFieldRefInput<$PrismaModel>
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel>
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedStringFilter<$PrismaModel>
-    _max?: NestedStringFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {

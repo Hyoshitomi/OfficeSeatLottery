@@ -10,10 +10,15 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { Input } from "../ui/input"
 
 
-export default function SidebarRight({ onFileChange, tableName, setTableName, ...props }) {
+export default function SidebarRight({
+  onFileChange,
+  tableName,
+  setTableName,
+  onSave, 
+  ...props
+}) {
   return (
     <Sidebar
       collapsible="none"
@@ -30,7 +35,7 @@ export default function SidebarRight({ onFileChange, tableName, setTableName, ..
           <SidebarMenuItem>
             <div className="flex flex-col items-center gap-4 w-full">
               <ImageUploader onChange={onFileChange} />
-              <SaveButton />
+              <SaveButton onClick={onSave} />
             </div>
           </SidebarMenuItem>
         </SidebarMenu>

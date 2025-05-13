@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
 import SidebarRight from '@/components/sidebar/right-sidebar'
@@ -10,7 +10,37 @@ export default function Page() {
   const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
   const [boxes, setBoxes] = useState([])
   const [tableName, setTableName] = useState("A")
+  const [isLoading, setIsLoading] = useState(false) // 追加
   const fileInputRef = useRef(null)
+
+  // 初回マウント時にDBから座席データを取得
+  useEffect(() => {
+    const fetchSeats = async () => {
+      setIsLoading(true) // 取得前にローディング開始
+      try {
+        const res = await fetch('/api/seats')
+        if (res.ok) {
+          const seats = await res.json()
+          setBoxes(
+            seats.map(seat => ({
+              id: seat.seatId,
+              name: `${seat.tableId}${seat.seatNumber}`,
+              status:
+                seat.status === 1 ? 'movable' :
+                seat.status === 2 ? 'fixed' :
+                seat.status === 3 ? 'unused' :
+                seat.status === 4 ? 'reserved' : 'movable',
+              x: seat.imageX,
+              y: seat.imageY,
+            }))
+          )
+        }
+      } finally {
+        setIsLoading(false) // 完了時にローディング終了
+      }
+    }
+    fetchSeats()
+  }, [])
 
   const handleImgLoad = e => {
     setImgSize({
@@ -18,6 +48,20 @@ export default function Page() {
       height: e.currentTarget.naturalHeight,
     })
   }
+
+  // 保存ボタン押下時にAPIへboxesを送信
+  const handleSave = async () => {
+    const res = await fetch('/api/seats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ boxes }),
+    });
+    if (res.ok) {
+      alert('保存しました！');
+    } else {
+      alert('保存に失敗しました');
+    }
+  };
 
   const handleFileChange = file => {
     setPreviewImage(URL.createObjectURL(file))
@@ -53,7 +97,7 @@ export default function Page() {
     const plusSize = 32
     // テーブル名でカウント
     const aCount = boxes.filter(b => new RegExp(`^${tableName}\\d+$`).test(b.name)).length
-    const name = `${tableName}${aCount + 1}` // ←ここを変更
+    const name = `${tableName}${aCount + 1}`
     const x = imgSize.width - offset - plusSize - gap - boxW
     const y = offset + boxH
     setBoxes(prev => [
@@ -67,22 +111,29 @@ export default function Page() {
       <SiteHeader title="座席図編集" />
       <div className="flex flex-row h-[calc(100vh-56px)]">
         <div className="flex-1 flex flex-col items-center justify-center">
-          <SeatCanvas
-            src={previewImage}
-            imgSize={imgSize}
-            boxes={boxes}
-            onImgLoad={handleImgLoad}
-            onDragStop={handleStop}
-            onUpdate={handleUpdate}
-            onDelete={handleDelete}
-            onAddBox={handleAddBox}
-          />
+          {isLoading ? (
+            <div className="flex items-center justify-center h-full w-full">
+              <div className="text-xl font-bold animate-pulse">Loading...</div>
+            </div>
+          ) : (
+            <SeatCanvas
+              src={previewImage}
+              imgSize={imgSize}
+              boxes={boxes}
+              onImgLoad={handleImgLoad}
+              onDragStop={handleStop}
+              onUpdate={handleUpdate}
+              onDelete={handleDelete}
+              onAddBox={handleAddBox}
+            />
+          )}
         </div>
         <SidebarRight
           fileInputRef={fileInputRef}
           onFileChange={handleFileChange}
-          tableName={tableName} 
+          tableName={tableName}
           setTableName={setTableName}
+          onSave={handleSave}
         />
       </div>
     </>
