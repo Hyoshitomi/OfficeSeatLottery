@@ -104,6 +104,7 @@ export default function Page() {
               onUpdate={handleUpdate}
               onDelete={handleDelete}
               onAddBox={handleAddBox}
+              move={false}
             />
           )}
         </div>

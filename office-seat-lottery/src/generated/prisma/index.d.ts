@@ -19,15 +19,10 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type M_SEAT = $Result.DefaultSelection<Prisma.$M_SEATPayload>
 /**
- * Model T_TODAY_POSITION
+ * Model T_SEAT_POSITION
  * 
  */
-export type T_TODAY_POSITION = $Result.DefaultSelection<Prisma.$T_TODAY_POSITIONPayload>
-/**
- * Model T_PAST_POSITION
- * 
- */
-export type T_PAST_POSITION = $Result.DefaultSelection<Prisma.$T_PAST_POSITIONPayload>
+export type T_SEAT_POSITION = $Result.DefaultSelection<Prisma.$T_SEAT_POSITIONPayload>
 /**
  * Model M_USER
  * 
@@ -170,24 +165,14 @@ export class PrismaClient<
   get m_SEAT(): Prisma.M_SEATDelegate<ExtArgs, ClientOptions>;
 
   /**
-   * `prisma.t_TODAY_POSITION`: Exposes CRUD operations for the **T_TODAY_POSITION** model.
+   * `prisma.t_SEAT_POSITION`: Exposes CRUD operations for the **T_SEAT_POSITION** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more T_TODAY_POSITIONS
-    * const t_TODAY_POSITIONS = await prisma.t_TODAY_POSITION.findMany()
+    * // Fetch zero or more T_SEAT_POSITIONS
+    * const t_SEAT_POSITIONS = await prisma.t_SEAT_POSITION.findMany()
     * ```
     */
-  get t_TODAY_POSITION(): Prisma.T_TODAY_POSITIONDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.t_PAST_POSITION`: Exposes CRUD operations for the **T_PAST_POSITION** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more T_PAST_POSITIONS
-    * const t_PAST_POSITIONS = await prisma.t_PAST_POSITION.findMany()
-    * ```
-    */
-  get t_PAST_POSITION(): Prisma.T_PAST_POSITIONDelegate<ExtArgs, ClientOptions>;
+  get t_SEAT_POSITION(): Prisma.T_SEAT_POSITIONDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.m_USER`: Exposes CRUD operations for the **M_USER** model.
@@ -639,8 +624,7 @@ export namespace Prisma {
 
   export const ModelName: {
     M_SEAT: 'M_SEAT',
-    T_TODAY_POSITION: 'T_TODAY_POSITION',
-    T_PAST_POSITION: 'T_PAST_POSITION',
+    T_SEAT_POSITION: 'T_SEAT_POSITION',
     M_USER: 'M_USER'
   };
 
@@ -660,7 +644,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "m_SEAT" | "t_TODAY_POSITION" | "t_PAST_POSITION" | "m_USER"
+      modelProps: "m_SEAT" | "t_SEAT_POSITION" | "m_USER"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -738,151 +722,77 @@ export namespace Prisma {
           }
         }
       }
-      T_TODAY_POSITION: {
-        payload: Prisma.$T_TODAY_POSITIONPayload<ExtArgs>
-        fields: Prisma.T_TODAY_POSITIONFieldRefs
+      T_SEAT_POSITION: {
+        payload: Prisma.$T_SEAT_POSITIONPayload<ExtArgs>
+        fields: Prisma.T_SEAT_POSITIONFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.T_TODAY_POSITIONFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload> | null
+            args: Prisma.T_SEAT_POSITIONFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.T_TODAY_POSITIONFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>
+            args: Prisma.T_SEAT_POSITIONFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>
           }
           findFirst: {
-            args: Prisma.T_TODAY_POSITIONFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload> | null
+            args: Prisma.T_SEAT_POSITIONFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.T_TODAY_POSITIONFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>
+            args: Prisma.T_SEAT_POSITIONFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>
           }
           findMany: {
-            args: Prisma.T_TODAY_POSITIONFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>[]
+            args: Prisma.T_SEAT_POSITIONFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>[]
           }
           create: {
-            args: Prisma.T_TODAY_POSITIONCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>
+            args: Prisma.T_SEAT_POSITIONCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>
           }
           createMany: {
-            args: Prisma.T_TODAY_POSITIONCreateManyArgs<ExtArgs>
+            args: Prisma.T_SEAT_POSITIONCreateManyArgs<ExtArgs>
             result: BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.T_TODAY_POSITIONCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>[]
+            args: Prisma.T_SEAT_POSITIONCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>[]
           }
           delete: {
-            args: Prisma.T_TODAY_POSITIONDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>
+            args: Prisma.T_SEAT_POSITIONDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>
           }
           update: {
-            args: Prisma.T_TODAY_POSITIONUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>
+            args: Prisma.T_SEAT_POSITIONUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>
           }
           deleteMany: {
-            args: Prisma.T_TODAY_POSITIONDeleteManyArgs<ExtArgs>
+            args: Prisma.T_SEAT_POSITIONDeleteManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateMany: {
-            args: Prisma.T_TODAY_POSITIONUpdateManyArgs<ExtArgs>
+            args: Prisma.T_SEAT_POSITIONUpdateManyArgs<ExtArgs>
             result: BatchPayload
           }
           updateManyAndReturn: {
-            args: Prisma.T_TODAY_POSITIONUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>[]
+            args: Prisma.T_SEAT_POSITIONUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>[]
           }
           upsert: {
-            args: Prisma.T_TODAY_POSITIONUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_TODAY_POSITIONPayload>
+            args: Prisma.T_SEAT_POSITIONUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$T_SEAT_POSITIONPayload>
           }
           aggregate: {
-            args: Prisma.T_TODAY_POSITIONAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateT_TODAY_POSITION>
+            args: Prisma.T_SEAT_POSITIONAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateT_SEAT_POSITION>
           }
           groupBy: {
-            args: Prisma.T_TODAY_POSITIONGroupByArgs<ExtArgs>
-            result: $Utils.Optional<T_TODAY_POSITIONGroupByOutputType>[]
+            args: Prisma.T_SEAT_POSITIONGroupByArgs<ExtArgs>
+            result: $Utils.Optional<T_SEAT_POSITIONGroupByOutputType>[]
           }
           count: {
-            args: Prisma.T_TODAY_POSITIONCountArgs<ExtArgs>
-            result: $Utils.Optional<T_TODAY_POSITIONCountAggregateOutputType> | number
-          }
-        }
-      }
-      T_PAST_POSITION: {
-        payload: Prisma.$T_PAST_POSITIONPayload<ExtArgs>
-        fields: Prisma.T_PAST_POSITIONFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.T_PAST_POSITIONFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.T_PAST_POSITIONFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>
-          }
-          findFirst: {
-            args: Prisma.T_PAST_POSITIONFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.T_PAST_POSITIONFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>
-          }
-          findMany: {
-            args: Prisma.T_PAST_POSITIONFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>[]
-          }
-          create: {
-            args: Prisma.T_PAST_POSITIONCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>
-          }
-          createMany: {
-            args: Prisma.T_PAST_POSITIONCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.T_PAST_POSITIONCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>[]
-          }
-          delete: {
-            args: Prisma.T_PAST_POSITIONDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>
-          }
-          update: {
-            args: Prisma.T_PAST_POSITIONUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>
-          }
-          deleteMany: {
-            args: Prisma.T_PAST_POSITIONDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.T_PAST_POSITIONUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.T_PAST_POSITIONUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>[]
-          }
-          upsert: {
-            args: Prisma.T_PAST_POSITIONUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$T_PAST_POSITIONPayload>
-          }
-          aggregate: {
-            args: Prisma.T_PAST_POSITIONAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateT_PAST_POSITION>
-          }
-          groupBy: {
-            args: Prisma.T_PAST_POSITIONGroupByArgs<ExtArgs>
-            result: $Utils.Optional<T_PAST_POSITIONGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.T_PAST_POSITIONCountArgs<ExtArgs>
-            result: $Utils.Optional<T_PAST_POSITIONCountAggregateOutputType> | number
+            args: Prisma.T_SEAT_POSITIONCountArgs<ExtArgs>
+            result: $Utils.Optional<T_SEAT_POSITIONCountAggregateOutputType> | number
           }
         }
       }
@@ -1045,8 +955,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     m_SEAT?: M_SEATOmit
-    t_TODAY_POSITION?: T_TODAY_POSITIONOmit
-    t_PAST_POSITION?: T_PAST_POSITIONOmit
+    t_SEAT_POSITION?: T_SEAT_POSITIONOmit
     m_USER?: M_USEROmit
   }
 
@@ -2197,382 +2106,390 @@ export namespace Prisma {
 
 
   /**
-   * Model T_TODAY_POSITION
+   * Model T_SEAT_POSITION
    */
 
-  export type AggregateT_TODAY_POSITION = {
-    _count: T_TODAY_POSITIONCountAggregateOutputType | null
-    _avg: T_TODAY_POSITIONAvgAggregateOutputType | null
-    _sum: T_TODAY_POSITIONSumAggregateOutputType | null
-    _min: T_TODAY_POSITIONMinAggregateOutputType | null
-    _max: T_TODAY_POSITIONMaxAggregateOutputType | null
+  export type AggregateT_SEAT_POSITION = {
+    _count: T_SEAT_POSITIONCountAggregateOutputType | null
+    _avg: T_SEAT_POSITIONAvgAggregateOutputType | null
+    _sum: T_SEAT_POSITIONSumAggregateOutputType | null
+    _min: T_SEAT_POSITIONMinAggregateOutputType | null
+    _max: T_SEAT_POSITIONMaxAggregateOutputType | null
   }
 
-  export type T_TODAY_POSITIONAvgAggregateOutputType = {
+  export type T_SEAT_POSITIONAvgAggregateOutputType = {
     id: number | null
     seatId: number | null
-    lotteryNumber: number | null
     userId: number | null
   }
 
-  export type T_TODAY_POSITIONSumAggregateOutputType = {
+  export type T_SEAT_POSITIONSumAggregateOutputType = {
     id: number | null
     seatId: number | null
-    lotteryNumber: number | null
     userId: number | null
   }
 
-  export type T_TODAY_POSITIONMinAggregateOutputType = {
+  export type T_SEAT_POSITIONMinAggregateOutputType = {
     id: number | null
     date: Date | null
     seatId: number | null
-    lotteryNumber: number | null
     userId: number | null
+    created: Date | null
+    updated: Date | null
   }
 
-  export type T_TODAY_POSITIONMaxAggregateOutputType = {
+  export type T_SEAT_POSITIONMaxAggregateOutputType = {
     id: number | null
     date: Date | null
     seatId: number | null
-    lotteryNumber: number | null
     userId: number | null
+    created: Date | null
+    updated: Date | null
   }
 
-  export type T_TODAY_POSITIONCountAggregateOutputType = {
+  export type T_SEAT_POSITIONCountAggregateOutputType = {
     id: number
     date: number
     seatId: number
-    lotteryNumber: number
     userId: number
+    created: number
+    updated: number
     _all: number
   }
 
 
-  export type T_TODAY_POSITIONAvgAggregateInputType = {
+  export type T_SEAT_POSITIONAvgAggregateInputType = {
     id?: true
     seatId?: true
-    lotteryNumber?: true
     userId?: true
   }
 
-  export type T_TODAY_POSITIONSumAggregateInputType = {
+  export type T_SEAT_POSITIONSumAggregateInputType = {
     id?: true
     seatId?: true
-    lotteryNumber?: true
     userId?: true
   }
 
-  export type T_TODAY_POSITIONMinAggregateInputType = {
+  export type T_SEAT_POSITIONMinAggregateInputType = {
     id?: true
     date?: true
     seatId?: true
-    lotteryNumber?: true
     userId?: true
+    created?: true
+    updated?: true
   }
 
-  export type T_TODAY_POSITIONMaxAggregateInputType = {
+  export type T_SEAT_POSITIONMaxAggregateInputType = {
     id?: true
     date?: true
     seatId?: true
-    lotteryNumber?: true
     userId?: true
+    created?: true
+    updated?: true
   }
 
-  export type T_TODAY_POSITIONCountAggregateInputType = {
+  export type T_SEAT_POSITIONCountAggregateInputType = {
     id?: true
     date?: true
     seatId?: true
-    lotteryNumber?: true
     userId?: true
+    created?: true
+    updated?: true
     _all?: true
   }
 
-  export type T_TODAY_POSITIONAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which T_TODAY_POSITION to aggregate.
+     * Filter which T_SEAT_POSITION to aggregate.
      */
-    where?: T_TODAY_POSITIONWhereInput
+    where?: T_SEAT_POSITIONWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of T_TODAY_POSITIONS to fetch.
+     * Determine the order of T_SEAT_POSITIONS to fetch.
      */
-    orderBy?: T_TODAY_POSITIONOrderByWithRelationInput | T_TODAY_POSITIONOrderByWithRelationInput[]
+    orderBy?: T_SEAT_POSITIONOrderByWithRelationInput | T_SEAT_POSITIONOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
      * Sets the start position
      */
-    cursor?: T_TODAY_POSITIONWhereUniqueInput
+    cursor?: T_SEAT_POSITIONWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` T_TODAY_POSITIONS from the position of the cursor.
+     * Take `±n` T_SEAT_POSITIONS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` T_TODAY_POSITIONS.
+     * Skip the first `n` T_SEAT_POSITIONS.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Count returned T_TODAY_POSITIONS
+     * Count returned T_SEAT_POSITIONS
     **/
-    _count?: true | T_TODAY_POSITIONCountAggregateInputType
+    _count?: true | T_SEAT_POSITIONCountAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to average
     **/
-    _avg?: T_TODAY_POSITIONAvgAggregateInputType
+    _avg?: T_SEAT_POSITIONAvgAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to sum
     **/
-    _sum?: T_TODAY_POSITIONSumAggregateInputType
+    _sum?: T_SEAT_POSITIONSumAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the minimum value
     **/
-    _min?: T_TODAY_POSITIONMinAggregateInputType
+    _min?: T_SEAT_POSITIONMinAggregateInputType
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
      * Select which fields to find the maximum value
     **/
-    _max?: T_TODAY_POSITIONMaxAggregateInputType
+    _max?: T_SEAT_POSITIONMaxAggregateInputType
   }
 
-  export type GetT_TODAY_POSITIONAggregateType<T extends T_TODAY_POSITIONAggregateArgs> = {
-        [P in keyof T & keyof AggregateT_TODAY_POSITION]: P extends '_count' | 'count'
+  export type GetT_SEAT_POSITIONAggregateType<T extends T_SEAT_POSITIONAggregateArgs> = {
+        [P in keyof T & keyof AggregateT_SEAT_POSITION]: P extends '_count' | 'count'
       ? T[P] extends true
         ? number
-        : GetScalarType<T[P], AggregateT_TODAY_POSITION[P]>
-      : GetScalarType<T[P], AggregateT_TODAY_POSITION[P]>
+        : GetScalarType<T[P], AggregateT_SEAT_POSITION[P]>
+      : GetScalarType<T[P], AggregateT_SEAT_POSITION[P]>
   }
 
 
 
 
-  export type T_TODAY_POSITIONGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: T_TODAY_POSITIONWhereInput
-    orderBy?: T_TODAY_POSITIONOrderByWithAggregationInput | T_TODAY_POSITIONOrderByWithAggregationInput[]
-    by: T_TODAY_POSITIONScalarFieldEnum[] | T_TODAY_POSITIONScalarFieldEnum
-    having?: T_TODAY_POSITIONScalarWhereWithAggregatesInput
+  export type T_SEAT_POSITIONGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: T_SEAT_POSITIONWhereInput
+    orderBy?: T_SEAT_POSITIONOrderByWithAggregationInput | T_SEAT_POSITIONOrderByWithAggregationInput[]
+    by: T_SEAT_POSITIONScalarFieldEnum[] | T_SEAT_POSITIONScalarFieldEnum
+    having?: T_SEAT_POSITIONScalarWhereWithAggregatesInput
     take?: number
     skip?: number
-    _count?: T_TODAY_POSITIONCountAggregateInputType | true
-    _avg?: T_TODAY_POSITIONAvgAggregateInputType
-    _sum?: T_TODAY_POSITIONSumAggregateInputType
-    _min?: T_TODAY_POSITIONMinAggregateInputType
-    _max?: T_TODAY_POSITIONMaxAggregateInputType
+    _count?: T_SEAT_POSITIONCountAggregateInputType | true
+    _avg?: T_SEAT_POSITIONAvgAggregateInputType
+    _sum?: T_SEAT_POSITIONSumAggregateInputType
+    _min?: T_SEAT_POSITIONMinAggregateInputType
+    _max?: T_SEAT_POSITIONMaxAggregateInputType
   }
 
-  export type T_TODAY_POSITIONGroupByOutputType = {
+  export type T_SEAT_POSITIONGroupByOutputType = {
     id: number
     date: Date
     seatId: number
-    lotteryNumber: number
     userId: number
-    _count: T_TODAY_POSITIONCountAggregateOutputType | null
-    _avg: T_TODAY_POSITIONAvgAggregateOutputType | null
-    _sum: T_TODAY_POSITIONSumAggregateOutputType | null
-    _min: T_TODAY_POSITIONMinAggregateOutputType | null
-    _max: T_TODAY_POSITIONMaxAggregateOutputType | null
+    created: Date
+    updated: Date
+    _count: T_SEAT_POSITIONCountAggregateOutputType | null
+    _avg: T_SEAT_POSITIONAvgAggregateOutputType | null
+    _sum: T_SEAT_POSITIONSumAggregateOutputType | null
+    _min: T_SEAT_POSITIONMinAggregateOutputType | null
+    _max: T_SEAT_POSITIONMaxAggregateOutputType | null
   }
 
-  type GetT_TODAY_POSITIONGroupByPayload<T extends T_TODAY_POSITIONGroupByArgs> = Prisma.PrismaPromise<
+  type GetT_SEAT_POSITIONGroupByPayload<T extends T_SEAT_POSITIONGroupByArgs> = Prisma.PrismaPromise<
     Array<
-      PickEnumerable<T_TODAY_POSITIONGroupByOutputType, T['by']> &
+      PickEnumerable<T_SEAT_POSITIONGroupByOutputType, T['by']> &
         {
-          [P in ((keyof T) & (keyof T_TODAY_POSITIONGroupByOutputType))]: P extends '_count'
+          [P in ((keyof T) & (keyof T_SEAT_POSITIONGroupByOutputType))]: P extends '_count'
             ? T[P] extends boolean
               ? number
-              : GetScalarType<T[P], T_TODAY_POSITIONGroupByOutputType[P]>
-            : GetScalarType<T[P], T_TODAY_POSITIONGroupByOutputType[P]>
+              : GetScalarType<T[P], T_SEAT_POSITIONGroupByOutputType[P]>
+            : GetScalarType<T[P], T_SEAT_POSITIONGroupByOutputType[P]>
         }
       >
     >
 
 
-  export type T_TODAY_POSITIONSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type T_SEAT_POSITIONSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     date?: boolean
     seatId?: boolean
-    lotteryNumber?: boolean
     userId?: boolean
-  }, ExtArgs["result"]["t_TODAY_POSITION"]>
+    created?: boolean
+    updated?: boolean
+  }, ExtArgs["result"]["t_SEAT_POSITION"]>
 
-  export type T_TODAY_POSITIONSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type T_SEAT_POSITIONSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     date?: boolean
     seatId?: boolean
-    lotteryNumber?: boolean
     userId?: boolean
-  }, ExtArgs["result"]["t_TODAY_POSITION"]>
+    created?: boolean
+    updated?: boolean
+  }, ExtArgs["result"]["t_SEAT_POSITION"]>
 
-  export type T_TODAY_POSITIONSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+  export type T_SEAT_POSITIONSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     date?: boolean
     seatId?: boolean
-    lotteryNumber?: boolean
     userId?: boolean
-  }, ExtArgs["result"]["t_TODAY_POSITION"]>
+    created?: boolean
+    updated?: boolean
+  }, ExtArgs["result"]["t_SEAT_POSITION"]>
 
-  export type T_TODAY_POSITIONSelectScalar = {
+  export type T_SEAT_POSITIONSelectScalar = {
     id?: boolean
     date?: boolean
     seatId?: boolean
-    lotteryNumber?: boolean
     userId?: boolean
+    created?: boolean
+    updated?: boolean
   }
 
-  export type T_TODAY_POSITIONOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "seatId" | "lotteryNumber" | "userId", ExtArgs["result"]["t_TODAY_POSITION"]>
+  export type T_SEAT_POSITIONOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "seatId" | "userId" | "created" | "updated", ExtArgs["result"]["t_SEAT_POSITION"]>
 
-  export type $T_TODAY_POSITIONPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "T_TODAY_POSITION"
+  export type $T_SEAT_POSITIONPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "T_SEAT_POSITION"
     objects: {}
     scalars: $Extensions.GetPayloadResult<{
       id: number
       date: Date
       seatId: number
-      lotteryNumber: number
       userId: number
-    }, ExtArgs["result"]["t_TODAY_POSITION"]>
+      created: Date
+      updated: Date
+    }, ExtArgs["result"]["t_SEAT_POSITION"]>
     composites: {}
   }
 
-  type T_TODAY_POSITIONGetPayload<S extends boolean | null | undefined | T_TODAY_POSITIONDefaultArgs> = $Result.GetResult<Prisma.$T_TODAY_POSITIONPayload, S>
+  type T_SEAT_POSITIONGetPayload<S extends boolean | null | undefined | T_SEAT_POSITIONDefaultArgs> = $Result.GetResult<Prisma.$T_SEAT_POSITIONPayload, S>
 
-  type T_TODAY_POSITIONCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<T_TODAY_POSITIONFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: T_TODAY_POSITIONCountAggregateInputType | true
+  type T_SEAT_POSITIONCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<T_SEAT_POSITIONFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: T_SEAT_POSITIONCountAggregateInputType | true
     }
 
-  export interface T_TODAY_POSITIONDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['T_TODAY_POSITION'], meta: { name: 'T_TODAY_POSITION' } }
+  export interface T_SEAT_POSITIONDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['T_SEAT_POSITION'], meta: { name: 'T_SEAT_POSITION' } }
     /**
-     * Find zero or one T_TODAY_POSITION that matches the filter.
-     * @param {T_TODAY_POSITIONFindUniqueArgs} args - Arguments to find a T_TODAY_POSITION
+     * Find zero or one T_SEAT_POSITION that matches the filter.
+     * @param {T_SEAT_POSITIONFindUniqueArgs} args - Arguments to find a T_SEAT_POSITION
      * @example
-     * // Get one T_TODAY_POSITION
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.findUnique({
+     * // Get one T_SEAT_POSITION
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.findUnique({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUnique<T extends T_TODAY_POSITIONFindUniqueArgs>(args: SelectSubset<T, T_TODAY_POSITIONFindUniqueArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findUnique<T extends T_SEAT_POSITIONFindUniqueArgs>(args: SelectSubset<T, T_SEAT_POSITIONFindUniqueArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find one T_TODAY_POSITION that matches the filter or throw an error with `error.code='P2025'`
+     * Find one T_SEAT_POSITION that matches the filter or throw an error with `error.code='P2025'`
      * if no matches were found.
-     * @param {T_TODAY_POSITIONFindUniqueOrThrowArgs} args - Arguments to find a T_TODAY_POSITION
+     * @param {T_SEAT_POSITIONFindUniqueOrThrowArgs} args - Arguments to find a T_SEAT_POSITION
      * @example
-     * // Get one T_TODAY_POSITION
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.findUniqueOrThrow({
+     * // Get one T_SEAT_POSITION
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.findUniqueOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findUniqueOrThrow<T extends T_TODAY_POSITIONFindUniqueOrThrowArgs>(args: SelectSubset<T, T_TODAY_POSITIONFindUniqueOrThrowArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findUniqueOrThrow<T extends T_SEAT_POSITIONFindUniqueOrThrowArgs>(args: SelectSubset<T, T_SEAT_POSITIONFindUniqueOrThrowArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first T_TODAY_POSITION that matches the filter.
+     * Find the first T_SEAT_POSITION that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_TODAY_POSITIONFindFirstArgs} args - Arguments to find a T_TODAY_POSITION
+     * @param {T_SEAT_POSITIONFindFirstArgs} args - Arguments to find a T_SEAT_POSITION
      * @example
-     * // Get one T_TODAY_POSITION
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.findFirst({
+     * // Get one T_SEAT_POSITION
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.findFirst({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirst<T extends T_TODAY_POSITIONFindFirstArgs>(args?: SelectSubset<T, T_TODAY_POSITIONFindFirstArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    findFirst<T extends T_SEAT_POSITIONFindFirstArgs>(args?: SelectSubset<T, T_SEAT_POSITIONFindFirstArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find the first T_TODAY_POSITION that matches the filter or
+     * Find the first T_SEAT_POSITION that matches the filter or
      * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_TODAY_POSITIONFindFirstOrThrowArgs} args - Arguments to find a T_TODAY_POSITION
+     * @param {T_SEAT_POSITIONFindFirstOrThrowArgs} args - Arguments to find a T_SEAT_POSITION
      * @example
-     * // Get one T_TODAY_POSITION
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.findFirstOrThrow({
+     * // Get one T_SEAT_POSITION
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.findFirstOrThrow({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      */
-    findFirstOrThrow<T extends T_TODAY_POSITIONFindFirstOrThrowArgs>(args?: SelectSubset<T, T_TODAY_POSITIONFindFirstOrThrowArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    findFirstOrThrow<T extends T_SEAT_POSITIONFindFirstOrThrowArgs>(args?: SelectSubset<T, T_SEAT_POSITIONFindFirstOrThrowArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Find zero or more T_TODAY_POSITIONS that matches the filter.
+     * Find zero or more T_SEAT_POSITIONS that matches the filter.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_TODAY_POSITIONFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @param {T_SEAT_POSITIONFindManyArgs} args - Arguments to filter and select certain fields only.
      * @example
-     * // Get all T_TODAY_POSITIONS
-     * const t_TODAY_POSITIONS = await prisma.t_TODAY_POSITION.findMany()
+     * // Get all T_SEAT_POSITIONS
+     * const t_SEAT_POSITIONS = await prisma.t_SEAT_POSITION.findMany()
      * 
-     * // Get first 10 T_TODAY_POSITIONS
-     * const t_TODAY_POSITIONS = await prisma.t_TODAY_POSITION.findMany({ take: 10 })
+     * // Get first 10 T_SEAT_POSITIONS
+     * const t_SEAT_POSITIONS = await prisma.t_SEAT_POSITION.findMany({ take: 10 })
      * 
      * // Only select the `id`
-     * const t_TODAY_POSITIONWithIdOnly = await prisma.t_TODAY_POSITION.findMany({ select: { id: true } })
+     * const t_SEAT_POSITIONWithIdOnly = await prisma.t_SEAT_POSITION.findMany({ select: { id: true } })
      * 
      */
-    findMany<T extends T_TODAY_POSITIONFindManyArgs>(args?: SelectSubset<T, T_TODAY_POSITIONFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    findMany<T extends T_SEAT_POSITIONFindManyArgs>(args?: SelectSubset<T, T_SEAT_POSITIONFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
 
     /**
-     * Create a T_TODAY_POSITION.
-     * @param {T_TODAY_POSITIONCreateArgs} args - Arguments to create a T_TODAY_POSITION.
+     * Create a T_SEAT_POSITION.
+     * @param {T_SEAT_POSITIONCreateArgs} args - Arguments to create a T_SEAT_POSITION.
      * @example
-     * // Create one T_TODAY_POSITION
-     * const T_TODAY_POSITION = await prisma.t_TODAY_POSITION.create({
+     * // Create one T_SEAT_POSITION
+     * const T_SEAT_POSITION = await prisma.t_SEAT_POSITION.create({
      *   data: {
-     *     // ... data to create a T_TODAY_POSITION
+     *     // ... data to create a T_SEAT_POSITION
      *   }
      * })
      * 
      */
-    create<T extends T_TODAY_POSITIONCreateArgs>(args: SelectSubset<T, T_TODAY_POSITIONCreateArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    create<T extends T_SEAT_POSITIONCreateArgs>(args: SelectSubset<T, T_SEAT_POSITIONCreateArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Create many T_TODAY_POSITIONS.
-     * @param {T_TODAY_POSITIONCreateManyArgs} args - Arguments to create many T_TODAY_POSITIONS.
+     * Create many T_SEAT_POSITIONS.
+     * @param {T_SEAT_POSITIONCreateManyArgs} args - Arguments to create many T_SEAT_POSITIONS.
      * @example
-     * // Create many T_TODAY_POSITIONS
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.createMany({
+     * // Create many T_SEAT_POSITIONS
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.createMany({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      *     
      */
-    createMany<T extends T_TODAY_POSITIONCreateManyArgs>(args?: SelectSubset<T, T_TODAY_POSITIONCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    createMany<T extends T_SEAT_POSITIONCreateManyArgs>(args?: SelectSubset<T, T_SEAT_POSITIONCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Create many T_TODAY_POSITIONS and returns the data saved in the database.
-     * @param {T_TODAY_POSITIONCreateManyAndReturnArgs} args - Arguments to create many T_TODAY_POSITIONS.
+     * Create many T_SEAT_POSITIONS and returns the data saved in the database.
+     * @param {T_SEAT_POSITIONCreateManyAndReturnArgs} args - Arguments to create many T_SEAT_POSITIONS.
      * @example
-     * // Create many T_TODAY_POSITIONS
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.createManyAndReturn({
+     * // Create many T_SEAT_POSITIONS
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.createManyAndReturn({
      *   data: [
      *     // ... provide data here
      *   ]
      * })
      * 
-     * // Create many T_TODAY_POSITIONS and only return the `id`
-     * const t_TODAY_POSITIONWithIdOnly = await prisma.t_TODAY_POSITION.createManyAndReturn({
+     * // Create many T_SEAT_POSITIONS and only return the `id`
+     * const t_SEAT_POSITIONWithIdOnly = await prisma.t_SEAT_POSITION.createManyAndReturn({
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -2582,28 +2499,28 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    createManyAndReturn<T extends T_TODAY_POSITIONCreateManyAndReturnArgs>(args?: SelectSubset<T, T_TODAY_POSITIONCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    createManyAndReturn<T extends T_SEAT_POSITIONCreateManyAndReturnArgs>(args?: SelectSubset<T, T_SEAT_POSITIONCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Delete a T_TODAY_POSITION.
-     * @param {T_TODAY_POSITIONDeleteArgs} args - Arguments to delete one T_TODAY_POSITION.
+     * Delete a T_SEAT_POSITION.
+     * @param {T_SEAT_POSITIONDeleteArgs} args - Arguments to delete one T_SEAT_POSITION.
      * @example
-     * // Delete one T_TODAY_POSITION
-     * const T_TODAY_POSITION = await prisma.t_TODAY_POSITION.delete({
+     * // Delete one T_SEAT_POSITION
+     * const T_SEAT_POSITION = await prisma.t_SEAT_POSITION.delete({
      *   where: {
-     *     // ... filter to delete one T_TODAY_POSITION
+     *     // ... filter to delete one T_SEAT_POSITION
      *   }
      * })
      * 
      */
-    delete<T extends T_TODAY_POSITIONDeleteArgs>(args: SelectSubset<T, T_TODAY_POSITIONDeleteArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    delete<T extends T_SEAT_POSITIONDeleteArgs>(args: SelectSubset<T, T_SEAT_POSITIONDeleteArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Update one T_TODAY_POSITION.
-     * @param {T_TODAY_POSITIONUpdateArgs} args - Arguments to update one T_TODAY_POSITION.
+     * Update one T_SEAT_POSITION.
+     * @param {T_SEAT_POSITIONUpdateArgs} args - Arguments to update one T_SEAT_POSITION.
      * @example
-     * // Update one T_TODAY_POSITION
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.update({
+     * // Update one T_SEAT_POSITION
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.update({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2613,30 +2530,30 @@ export namespace Prisma {
      * })
      * 
      */
-    update<T extends T_TODAY_POSITIONUpdateArgs>(args: SelectSubset<T, T_TODAY_POSITIONUpdateArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    update<T extends T_SEAT_POSITIONUpdateArgs>(args: SelectSubset<T, T_SEAT_POSITIONUpdateArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
     /**
-     * Delete zero or more T_TODAY_POSITIONS.
-     * @param {T_TODAY_POSITIONDeleteManyArgs} args - Arguments to filter T_TODAY_POSITIONS to delete.
+     * Delete zero or more T_SEAT_POSITIONS.
+     * @param {T_SEAT_POSITIONDeleteManyArgs} args - Arguments to filter T_SEAT_POSITIONS to delete.
      * @example
-     * // Delete a few T_TODAY_POSITIONS
-     * const { count } = await prisma.t_TODAY_POSITION.deleteMany({
+     * // Delete a few T_SEAT_POSITIONS
+     * const { count } = await prisma.t_SEAT_POSITION.deleteMany({
      *   where: {
      *     // ... provide filter here
      *   }
      * })
      * 
      */
-    deleteMany<T extends T_TODAY_POSITIONDeleteManyArgs>(args?: SelectSubset<T, T_TODAY_POSITIONDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    deleteMany<T extends T_SEAT_POSITIONDeleteManyArgs>(args?: SelectSubset<T, T_SEAT_POSITIONDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more T_TODAY_POSITIONS.
+     * Update zero or more T_SEAT_POSITIONS.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_TODAY_POSITIONUpdateManyArgs} args - Arguments to update one or more rows.
+     * @param {T_SEAT_POSITIONUpdateManyArgs} args - Arguments to update one or more rows.
      * @example
-     * // Update many T_TODAY_POSITIONS
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.updateMany({
+     * // Update many T_SEAT_POSITIONS
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.updateMany({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2646,14 +2563,14 @@ export namespace Prisma {
      * })
      * 
      */
-    updateMany<T extends T_TODAY_POSITIONUpdateManyArgs>(args: SelectSubset<T, T_TODAY_POSITIONUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    updateMany<T extends T_SEAT_POSITIONUpdateManyArgs>(args: SelectSubset<T, T_SEAT_POSITIONUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
 
     /**
-     * Update zero or more T_TODAY_POSITIONS and returns the data updated in the database.
-     * @param {T_TODAY_POSITIONUpdateManyAndReturnArgs} args - Arguments to update many T_TODAY_POSITIONS.
+     * Update zero or more T_SEAT_POSITIONS and returns the data updated in the database.
+     * @param {T_SEAT_POSITIONUpdateManyAndReturnArgs} args - Arguments to update many T_SEAT_POSITIONS.
      * @example
-     * // Update many T_TODAY_POSITIONS
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.updateManyAndReturn({
+     * // Update many T_SEAT_POSITIONS
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.updateManyAndReturn({
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2662,8 +2579,8 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more T_TODAY_POSITIONS and only return the `id`
-     * const t_TODAY_POSITIONWithIdOnly = await prisma.t_TODAY_POSITION.updateManyAndReturn({
+     * // Update zero or more T_SEAT_POSITIONS and only return the `id`
+     * const t_SEAT_POSITIONWithIdOnly = await prisma.t_SEAT_POSITION.updateManyAndReturn({
      *   select: { id: true },
      *   where: {
      *     // ... provide filter here
@@ -2676,56 +2593,56 @@ export namespace Prisma {
      * Read more here: https://pris.ly/d/null-undefined
      * 
      */
-    updateManyAndReturn<T extends T_TODAY_POSITIONUpdateManyAndReturnArgs>(args: SelectSubset<T, T_TODAY_POSITIONUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    updateManyAndReturn<T extends T_SEAT_POSITIONUpdateManyAndReturnArgs>(args: SelectSubset<T, T_SEAT_POSITIONUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
 
     /**
-     * Create or update one T_TODAY_POSITION.
-     * @param {T_TODAY_POSITIONUpsertArgs} args - Arguments to update or create a T_TODAY_POSITION.
+     * Create or update one T_SEAT_POSITION.
+     * @param {T_SEAT_POSITIONUpsertArgs} args - Arguments to update or create a T_SEAT_POSITION.
      * @example
-     * // Update or create a T_TODAY_POSITION
-     * const t_TODAY_POSITION = await prisma.t_TODAY_POSITION.upsert({
+     * // Update or create a T_SEAT_POSITION
+     * const t_SEAT_POSITION = await prisma.t_SEAT_POSITION.upsert({
      *   create: {
-     *     // ... data to create a T_TODAY_POSITION
+     *     // ... data to create a T_SEAT_POSITION
      *   },
      *   update: {
      *     // ... in case it already exists, update
      *   },
      *   where: {
-     *     // ... the filter for the T_TODAY_POSITION we want to update
+     *     // ... the filter for the T_SEAT_POSITION we want to update
      *   }
      * })
      */
-    upsert<T extends T_TODAY_POSITIONUpsertArgs>(args: SelectSubset<T, T_TODAY_POSITIONUpsertArgs<ExtArgs>>): Prisma__T_TODAY_POSITIONClient<$Result.GetResult<Prisma.$T_TODAY_POSITIONPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    upsert<T extends T_SEAT_POSITIONUpsertArgs>(args: SelectSubset<T, T_SEAT_POSITIONUpsertArgs<ExtArgs>>): Prisma__T_SEAT_POSITIONClient<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
 
 
     /**
-     * Count the number of T_TODAY_POSITIONS.
+     * Count the number of T_SEAT_POSITIONS.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_TODAY_POSITIONCountArgs} args - Arguments to filter T_TODAY_POSITIONS to count.
+     * @param {T_SEAT_POSITIONCountArgs} args - Arguments to filter T_SEAT_POSITIONS to count.
      * @example
-     * // Count the number of T_TODAY_POSITIONS
-     * const count = await prisma.t_TODAY_POSITION.count({
+     * // Count the number of T_SEAT_POSITIONS
+     * const count = await prisma.t_SEAT_POSITION.count({
      *   where: {
-     *     // ... the filter for the T_TODAY_POSITIONS we want to count
+     *     // ... the filter for the T_SEAT_POSITIONS we want to count
      *   }
      * })
     **/
-    count<T extends T_TODAY_POSITIONCountArgs>(
-      args?: Subset<T, T_TODAY_POSITIONCountArgs>,
+    count<T extends T_SEAT_POSITIONCountArgs>(
+      args?: Subset<T, T_SEAT_POSITIONCountArgs>,
     ): Prisma.PrismaPromise<
       T extends $Utils.Record<'select', any>
         ? T['select'] extends true
           ? number
-          : GetScalarType<T['select'], T_TODAY_POSITIONCountAggregateOutputType>
+          : GetScalarType<T['select'], T_SEAT_POSITIONCountAggregateOutputType>
         : number
     >
 
     /**
-     * Allows you to perform aggregations operations on a T_TODAY_POSITION.
+     * Allows you to perform aggregations operations on a T_SEAT_POSITION.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_TODAY_POSITIONAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @param {T_SEAT_POSITIONAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
      * @example
      * // Ordered by age ascending
      * // Where email contains prisma.io
@@ -2745,13 +2662,13 @@ export namespace Prisma {
      *   take: 10,
      * })
     **/
-    aggregate<T extends T_TODAY_POSITIONAggregateArgs>(args: Subset<T, T_TODAY_POSITIONAggregateArgs>): Prisma.PrismaPromise<GetT_TODAY_POSITIONAggregateType<T>>
+    aggregate<T extends T_SEAT_POSITIONAggregateArgs>(args: Subset<T, T_SEAT_POSITIONAggregateArgs>): Prisma.PrismaPromise<GetT_SEAT_POSITIONAggregateType<T>>
 
     /**
-     * Group by T_TODAY_POSITION.
+     * Group by T_SEAT_POSITION.
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_TODAY_POSITIONGroupByArgs} args - Group by arguments.
+     * @param {T_SEAT_POSITIONGroupByArgs} args - Group by arguments.
      * @example
      * // Group by city, order by createdAt, get count
      * const result = await prisma.user.groupBy({
@@ -2766,14 +2683,14 @@ export namespace Prisma {
      * 
     **/
     groupBy<
-      T extends T_TODAY_POSITIONGroupByArgs,
+      T extends T_SEAT_POSITIONGroupByArgs,
       HasSelectOrTake extends Or<
         Extends<'skip', Keys<T>>,
         Extends<'take', Keys<T>>
       >,
       OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: T_TODAY_POSITIONGroupByArgs['orderBy'] }
-        : { orderBy?: T_TODAY_POSITIONGroupByArgs['orderBy'] },
+        ? { orderBy: T_SEAT_POSITIONGroupByArgs['orderBy'] }
+        : { orderBy?: T_SEAT_POSITIONGroupByArgs['orderBy'] },
       OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
       ByFields extends MaybeTupleToUnion<T['by']>,
       ByValid extends Has<ByFields, OrderFields>,
@@ -2822,20 +2739,20 @@ export namespace Prisma {
             ? never
             : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
         }[OrderFields]
-    >(args: SubsetIntersection<T, T_TODAY_POSITIONGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetT_TODAY_POSITIONGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+    >(args: SubsetIntersection<T, T_SEAT_POSITIONGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetT_SEAT_POSITIONGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
   /**
-   * Fields of the T_TODAY_POSITION model
+   * Fields of the T_SEAT_POSITION model
    */
-  readonly fields: T_TODAY_POSITIONFieldRefs;
+  readonly fields: T_SEAT_POSITIONFieldRefs;
   }
 
   /**
-   * The delegate class that acts as a "Promise-like" for T_TODAY_POSITION.
+   * The delegate class that acts as a "Promise-like" for T_SEAT_POSITION.
    * Why is this prefixed with `Prisma__`?
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__T_TODAY_POSITIONClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+  export interface Prisma__T_SEAT_POSITIONClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2863,1418 +2780,378 @@ export namespace Prisma {
 
 
   /**
-   * Fields of the T_TODAY_POSITION model
+   * Fields of the T_SEAT_POSITION model
    */
-  interface T_TODAY_POSITIONFieldRefs {
-    readonly id: FieldRef<"T_TODAY_POSITION", 'Int'>
-    readonly date: FieldRef<"T_TODAY_POSITION", 'DateTime'>
-    readonly seatId: FieldRef<"T_TODAY_POSITION", 'Int'>
-    readonly lotteryNumber: FieldRef<"T_TODAY_POSITION", 'Int'>
-    readonly userId: FieldRef<"T_TODAY_POSITION", 'Int'>
+  interface T_SEAT_POSITIONFieldRefs {
+    readonly id: FieldRef<"T_SEAT_POSITION", 'Int'>
+    readonly date: FieldRef<"T_SEAT_POSITION", 'DateTime'>
+    readonly seatId: FieldRef<"T_SEAT_POSITION", 'Int'>
+    readonly userId: FieldRef<"T_SEAT_POSITION", 'Int'>
+    readonly created: FieldRef<"T_SEAT_POSITION", 'DateTime'>
+    readonly updated: FieldRef<"T_SEAT_POSITION", 'DateTime'>
   }
     
 
   // Custom InputTypes
   /**
-   * T_TODAY_POSITION findUnique
+   * T_SEAT_POSITION findUnique
    */
-  export type T_TODAY_POSITIONFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * Filter, which T_TODAY_POSITION to fetch.
+     * Filter, which T_SEAT_POSITION to fetch.
      */
-    where: T_TODAY_POSITIONWhereUniqueInput
+    where: T_SEAT_POSITIONWhereUniqueInput
   }
 
   /**
-   * T_TODAY_POSITION findUniqueOrThrow
+   * T_SEAT_POSITION findUniqueOrThrow
    */
-  export type T_TODAY_POSITIONFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * Filter, which T_TODAY_POSITION to fetch.
+     * Filter, which T_SEAT_POSITION to fetch.
      */
-    where: T_TODAY_POSITIONWhereUniqueInput
+    where: T_SEAT_POSITIONWhereUniqueInput
   }
 
   /**
-   * T_TODAY_POSITION findFirst
+   * T_SEAT_POSITION findFirst
    */
-  export type T_TODAY_POSITIONFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * Filter, which T_TODAY_POSITION to fetch.
+     * Filter, which T_SEAT_POSITION to fetch.
      */
-    where?: T_TODAY_POSITIONWhereInput
+    where?: T_SEAT_POSITIONWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of T_TODAY_POSITIONS to fetch.
+     * Determine the order of T_SEAT_POSITIONS to fetch.
      */
-    orderBy?: T_TODAY_POSITIONOrderByWithRelationInput | T_TODAY_POSITIONOrderByWithRelationInput[]
+    orderBy?: T_SEAT_POSITIONOrderByWithRelationInput | T_SEAT_POSITIONOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for T_TODAY_POSITIONS.
+     * Sets the position for searching for T_SEAT_POSITIONS.
      */
-    cursor?: T_TODAY_POSITIONWhereUniqueInput
+    cursor?: T_SEAT_POSITIONWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` T_TODAY_POSITIONS from the position of the cursor.
+     * Take `±n` T_SEAT_POSITIONS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` T_TODAY_POSITIONS.
+     * Skip the first `n` T_SEAT_POSITIONS.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of T_TODAY_POSITIONS.
+     * Filter by unique combinations of T_SEAT_POSITIONS.
      */
-    distinct?: T_TODAY_POSITIONScalarFieldEnum | T_TODAY_POSITIONScalarFieldEnum[]
+    distinct?: T_SEAT_POSITIONScalarFieldEnum | T_SEAT_POSITIONScalarFieldEnum[]
   }
 
   /**
-   * T_TODAY_POSITION findFirstOrThrow
+   * T_SEAT_POSITION findFirstOrThrow
    */
-  export type T_TODAY_POSITIONFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * Filter, which T_TODAY_POSITION to fetch.
+     * Filter, which T_SEAT_POSITION to fetch.
      */
-    where?: T_TODAY_POSITIONWhereInput
+    where?: T_SEAT_POSITIONWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of T_TODAY_POSITIONS to fetch.
+     * Determine the order of T_SEAT_POSITIONS to fetch.
      */
-    orderBy?: T_TODAY_POSITIONOrderByWithRelationInput | T_TODAY_POSITIONOrderByWithRelationInput[]
+    orderBy?: T_SEAT_POSITIONOrderByWithRelationInput | T_SEAT_POSITIONOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for searching for T_TODAY_POSITIONS.
+     * Sets the position for searching for T_SEAT_POSITIONS.
      */
-    cursor?: T_TODAY_POSITIONWhereUniqueInput
+    cursor?: T_SEAT_POSITIONWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` T_TODAY_POSITIONS from the position of the cursor.
+     * Take `±n` T_SEAT_POSITIONS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` T_TODAY_POSITIONS.
+     * Skip the first `n` T_SEAT_POSITIONS.
      */
     skip?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
      * 
-     * Filter by unique combinations of T_TODAY_POSITIONS.
+     * Filter by unique combinations of T_SEAT_POSITIONS.
      */
-    distinct?: T_TODAY_POSITIONScalarFieldEnum | T_TODAY_POSITIONScalarFieldEnum[]
+    distinct?: T_SEAT_POSITIONScalarFieldEnum | T_SEAT_POSITIONScalarFieldEnum[]
   }
 
   /**
-   * T_TODAY_POSITION findMany
+   * T_SEAT_POSITION findMany
    */
-  export type T_TODAY_POSITIONFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * Filter, which T_TODAY_POSITIONS to fetch.
+     * Filter, which T_SEAT_POSITIONS to fetch.
      */
-    where?: T_TODAY_POSITIONWhereInput
+    where?: T_SEAT_POSITIONWhereInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
      * 
-     * Determine the order of T_TODAY_POSITIONS to fetch.
+     * Determine the order of T_SEAT_POSITIONS to fetch.
      */
-    orderBy?: T_TODAY_POSITIONOrderByWithRelationInput | T_TODAY_POSITIONOrderByWithRelationInput[]
+    orderBy?: T_SEAT_POSITIONOrderByWithRelationInput | T_SEAT_POSITIONOrderByWithRelationInput[]
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
      * 
-     * Sets the position for listing T_TODAY_POSITIONS.
+     * Sets the position for listing T_SEAT_POSITIONS.
      */
-    cursor?: T_TODAY_POSITIONWhereUniqueInput
+    cursor?: T_SEAT_POSITIONWhereUniqueInput
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Take `±n` T_TODAY_POSITIONS from the position of the cursor.
+     * Take `±n` T_SEAT_POSITIONS from the position of the cursor.
      */
     take?: number
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
      * 
-     * Skip the first `n` T_TODAY_POSITIONS.
+     * Skip the first `n` T_SEAT_POSITIONS.
      */
     skip?: number
-    distinct?: T_TODAY_POSITIONScalarFieldEnum | T_TODAY_POSITIONScalarFieldEnum[]
+    distinct?: T_SEAT_POSITIONScalarFieldEnum | T_SEAT_POSITIONScalarFieldEnum[]
   }
 
   /**
-   * T_TODAY_POSITION create
+   * T_SEAT_POSITION create
    */
-  export type T_TODAY_POSITIONCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * The data needed to create a T_TODAY_POSITION.
+     * The data needed to create a T_SEAT_POSITION.
      */
-    data: XOR<T_TODAY_POSITIONCreateInput, T_TODAY_POSITIONUncheckedCreateInput>
+    data: XOR<T_SEAT_POSITIONCreateInput, T_SEAT_POSITIONUncheckedCreateInput>
   }
 
   /**
-   * T_TODAY_POSITION createMany
+   * T_SEAT_POSITION createMany
    */
-  export type T_TODAY_POSITIONCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to create many T_TODAY_POSITIONS.
+     * The data used to create many T_SEAT_POSITIONS.
      */
-    data: T_TODAY_POSITIONCreateManyInput | T_TODAY_POSITIONCreateManyInput[]
+    data: T_SEAT_POSITIONCreateManyInput | T_SEAT_POSITIONCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * T_TODAY_POSITION createManyAndReturn
+   * T_SEAT_POSITION createManyAndReturn
    */
-  export type T_TODAY_POSITIONCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelectCreateManyAndReturn<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelectCreateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * The data used to create many T_TODAY_POSITIONS.
+     * The data used to create many T_SEAT_POSITIONS.
      */
-    data: T_TODAY_POSITIONCreateManyInput | T_TODAY_POSITIONCreateManyInput[]
+    data: T_SEAT_POSITIONCreateManyInput | T_SEAT_POSITIONCreateManyInput[]
     skipDuplicates?: boolean
   }
 
   /**
-   * T_TODAY_POSITION update
+   * T_SEAT_POSITION update
    */
-  export type T_TODAY_POSITIONUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * The data needed to update a T_TODAY_POSITION.
+     * The data needed to update a T_SEAT_POSITION.
      */
-    data: XOR<T_TODAY_POSITIONUpdateInput, T_TODAY_POSITIONUncheckedUpdateInput>
+    data: XOR<T_SEAT_POSITIONUpdateInput, T_SEAT_POSITIONUncheckedUpdateInput>
     /**
-     * Choose, which T_TODAY_POSITION to update.
+     * Choose, which T_SEAT_POSITION to update.
      */
-    where: T_TODAY_POSITIONWhereUniqueInput
+    where: T_SEAT_POSITIONWhereUniqueInput
   }
 
   /**
-   * T_TODAY_POSITION updateMany
+   * T_SEAT_POSITION updateMany
    */
-  export type T_TODAY_POSITIONUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * The data used to update T_TODAY_POSITIONS.
+     * The data used to update T_SEAT_POSITIONS.
      */
-    data: XOR<T_TODAY_POSITIONUpdateManyMutationInput, T_TODAY_POSITIONUncheckedUpdateManyInput>
+    data: XOR<T_SEAT_POSITIONUpdateManyMutationInput, T_SEAT_POSITIONUncheckedUpdateManyInput>
     /**
-     * Filter which T_TODAY_POSITIONS to update
+     * Filter which T_SEAT_POSITIONS to update
      */
-    where?: T_TODAY_POSITIONWhereInput
+    where?: T_SEAT_POSITIONWhereInput
     /**
-     * Limit how many T_TODAY_POSITIONS to update.
+     * Limit how many T_SEAT_POSITIONS to update.
      */
     limit?: number
   }
 
   /**
-   * T_TODAY_POSITION updateManyAndReturn
+   * T_SEAT_POSITION updateManyAndReturn
    */
-  export type T_TODAY_POSITIONUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelectUpdateManyAndReturn<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelectUpdateManyAndReturn<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * The data used to update T_TODAY_POSITIONS.
+     * The data used to update T_SEAT_POSITIONS.
      */
-    data: XOR<T_TODAY_POSITIONUpdateManyMutationInput, T_TODAY_POSITIONUncheckedUpdateManyInput>
+    data: XOR<T_SEAT_POSITIONUpdateManyMutationInput, T_SEAT_POSITIONUncheckedUpdateManyInput>
     /**
-     * Filter which T_TODAY_POSITIONS to update
+     * Filter which T_SEAT_POSITIONS to update
      */
-    where?: T_TODAY_POSITIONWhereInput
+    where?: T_SEAT_POSITIONWhereInput
     /**
-     * Limit how many T_TODAY_POSITIONS to update.
+     * Limit how many T_SEAT_POSITIONS to update.
      */
     limit?: number
   }
 
   /**
-   * T_TODAY_POSITION upsert
+   * T_SEAT_POSITION upsert
    */
-  export type T_TODAY_POSITIONUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * The filter to search for the T_TODAY_POSITION to update in case it exists.
+     * The filter to search for the T_SEAT_POSITION to update in case it exists.
      */
-    where: T_TODAY_POSITIONWhereUniqueInput
+    where: T_SEAT_POSITIONWhereUniqueInput
     /**
-     * In case the T_TODAY_POSITION found by the `where` argument doesn't exist, create a new T_TODAY_POSITION with this data.
+     * In case the T_SEAT_POSITION found by the `where` argument doesn't exist, create a new T_SEAT_POSITION with this data.
      */
-    create: XOR<T_TODAY_POSITIONCreateInput, T_TODAY_POSITIONUncheckedCreateInput>
+    create: XOR<T_SEAT_POSITIONCreateInput, T_SEAT_POSITIONUncheckedCreateInput>
     /**
-     * In case the T_TODAY_POSITION was found with the provided `where` argument, update it with this data.
+     * In case the T_SEAT_POSITION was found with the provided `where` argument, update it with this data.
      */
-    update: XOR<T_TODAY_POSITIONUpdateInput, T_TODAY_POSITIONUncheckedUpdateInput>
+    update: XOR<T_SEAT_POSITIONUpdateInput, T_SEAT_POSITIONUncheckedUpdateInput>
   }
 
   /**
-   * T_TODAY_POSITION delete
+   * T_SEAT_POSITION delete
    */
-  export type T_TODAY_POSITIONDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
-     * Filter which T_TODAY_POSITION to delete.
+     * Filter which T_SEAT_POSITION to delete.
      */
-    where: T_TODAY_POSITIONWhereUniqueInput
+    where: T_SEAT_POSITIONWhereUniqueInput
   }
 
   /**
-   * T_TODAY_POSITION deleteMany
+   * T_SEAT_POSITION deleteMany
    */
-  export type T_TODAY_POSITIONDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Filter which T_TODAY_POSITIONS to delete
+     * Filter which T_SEAT_POSITIONS to delete
      */
-    where?: T_TODAY_POSITIONWhereInput
+    where?: T_SEAT_POSITIONWhereInput
     /**
-     * Limit how many T_TODAY_POSITIONS to delete.
+     * Limit how many T_SEAT_POSITIONS to delete.
      */
     limit?: number
   }
 
   /**
-   * T_TODAY_POSITION without action
+   * T_SEAT_POSITION without action
    */
-  export type T_TODAY_POSITIONDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type T_SEAT_POSITIONDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the T_TODAY_POSITION
+     * Select specific fields to fetch from the T_SEAT_POSITION
      */
-    select?: T_TODAY_POSITIONSelect<ExtArgs> | null
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the T_TODAY_POSITION
+     * Omit specific fields from the T_SEAT_POSITION
      */
-    omit?: T_TODAY_POSITIONOmit<ExtArgs> | null
-  }
-
-
-  /**
-   * Model T_PAST_POSITION
-   */
-
-  export type AggregateT_PAST_POSITION = {
-    _count: T_PAST_POSITIONCountAggregateOutputType | null
-    _avg: T_PAST_POSITIONAvgAggregateOutputType | null
-    _sum: T_PAST_POSITIONSumAggregateOutputType | null
-    _min: T_PAST_POSITIONMinAggregateOutputType | null
-    _max: T_PAST_POSITIONMaxAggregateOutputType | null
-  }
-
-  export type T_PAST_POSITIONAvgAggregateOutputType = {
-    id: number | null
-    seatId: number | null
-    lotteryNumber: number | null
-    userId: number | null
-  }
-
-  export type T_PAST_POSITIONSumAggregateOutputType = {
-    id: number | null
-    seatId: number | null
-    lotteryNumber: number | null
-    userId: number | null
-  }
-
-  export type T_PAST_POSITIONMinAggregateOutputType = {
-    id: number | null
-    date: Date | null
-    seatId: number | null
-    lotteryNumber: number | null
-    userId: number | null
-  }
-
-  export type T_PAST_POSITIONMaxAggregateOutputType = {
-    id: number | null
-    date: Date | null
-    seatId: number | null
-    lotteryNumber: number | null
-    userId: number | null
-  }
-
-  export type T_PAST_POSITIONCountAggregateOutputType = {
-    id: number
-    date: number
-    seatId: number
-    lotteryNumber: number
-    userId: number
-    _all: number
-  }
-
-
-  export type T_PAST_POSITIONAvgAggregateInputType = {
-    id?: true
-    seatId?: true
-    lotteryNumber?: true
-    userId?: true
-  }
-
-  export type T_PAST_POSITIONSumAggregateInputType = {
-    id?: true
-    seatId?: true
-    lotteryNumber?: true
-    userId?: true
-  }
-
-  export type T_PAST_POSITIONMinAggregateInputType = {
-    id?: true
-    date?: true
-    seatId?: true
-    lotteryNumber?: true
-    userId?: true
-  }
-
-  export type T_PAST_POSITIONMaxAggregateInputType = {
-    id?: true
-    date?: true
-    seatId?: true
-    lotteryNumber?: true
-    userId?: true
-  }
-
-  export type T_PAST_POSITIONCountAggregateInputType = {
-    id?: true
-    date?: true
-    seatId?: true
-    lotteryNumber?: true
-    userId?: true
-    _all?: true
-  }
-
-  export type T_PAST_POSITIONAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which T_PAST_POSITION to aggregate.
-     */
-    where?: T_PAST_POSITIONWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of T_PAST_POSITIONS to fetch.
-     */
-    orderBy?: T_PAST_POSITIONOrderByWithRelationInput | T_PAST_POSITIONOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: T_PAST_POSITIONWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` T_PAST_POSITIONS from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` T_PAST_POSITIONS.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned T_PAST_POSITIONS
-    **/
-    _count?: true | T_PAST_POSITIONCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: T_PAST_POSITIONAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: T_PAST_POSITIONSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: T_PAST_POSITIONMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: T_PAST_POSITIONMaxAggregateInputType
-  }
-
-  export type GetT_PAST_POSITIONAggregateType<T extends T_PAST_POSITIONAggregateArgs> = {
-        [P in keyof T & keyof AggregateT_PAST_POSITION]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateT_PAST_POSITION[P]>
-      : GetScalarType<T[P], AggregateT_PAST_POSITION[P]>
-  }
-
-
-
-
-  export type T_PAST_POSITIONGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: T_PAST_POSITIONWhereInput
-    orderBy?: T_PAST_POSITIONOrderByWithAggregationInput | T_PAST_POSITIONOrderByWithAggregationInput[]
-    by: T_PAST_POSITIONScalarFieldEnum[] | T_PAST_POSITIONScalarFieldEnum
-    having?: T_PAST_POSITIONScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: T_PAST_POSITIONCountAggregateInputType | true
-    _avg?: T_PAST_POSITIONAvgAggregateInputType
-    _sum?: T_PAST_POSITIONSumAggregateInputType
-    _min?: T_PAST_POSITIONMinAggregateInputType
-    _max?: T_PAST_POSITIONMaxAggregateInputType
-  }
-
-  export type T_PAST_POSITIONGroupByOutputType = {
-    id: number
-    date: Date
-    seatId: number
-    lotteryNumber: number
-    userId: number
-    _count: T_PAST_POSITIONCountAggregateOutputType | null
-    _avg: T_PAST_POSITIONAvgAggregateOutputType | null
-    _sum: T_PAST_POSITIONSumAggregateOutputType | null
-    _min: T_PAST_POSITIONMinAggregateOutputType | null
-    _max: T_PAST_POSITIONMaxAggregateOutputType | null
-  }
-
-  type GetT_PAST_POSITIONGroupByPayload<T extends T_PAST_POSITIONGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<T_PAST_POSITIONGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof T_PAST_POSITIONGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], T_PAST_POSITIONGroupByOutputType[P]>
-            : GetScalarType<T[P], T_PAST_POSITIONGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type T_PAST_POSITIONSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    date?: boolean
-    seatId?: boolean
-    lotteryNumber?: boolean
-    userId?: boolean
-  }, ExtArgs["result"]["t_PAST_POSITION"]>
-
-  export type T_PAST_POSITIONSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    date?: boolean
-    seatId?: boolean
-    lotteryNumber?: boolean
-    userId?: boolean
-  }, ExtArgs["result"]["t_PAST_POSITION"]>
-
-  export type T_PAST_POSITIONSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    date?: boolean
-    seatId?: boolean
-    lotteryNumber?: boolean
-    userId?: boolean
-  }, ExtArgs["result"]["t_PAST_POSITION"]>
-
-  export type T_PAST_POSITIONSelectScalar = {
-    id?: boolean
-    date?: boolean
-    seatId?: boolean
-    lotteryNumber?: boolean
-    userId?: boolean
-  }
-
-  export type T_PAST_POSITIONOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "seatId" | "lotteryNumber" | "userId", ExtArgs["result"]["t_PAST_POSITION"]>
-
-  export type $T_PAST_POSITIONPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "T_PAST_POSITION"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: number
-      date: Date
-      seatId: number
-      lotteryNumber: number
-      userId: number
-    }, ExtArgs["result"]["t_PAST_POSITION"]>
-    composites: {}
-  }
-
-  type T_PAST_POSITIONGetPayload<S extends boolean | null | undefined | T_PAST_POSITIONDefaultArgs> = $Result.GetResult<Prisma.$T_PAST_POSITIONPayload, S>
-
-  type T_PAST_POSITIONCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<T_PAST_POSITIONFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: T_PAST_POSITIONCountAggregateInputType | true
-    }
-
-  export interface T_PAST_POSITIONDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['T_PAST_POSITION'], meta: { name: 'T_PAST_POSITION' } }
-    /**
-     * Find zero or one T_PAST_POSITION that matches the filter.
-     * @param {T_PAST_POSITIONFindUniqueArgs} args - Arguments to find a T_PAST_POSITION
-     * @example
-     * // Get one T_PAST_POSITION
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends T_PAST_POSITIONFindUniqueArgs>(args: SelectSubset<T, T_PAST_POSITIONFindUniqueArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one T_PAST_POSITION that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {T_PAST_POSITIONFindUniqueOrThrowArgs} args - Arguments to find a T_PAST_POSITION
-     * @example
-     * // Get one T_PAST_POSITION
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends T_PAST_POSITIONFindUniqueOrThrowArgs>(args: SelectSubset<T, T_PAST_POSITIONFindUniqueOrThrowArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first T_PAST_POSITION that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_PAST_POSITIONFindFirstArgs} args - Arguments to find a T_PAST_POSITION
-     * @example
-     * // Get one T_PAST_POSITION
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends T_PAST_POSITIONFindFirstArgs>(args?: SelectSubset<T, T_PAST_POSITIONFindFirstArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first T_PAST_POSITION that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_PAST_POSITIONFindFirstOrThrowArgs} args - Arguments to find a T_PAST_POSITION
-     * @example
-     * // Get one T_PAST_POSITION
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends T_PAST_POSITIONFindFirstOrThrowArgs>(args?: SelectSubset<T, T_PAST_POSITIONFindFirstOrThrowArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more T_PAST_POSITIONS that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_PAST_POSITIONFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all T_PAST_POSITIONS
-     * const t_PAST_POSITIONS = await prisma.t_PAST_POSITION.findMany()
-     * 
-     * // Get first 10 T_PAST_POSITIONS
-     * const t_PAST_POSITIONS = await prisma.t_PAST_POSITION.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const t_PAST_POSITIONWithIdOnly = await prisma.t_PAST_POSITION.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends T_PAST_POSITIONFindManyArgs>(args?: SelectSubset<T, T_PAST_POSITIONFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a T_PAST_POSITION.
-     * @param {T_PAST_POSITIONCreateArgs} args - Arguments to create a T_PAST_POSITION.
-     * @example
-     * // Create one T_PAST_POSITION
-     * const T_PAST_POSITION = await prisma.t_PAST_POSITION.create({
-     *   data: {
-     *     // ... data to create a T_PAST_POSITION
-     *   }
-     * })
-     * 
-     */
-    create<T extends T_PAST_POSITIONCreateArgs>(args: SelectSubset<T, T_PAST_POSITIONCreateArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many T_PAST_POSITIONS.
-     * @param {T_PAST_POSITIONCreateManyArgs} args - Arguments to create many T_PAST_POSITIONS.
-     * @example
-     * // Create many T_PAST_POSITIONS
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends T_PAST_POSITIONCreateManyArgs>(args?: SelectSubset<T, T_PAST_POSITIONCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many T_PAST_POSITIONS and returns the data saved in the database.
-     * @param {T_PAST_POSITIONCreateManyAndReturnArgs} args - Arguments to create many T_PAST_POSITIONS.
-     * @example
-     * // Create many T_PAST_POSITIONS
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many T_PAST_POSITIONS and only return the `id`
-     * const t_PAST_POSITIONWithIdOnly = await prisma.t_PAST_POSITION.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends T_PAST_POSITIONCreateManyAndReturnArgs>(args?: SelectSubset<T, T_PAST_POSITIONCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a T_PAST_POSITION.
-     * @param {T_PAST_POSITIONDeleteArgs} args - Arguments to delete one T_PAST_POSITION.
-     * @example
-     * // Delete one T_PAST_POSITION
-     * const T_PAST_POSITION = await prisma.t_PAST_POSITION.delete({
-     *   where: {
-     *     // ... filter to delete one T_PAST_POSITION
-     *   }
-     * })
-     * 
-     */
-    delete<T extends T_PAST_POSITIONDeleteArgs>(args: SelectSubset<T, T_PAST_POSITIONDeleteArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one T_PAST_POSITION.
-     * @param {T_PAST_POSITIONUpdateArgs} args - Arguments to update one T_PAST_POSITION.
-     * @example
-     * // Update one T_PAST_POSITION
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends T_PAST_POSITIONUpdateArgs>(args: SelectSubset<T, T_PAST_POSITIONUpdateArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more T_PAST_POSITIONS.
-     * @param {T_PAST_POSITIONDeleteManyArgs} args - Arguments to filter T_PAST_POSITIONS to delete.
-     * @example
-     * // Delete a few T_PAST_POSITIONS
-     * const { count } = await prisma.t_PAST_POSITION.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends T_PAST_POSITIONDeleteManyArgs>(args?: SelectSubset<T, T_PAST_POSITIONDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more T_PAST_POSITIONS.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_PAST_POSITIONUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many T_PAST_POSITIONS
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends T_PAST_POSITIONUpdateManyArgs>(args: SelectSubset<T, T_PAST_POSITIONUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more T_PAST_POSITIONS and returns the data updated in the database.
-     * @param {T_PAST_POSITIONUpdateManyAndReturnArgs} args - Arguments to update many T_PAST_POSITIONS.
-     * @example
-     * // Update many T_PAST_POSITIONS
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more T_PAST_POSITIONS and only return the `id`
-     * const t_PAST_POSITIONWithIdOnly = await prisma.t_PAST_POSITION.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends T_PAST_POSITIONUpdateManyAndReturnArgs>(args: SelectSubset<T, T_PAST_POSITIONUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one T_PAST_POSITION.
-     * @param {T_PAST_POSITIONUpsertArgs} args - Arguments to update or create a T_PAST_POSITION.
-     * @example
-     * // Update or create a T_PAST_POSITION
-     * const t_PAST_POSITION = await prisma.t_PAST_POSITION.upsert({
-     *   create: {
-     *     // ... data to create a T_PAST_POSITION
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the T_PAST_POSITION we want to update
-     *   }
-     * })
-     */
-    upsert<T extends T_PAST_POSITIONUpsertArgs>(args: SelectSubset<T, T_PAST_POSITIONUpsertArgs<ExtArgs>>): Prisma__T_PAST_POSITIONClient<$Result.GetResult<Prisma.$T_PAST_POSITIONPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of T_PAST_POSITIONS.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_PAST_POSITIONCountArgs} args - Arguments to filter T_PAST_POSITIONS to count.
-     * @example
-     * // Count the number of T_PAST_POSITIONS
-     * const count = await prisma.t_PAST_POSITION.count({
-     *   where: {
-     *     // ... the filter for the T_PAST_POSITIONS we want to count
-     *   }
-     * })
-    **/
-    count<T extends T_PAST_POSITIONCountArgs>(
-      args?: Subset<T, T_PAST_POSITIONCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], T_PAST_POSITIONCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a T_PAST_POSITION.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_PAST_POSITIONAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends T_PAST_POSITIONAggregateArgs>(args: Subset<T, T_PAST_POSITIONAggregateArgs>): Prisma.PrismaPromise<GetT_PAST_POSITIONAggregateType<T>>
-
-    /**
-     * Group by T_PAST_POSITION.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {T_PAST_POSITIONGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends T_PAST_POSITIONGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: T_PAST_POSITIONGroupByArgs['orderBy'] }
-        : { orderBy?: T_PAST_POSITIONGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, T_PAST_POSITIONGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetT_PAST_POSITIONGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the T_PAST_POSITION model
-   */
-  readonly fields: T_PAST_POSITIONFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for T_PAST_POSITION.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__T_PAST_POSITIONClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the T_PAST_POSITION model
-   */
-  interface T_PAST_POSITIONFieldRefs {
-    readonly id: FieldRef<"T_PAST_POSITION", 'Int'>
-    readonly date: FieldRef<"T_PAST_POSITION", 'DateTime'>
-    readonly seatId: FieldRef<"T_PAST_POSITION", 'Int'>
-    readonly lotteryNumber: FieldRef<"T_PAST_POSITION", 'Int'>
-    readonly userId: FieldRef<"T_PAST_POSITION", 'Int'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * T_PAST_POSITION findUnique
-   */
-  export type T_PAST_POSITIONFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * Filter, which T_PAST_POSITION to fetch.
-     */
-    where: T_PAST_POSITIONWhereUniqueInput
-  }
-
-  /**
-   * T_PAST_POSITION findUniqueOrThrow
-   */
-  export type T_PAST_POSITIONFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * Filter, which T_PAST_POSITION to fetch.
-     */
-    where: T_PAST_POSITIONWhereUniqueInput
-  }
-
-  /**
-   * T_PAST_POSITION findFirst
-   */
-  export type T_PAST_POSITIONFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * Filter, which T_PAST_POSITION to fetch.
-     */
-    where?: T_PAST_POSITIONWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of T_PAST_POSITIONS to fetch.
-     */
-    orderBy?: T_PAST_POSITIONOrderByWithRelationInput | T_PAST_POSITIONOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for T_PAST_POSITIONS.
-     */
-    cursor?: T_PAST_POSITIONWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` T_PAST_POSITIONS from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` T_PAST_POSITIONS.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of T_PAST_POSITIONS.
-     */
-    distinct?: T_PAST_POSITIONScalarFieldEnum | T_PAST_POSITIONScalarFieldEnum[]
-  }
-
-  /**
-   * T_PAST_POSITION findFirstOrThrow
-   */
-  export type T_PAST_POSITIONFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * Filter, which T_PAST_POSITION to fetch.
-     */
-    where?: T_PAST_POSITIONWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of T_PAST_POSITIONS to fetch.
-     */
-    orderBy?: T_PAST_POSITIONOrderByWithRelationInput | T_PAST_POSITIONOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for T_PAST_POSITIONS.
-     */
-    cursor?: T_PAST_POSITIONWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` T_PAST_POSITIONS from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` T_PAST_POSITIONS.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of T_PAST_POSITIONS.
-     */
-    distinct?: T_PAST_POSITIONScalarFieldEnum | T_PAST_POSITIONScalarFieldEnum[]
-  }
-
-  /**
-   * T_PAST_POSITION findMany
-   */
-  export type T_PAST_POSITIONFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * Filter, which T_PAST_POSITIONS to fetch.
-     */
-    where?: T_PAST_POSITIONWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of T_PAST_POSITIONS to fetch.
-     */
-    orderBy?: T_PAST_POSITIONOrderByWithRelationInput | T_PAST_POSITIONOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing T_PAST_POSITIONS.
-     */
-    cursor?: T_PAST_POSITIONWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` T_PAST_POSITIONS from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` T_PAST_POSITIONS.
-     */
-    skip?: number
-    distinct?: T_PAST_POSITIONScalarFieldEnum | T_PAST_POSITIONScalarFieldEnum[]
-  }
-
-  /**
-   * T_PAST_POSITION create
-   */
-  export type T_PAST_POSITIONCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * The data needed to create a T_PAST_POSITION.
-     */
-    data: XOR<T_PAST_POSITIONCreateInput, T_PAST_POSITIONUncheckedCreateInput>
-  }
-
-  /**
-   * T_PAST_POSITION createMany
-   */
-  export type T_PAST_POSITIONCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many T_PAST_POSITIONS.
-     */
-    data: T_PAST_POSITIONCreateManyInput | T_PAST_POSITIONCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * T_PAST_POSITION createManyAndReturn
-   */
-  export type T_PAST_POSITIONCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * The data used to create many T_PAST_POSITIONS.
-     */
-    data: T_PAST_POSITIONCreateManyInput | T_PAST_POSITIONCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * T_PAST_POSITION update
-   */
-  export type T_PAST_POSITIONUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * The data needed to update a T_PAST_POSITION.
-     */
-    data: XOR<T_PAST_POSITIONUpdateInput, T_PAST_POSITIONUncheckedUpdateInput>
-    /**
-     * Choose, which T_PAST_POSITION to update.
-     */
-    where: T_PAST_POSITIONWhereUniqueInput
-  }
-
-  /**
-   * T_PAST_POSITION updateMany
-   */
-  export type T_PAST_POSITIONUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update T_PAST_POSITIONS.
-     */
-    data: XOR<T_PAST_POSITIONUpdateManyMutationInput, T_PAST_POSITIONUncheckedUpdateManyInput>
-    /**
-     * Filter which T_PAST_POSITIONS to update
-     */
-    where?: T_PAST_POSITIONWhereInput
-    /**
-     * Limit how many T_PAST_POSITIONS to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * T_PAST_POSITION updateManyAndReturn
-   */
-  export type T_PAST_POSITIONUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * The data used to update T_PAST_POSITIONS.
-     */
-    data: XOR<T_PAST_POSITIONUpdateManyMutationInput, T_PAST_POSITIONUncheckedUpdateManyInput>
-    /**
-     * Filter which T_PAST_POSITIONS to update
-     */
-    where?: T_PAST_POSITIONWhereInput
-    /**
-     * Limit how many T_PAST_POSITIONS to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * T_PAST_POSITION upsert
-   */
-  export type T_PAST_POSITIONUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * The filter to search for the T_PAST_POSITION to update in case it exists.
-     */
-    where: T_PAST_POSITIONWhereUniqueInput
-    /**
-     * In case the T_PAST_POSITION found by the `where` argument doesn't exist, create a new T_PAST_POSITION with this data.
-     */
-    create: XOR<T_PAST_POSITIONCreateInput, T_PAST_POSITIONUncheckedCreateInput>
-    /**
-     * In case the T_PAST_POSITION was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<T_PAST_POSITIONUpdateInput, T_PAST_POSITIONUncheckedUpdateInput>
-  }
-
-  /**
-   * T_PAST_POSITION delete
-   */
-  export type T_PAST_POSITIONDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
-    /**
-     * Filter which T_PAST_POSITION to delete.
-     */
-    where: T_PAST_POSITIONWhereUniqueInput
-  }
-
-  /**
-   * T_PAST_POSITION deleteMany
-   */
-  export type T_PAST_POSITIONDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which T_PAST_POSITIONS to delete
-     */
-    where?: T_PAST_POSITIONWhereInput
-    /**
-     * Limit how many T_PAST_POSITIONS to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * T_PAST_POSITION without action
-   */
-  export type T_PAST_POSITIONDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the T_PAST_POSITION
-     */
-    select?: T_PAST_POSITIONSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the T_PAST_POSITION
-     */
-    omit?: T_PAST_POSITIONOmit<ExtArgs> | null
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
   }
 
 
@@ -5372,26 +4249,16 @@ export namespace Prisma {
   export type M_SEATScalarFieldEnum = (typeof M_SEATScalarFieldEnum)[keyof typeof M_SEATScalarFieldEnum]
 
 
-  export const T_TODAY_POSITIONScalarFieldEnum: {
+  export const T_SEAT_POSITIONScalarFieldEnum: {
     id: 'id',
     date: 'date',
     seatId: 'seatId',
-    lotteryNumber: 'lotteryNumber',
-    userId: 'userId'
+    userId: 'userId',
+    created: 'created',
+    updated: 'updated'
   };
 
-  export type T_TODAY_POSITIONScalarFieldEnum = (typeof T_TODAY_POSITIONScalarFieldEnum)[keyof typeof T_TODAY_POSITIONScalarFieldEnum]
-
-
-  export const T_PAST_POSITIONScalarFieldEnum: {
-    id: 'id',
-    date: 'date',
-    seatId: 'seatId',
-    lotteryNumber: 'lotteryNumber',
-    userId: 'userId'
-  };
-
-  export type T_PAST_POSITIONScalarFieldEnum = (typeof T_PAST_POSITIONScalarFieldEnum)[keyof typeof T_PAST_POSITIONScalarFieldEnum]
+  export type T_SEAT_POSITIONScalarFieldEnum = (typeof T_SEAT_POSITIONScalarFieldEnum)[keyof typeof T_SEAT_POSITIONScalarFieldEnum]
 
 
   export const M_USERScalarFieldEnum: {
@@ -5562,112 +4429,63 @@ export namespace Prisma {
     imageY?: IntWithAggregatesFilter<"M_SEAT"> | number
   }
 
-  export type T_TODAY_POSITIONWhereInput = {
-    AND?: T_TODAY_POSITIONWhereInput | T_TODAY_POSITIONWhereInput[]
-    OR?: T_TODAY_POSITIONWhereInput[]
-    NOT?: T_TODAY_POSITIONWhereInput | T_TODAY_POSITIONWhereInput[]
-    id?: IntFilter<"T_TODAY_POSITION"> | number
-    date?: DateTimeFilter<"T_TODAY_POSITION"> | Date | string
-    seatId?: IntFilter<"T_TODAY_POSITION"> | number
-    lotteryNumber?: IntFilter<"T_TODAY_POSITION"> | number
-    userId?: IntFilter<"T_TODAY_POSITION"> | number
+  export type T_SEAT_POSITIONWhereInput = {
+    AND?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
+    OR?: T_SEAT_POSITIONWhereInput[]
+    NOT?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
+    id?: IntFilter<"T_SEAT_POSITION"> | number
+    date?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    seatId?: IntFilter<"T_SEAT_POSITION"> | number
+    userId?: IntFilter<"T_SEAT_POSITION"> | number
+    created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    updated?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
   }
 
-  export type T_TODAY_POSITIONOrderByWithRelationInput = {
+  export type T_SEAT_POSITIONOrderByWithRelationInput = {
     id?: SortOrder
     date?: SortOrder
     seatId?: SortOrder
-    lotteryNumber?: SortOrder
     userId?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
   }
 
-  export type T_TODAY_POSITIONWhereUniqueInput = Prisma.AtLeast<{
+  export type T_SEAT_POSITIONWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    AND?: T_TODAY_POSITIONWhereInput | T_TODAY_POSITIONWhereInput[]
-    OR?: T_TODAY_POSITIONWhereInput[]
-    NOT?: T_TODAY_POSITIONWhereInput | T_TODAY_POSITIONWhereInput[]
-    date?: DateTimeFilter<"T_TODAY_POSITION"> | Date | string
-    seatId?: IntFilter<"T_TODAY_POSITION"> | number
-    lotteryNumber?: IntFilter<"T_TODAY_POSITION"> | number
-    userId?: IntFilter<"T_TODAY_POSITION"> | number
+    AND?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
+    OR?: T_SEAT_POSITIONWhereInput[]
+    NOT?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
+    date?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    seatId?: IntFilter<"T_SEAT_POSITION"> | number
+    userId?: IntFilter<"T_SEAT_POSITION"> | number
+    created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    updated?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
   }, "id">
 
-  export type T_TODAY_POSITIONOrderByWithAggregationInput = {
+  export type T_SEAT_POSITIONOrderByWithAggregationInput = {
     id?: SortOrder
     date?: SortOrder
     seatId?: SortOrder
-    lotteryNumber?: SortOrder
     userId?: SortOrder
-    _count?: T_TODAY_POSITIONCountOrderByAggregateInput
-    _avg?: T_TODAY_POSITIONAvgOrderByAggregateInput
-    _max?: T_TODAY_POSITIONMaxOrderByAggregateInput
-    _min?: T_TODAY_POSITIONMinOrderByAggregateInput
-    _sum?: T_TODAY_POSITIONSumOrderByAggregateInput
+    created?: SortOrder
+    updated?: SortOrder
+    _count?: T_SEAT_POSITIONCountOrderByAggregateInput
+    _avg?: T_SEAT_POSITIONAvgOrderByAggregateInput
+    _max?: T_SEAT_POSITIONMaxOrderByAggregateInput
+    _min?: T_SEAT_POSITIONMinOrderByAggregateInput
+    _sum?: T_SEAT_POSITIONSumOrderByAggregateInput
   }
 
-  export type T_TODAY_POSITIONScalarWhereWithAggregatesInput = {
-    AND?: T_TODAY_POSITIONScalarWhereWithAggregatesInput | T_TODAY_POSITIONScalarWhereWithAggregatesInput[]
-    OR?: T_TODAY_POSITIONScalarWhereWithAggregatesInput[]
-    NOT?: T_TODAY_POSITIONScalarWhereWithAggregatesInput | T_TODAY_POSITIONScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"T_TODAY_POSITION"> | number
-    date?: DateTimeWithAggregatesFilter<"T_TODAY_POSITION"> | Date | string
-    seatId?: IntWithAggregatesFilter<"T_TODAY_POSITION"> | number
-    lotteryNumber?: IntWithAggregatesFilter<"T_TODAY_POSITION"> | number
-    userId?: IntWithAggregatesFilter<"T_TODAY_POSITION"> | number
-  }
-
-  export type T_PAST_POSITIONWhereInput = {
-    AND?: T_PAST_POSITIONWhereInput | T_PAST_POSITIONWhereInput[]
-    OR?: T_PAST_POSITIONWhereInput[]
-    NOT?: T_PAST_POSITIONWhereInput | T_PAST_POSITIONWhereInput[]
-    id?: IntFilter<"T_PAST_POSITION"> | number
-    date?: DateTimeFilter<"T_PAST_POSITION"> | Date | string
-    seatId?: IntFilter<"T_PAST_POSITION"> | number
-    lotteryNumber?: IntFilter<"T_PAST_POSITION"> | number
-    userId?: IntFilter<"T_PAST_POSITION"> | number
-  }
-
-  export type T_PAST_POSITIONOrderByWithRelationInput = {
-    id?: SortOrder
-    date?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type T_PAST_POSITIONWhereUniqueInput = Prisma.AtLeast<{
-    id?: number
-    AND?: T_PAST_POSITIONWhereInput | T_PAST_POSITIONWhereInput[]
-    OR?: T_PAST_POSITIONWhereInput[]
-    NOT?: T_PAST_POSITIONWhereInput | T_PAST_POSITIONWhereInput[]
-    date?: DateTimeFilter<"T_PAST_POSITION"> | Date | string
-    seatId?: IntFilter<"T_PAST_POSITION"> | number
-    lotteryNumber?: IntFilter<"T_PAST_POSITION"> | number
-    userId?: IntFilter<"T_PAST_POSITION"> | number
-  }, "id">
-
-  export type T_PAST_POSITIONOrderByWithAggregationInput = {
-    id?: SortOrder
-    date?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
-    _count?: T_PAST_POSITIONCountOrderByAggregateInput
-    _avg?: T_PAST_POSITIONAvgOrderByAggregateInput
-    _max?: T_PAST_POSITIONMaxOrderByAggregateInput
-    _min?: T_PAST_POSITIONMinOrderByAggregateInput
-    _sum?: T_PAST_POSITIONSumOrderByAggregateInput
-  }
-
-  export type T_PAST_POSITIONScalarWhereWithAggregatesInput = {
-    AND?: T_PAST_POSITIONScalarWhereWithAggregatesInput | T_PAST_POSITIONScalarWhereWithAggregatesInput[]
-    OR?: T_PAST_POSITIONScalarWhereWithAggregatesInput[]
-    NOT?: T_PAST_POSITIONScalarWhereWithAggregatesInput | T_PAST_POSITIONScalarWhereWithAggregatesInput[]
-    id?: IntWithAggregatesFilter<"T_PAST_POSITION"> | number
-    date?: DateTimeWithAggregatesFilter<"T_PAST_POSITION"> | Date | string
-    seatId?: IntWithAggregatesFilter<"T_PAST_POSITION"> | number
-    lotteryNumber?: IntWithAggregatesFilter<"T_PAST_POSITION"> | number
-    userId?: IntWithAggregatesFilter<"T_PAST_POSITION"> | number
+  export type T_SEAT_POSITIONScalarWhereWithAggregatesInput = {
+    AND?: T_SEAT_POSITIONScalarWhereWithAggregatesInput | T_SEAT_POSITIONScalarWhereWithAggregatesInput[]
+    OR?: T_SEAT_POSITIONScalarWhereWithAggregatesInput[]
+    NOT?: T_SEAT_POSITIONScalarWhereWithAggregatesInput | T_SEAT_POSITIONScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"T_SEAT_POSITION"> | number
+    date?: DateTimeWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string
+    seatId?: IntWithAggregatesFilter<"T_SEAT_POSITION"> | number
+    userId?: IntWithAggregatesFilter<"T_SEAT_POSITION"> | number
+    created?: DateTimeWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string
+    updated?: DateTimeWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string
   }
 
   export type M_USERWhereInput = {
@@ -5802,110 +4620,64 @@ export namespace Prisma {
     imageY?: IntFieldUpdateOperationsInput | number
   }
 
-  export type T_TODAY_POSITIONCreateInput = {
+  export type T_SEAT_POSITIONCreateInput = {
     date: Date | string
     seatId: number
-    lotteryNumber: number
     userId: number
+    created: Date | string
+    updated: Date | string
   }
 
-  export type T_TODAY_POSITIONUncheckedCreateInput = {
+  export type T_SEAT_POSITIONUncheckedCreateInput = {
     id?: number
     date: Date | string
     seatId: number
-    lotteryNumber: number
     userId: number
+    created: Date | string
+    updated: Date | string
   }
 
-  export type T_TODAY_POSITIONUpdateInput = {
+  export type T_SEAT_POSITIONUpdateInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type T_TODAY_POSITIONUncheckedUpdateInput = {
+  export type T_SEAT_POSITIONUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type T_TODAY_POSITIONCreateManyInput = {
+  export type T_SEAT_POSITIONCreateManyInput = {
     id?: number
     date: Date | string
     seatId: number
-    lotteryNumber: number
     userId: number
+    created: Date | string
+    updated: Date | string
   }
 
-  export type T_TODAY_POSITIONUpdateManyMutationInput = {
+  export type T_SEAT_POSITIONUpdateManyMutationInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type T_TODAY_POSITIONUncheckedUpdateManyInput = {
+  export type T_SEAT_POSITIONUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type T_PAST_POSITIONCreateInput = {
-    date: Date | string
-    seatId: number
-    lotteryNumber: number
-    userId: number
-  }
-
-  export type T_PAST_POSITIONUncheckedCreateInput = {
-    id?: number
-    date: Date | string
-    seatId: number
-    lotteryNumber: number
-    userId: number
-  }
-
-  export type T_PAST_POSITIONUpdateInput = {
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type T_PAST_POSITIONUncheckedUpdateInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type T_PAST_POSITIONCreateManyInput = {
-    id?: number
-    date: Date | string
-    seatId: number
-    lotteryNumber: number
-    userId: number
-  }
-
-  export type T_PAST_POSITIONUpdateManyMutationInput = {
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type T_PAST_POSITIONUncheckedUpdateManyInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: IntFieldUpdateOperationsInput | number
-    lotteryNumber?: IntFieldUpdateOperationsInput | number
-    userId?: IntFieldUpdateOperationsInput | number
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type M_USERCreateInput = {
@@ -6094,41 +4866,42 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type T_TODAY_POSITIONCountOrderByAggregateInput = {
+  export type T_SEAT_POSITIONCountOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
     seatId?: SortOrder
-    lotteryNumber?: SortOrder
     userId?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
   }
 
-  export type T_TODAY_POSITIONAvgOrderByAggregateInput = {
+  export type T_SEAT_POSITIONAvgOrderByAggregateInput = {
     id?: SortOrder
     seatId?: SortOrder
-    lotteryNumber?: SortOrder
     userId?: SortOrder
   }
 
-  export type T_TODAY_POSITIONMaxOrderByAggregateInput = {
-    id?: SortOrder
-    date?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type T_TODAY_POSITIONMinOrderByAggregateInput = {
+  export type T_SEAT_POSITIONMaxOrderByAggregateInput = {
     id?: SortOrder
     date?: SortOrder
     seatId?: SortOrder
-    lotteryNumber?: SortOrder
     userId?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
   }
 
-  export type T_TODAY_POSITIONSumOrderByAggregateInput = {
+  export type T_SEAT_POSITIONMinOrderByAggregateInput = {
+    id?: SortOrder
+    date?: SortOrder
+    seatId?: SortOrder
+    userId?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+  }
+
+  export type T_SEAT_POSITIONSumOrderByAggregateInput = {
     id?: SortOrder
     seatId?: SortOrder
-    lotteryNumber?: SortOrder
     userId?: SortOrder
   }
 
@@ -6144,44 +4917,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type T_PAST_POSITIONCountOrderByAggregateInput = {
-    id?: SortOrder
-    date?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type T_PAST_POSITIONAvgOrderByAggregateInput = {
-    id?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type T_PAST_POSITIONMaxOrderByAggregateInput = {
-    id?: SortOrder
-    date?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type T_PAST_POSITIONMinOrderByAggregateInput = {
-    id?: SortOrder
-    date?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
-  }
-
-  export type T_PAST_POSITIONSumOrderByAggregateInput = {
-    id?: SortOrder
-    seatId?: SortOrder
-    lotteryNumber?: SortOrder
-    userId?: SortOrder
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {

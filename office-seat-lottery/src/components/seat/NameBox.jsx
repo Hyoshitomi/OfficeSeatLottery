@@ -13,7 +13,7 @@ const statusStyle = {
   movable: 'border-[#1AA7FF] bg-[#FFFFFF] text-black',
   fixed: 'border-black bg-[#FFFFFF] text-black',
   unused: 'border-gray-400 bg-gray-200 text-gray-500',
-  reserved: 'border-red-500 bg-red-100 text-red-600',
+  reserved: 'border-green-500 bg-green-100 text-green-600',
 }
 
 export default function NameBox({
