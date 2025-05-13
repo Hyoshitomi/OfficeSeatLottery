@@ -17,7 +17,7 @@ export const authOptions = {
       async authorize(credentials) {
         if (!credentials) return null;
         try {
-          const user = await prisma.user.findUnique({
+          const user = await prisma.M_USER.findUnique({
             where: { employeeNumber: credentials.employeeNumber },
           });
           if (

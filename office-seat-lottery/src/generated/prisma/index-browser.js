@@ -120,27 +120,16 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.SeatScalarFieldEnum = {
-  Seatid: 'Seatid',
+exports.Prisma.M_SEATScalarFieldEnum = {
+  seatId: 'seatId',
   tableId: 'tableId',
   seatNumber: 'seatNumber',
-  isFixed: 'isFixed',
+  status: 'status',
   imageX: 'imageX',
   imageY: 'imageY'
 };
 
-exports.Prisma.TableScalarFieldEnum = {
-  Tableid: 'Tableid',
-  name: 'name'
-};
-
-exports.Prisma.AdjacentTableScalarFieldEnum = {
-  AdjacentTableId: 'AdjacentTableId',
-  tableId: 'tableId',
-  adjacentTableId: 'adjacentTableId'
-};
-
-exports.Prisma.TodayPositionScalarFieldEnum = {
+exports.Prisma.T_TODAY_POSITIONScalarFieldEnum = {
   id: 'id',
   date: 'date',
   seatId: 'seatId',
@@ -148,7 +137,7 @@ exports.Prisma.TodayPositionScalarFieldEnum = {
   userId: 'userId'
 };
 
-exports.Prisma.PastPositionScalarFieldEnum = {
+exports.Prisma.T_PAST_POSITIONScalarFieldEnum = {
   id: 'id',
   date: 'date',
   seatId: 'seatId',
@@ -156,7 +145,7 @@ exports.Prisma.PastPositionScalarFieldEnum = {
   userId: 'userId'
 };
 
-exports.Prisma.UserScalarFieldEnum = {
+exports.Prisma.M_USERScalarFieldEnum = {
   userId: 'userId',
   employeeNumber: 'employeeNumber',
   lastName: 'lastName',
@@ -184,12 +173,10 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  Seat: 'Seat',
-  Table: 'Table',
-  AdjacentTable: 'AdjacentTable',
-  TodayPosition: 'TodayPosition',
-  PastPosition: 'PastPosition',
-  User: 'User'
+  M_SEAT: 'M_SEAT',
+  T_TODAY_POSITION: 'T_TODAY_POSITION',
+  T_PAST_POSITION: 'T_PAST_POSITION',
+  M_USER: 'M_USER'
 };
 
 /**

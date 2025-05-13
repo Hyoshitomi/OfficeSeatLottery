@@ -11,31 +11,31 @@ datasource db {
   url      = env("POSTGRES_PRISMA_URL")
 }
 
-// 固定席・流動席の座席テーブル
-model Seat {
-  Seatid      Int    @id @default(autoincrement())
-  tableId     Int
-  seatNumber  String
-  isFixed     Boolean // 固定席: true, 流動席: false
+// 座席テーブル
+model M_SEAT {
+  seatId      Int    @id @default(autoincrement()) //A1
+  tableId     Int    //A
+  seatNumber  Int //1
+  status      Int // 1:流動 2:固定 3:不使用 4:予約
   imageX      Int     // 画像上のX座標
   imageY      Int     // 画像上のY座標
 }
 
-// 会議テーブル
-model Table {
-  Tableid Int    @id @default(autoincrement())
-  name    String
-}
+// // 会議テーブル
+// model Table {
+//   Tableid Int    @id @default(autoincrement())
+//   name    String
+// }
 
-// 隣接テーブル情報
-model AdjacentTable {
-  AdjacentTableId Int @id @default(autoincrement())
-  tableId         Int
-  adjacentTableId Int
-}
+// // 隣接テーブル情報
+// model AdjacentTable {
+//   AdjacentTableId Int @id @default(autoincrement())
+//   tableId         Int
+//   adjacentTableId Int
+// }
 
 // 当日の座席抽選結果
-model TodayPosition {
+model T_TODAY_POSITION {
   id            Int      @id @default(autoincrement())
   date          DateTime
   seatId        Int
@@ -44,7 +44,7 @@ model TodayPosition {
 }
 
 // 過去の座席抽選結果
-model PastPosition {
+model T_PAST_POSITION {
   id            Int      @id @default(autoincrement())
   date          DateTime
   seatId        Int
@@ -53,7 +53,7 @@ model PastPosition {
 }
 
 // ユーザー情報
-model User {
+model M_USER {
   userId         Int     @id @default(autoincrement())
   employeeNumber String  @unique
   lastName       String
