@@ -4448,6 +4448,7 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONWhereUniqueInput = Prisma.AtLeast<{
     id?: number
+    date_userId?: T_SEAT_POSITIONDateUserIdCompoundUniqueInput
     AND?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
     OR?: T_SEAT_POSITIONWhereInput[]
     NOT?: T_SEAT_POSITIONWhereInput | T_SEAT_POSITIONWhereInput[]
@@ -4456,7 +4457,7 @@ export namespace Prisma {
     userId?: IntFilter<"T_SEAT_POSITION"> | number
     created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
     updated?: DateTimeNullableFilter<"T_SEAT_POSITION"> | Date | string | null
-  }, "id">
+  }, "id" | "date_userId">
 
   export type T_SEAT_POSITIONOrderByWithAggregationInput = {
     id?: SortOrder
@@ -4876,6 +4877,11 @@ export namespace Prisma {
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
+  }
+
+  export type T_SEAT_POSITIONDateUserIdCompoundUniqueInput = {
+    date: Date | string
+    userId: number
   }
 
   export type T_SEAT_POSITIONCountOrderByAggregateInput = {

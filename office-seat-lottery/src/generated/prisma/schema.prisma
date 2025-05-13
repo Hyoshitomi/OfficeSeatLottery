@@ -13,43 +13,24 @@ datasource db {
 
 // 座席テーブル
 model M_SEAT {
-  seatId     Int @id @default(autoincrement()) //A1
-  tableId    Int //A
-  seatNumber Int //1
+  seatId     String @id // 例: "A1"
+  tableId    String // 例: "A"
+  seatNumber Int // 例: 1
   status     Int // 1:流動 2:固定 3:不使用 4:予約
-  imageX     Int // 画像上のX座標
-  imageY     Int // 画像上のY座標
+  imageX     Int
+  imageY     Int
 }
 
-// // 会議テーブル
-// model Table {
-//   Tableid Int    @id @default(autoincrement())
-//   name    String
-// }
+// 座席抽選結果
+model T_SEAT_POSITION {
+  id      Int       @id @default(autoincrement())
+  date    DateTime
+  seatId  String
+  userId  Int
+  created DateTime
+  updated DateTime?
 
-// // 隣接テーブル情報
-// model AdjacentTable {
-//   AdjacentTableId Int @id @default(autoincrement())
-//   tableId         Int
-//   adjacentTableId Int
-// }
-
-// 当日の座席抽選結果
-model T_TODAY_POSITION {
-  id            Int      @id @default(autoincrement())
-  date          DateTime
-  seatId        Int
-  lotteryNumber Int
-  userId        Int
-}
-
-// 過去の座席抽選結果
-model T_PAST_POSITION {
-  id            Int      @id @default(autoincrement())
-  date          DateTime
-  seatId        Int
-  lotteryNumber Int
-  userId        Int
+  @@unique([date, userId])
 }
 
 // ユーザー情報
@@ -63,3 +44,24 @@ model M_USER {
   adminFlag      Boolean
   deleteFlag     Boolean
 }
+
+// // 会議テーブル
+// model Table {
+//   Tableid Int    @id @default(autoincrement())
+//   name    String
+// }
+// // 隣接テーブル情報
+// model AdjacentTable {
+//   AdjacentTableId Int @id @default(autoincrement())
+//   tableId         Int
+//   adjacentTableId Int
+// }
+// // 過去の座席抽選結果
+// model T_PAST_POSITION {
+//   id            Int      @id @default(autoincrement())
+//   Date          DateTime
+//   seatId        Int
+//   userId        Int
+//   created       DateTime
+//   updated       DateTime
+// }
