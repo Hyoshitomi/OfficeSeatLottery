@@ -9,6 +9,7 @@ export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
   const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
   const [boxes, setBoxes] = useState([])
+  const [tableName, setTableName] = useState("A")
   const fileInputRef = useRef(null)
 
   const handleImgLoad = e => {
@@ -50,8 +51,9 @@ export default function Page() {
     const boxH = 40
     const gap = 8
     const plusSize = 32
-    const aCount = boxes.filter(b => /^A\d+$/.test(b.name)).length
-    const name = `A${aCount + 1}`
+    // テーブル名でカウント
+    const aCount = boxes.filter(b => new RegExp(`^${tableName}\\d+$`).test(b.name)).length
+    const name = `${tableName}${aCount + 1}` // ←ここを変更
     const x = imgSize.width - offset - plusSize - gap - boxW
     const y = offset + boxH
     setBoxes(prev => [
@@ -79,6 +81,8 @@ export default function Page() {
         <SidebarRight
           fileInputRef={fileInputRef}
           onFileChange={handleFileChange}
+          tableName={tableName} 
+          setTableName={setTableName}
         />
       </div>
     </>
