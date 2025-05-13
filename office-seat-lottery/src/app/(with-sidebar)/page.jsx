@@ -29,14 +29,6 @@ export default function Home() {
           animation={2}
           maxCount={3}
         />
-        {/* <div className="mt-4">
-          <h2 className="text-xl font-semibold">Selected Frameworks:</h2>
-          <ul className="list-disc list-inside">
-            {selectedFrameworks.map((framework) => (
-              <li key={framework}>{framework}</li>
-            ))}
-          </ul>
-        </div> */}
       </div>
     </>
   );
