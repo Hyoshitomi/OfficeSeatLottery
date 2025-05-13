@@ -1,34 +1,38 @@
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
 import importPlugin from 'eslint-plugin-import';
 import unusedImports from 'eslint-plugin-unused-imports';
+import eslintPluginNext from '@next/eslint-plugin-next';
+import prettierConfig from 'eslint-config-prettier';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-
-export default {
-  files: ["src/**/*.{js,jsx,ts,tsx}"],
-  ignores: ["**/.next/**/*"],
-  extends: [
-    "next/core-web-vitals",
-    "prettier",
-  ],
-  plugins: {
-    import: importPlugin,
-    "unused-imports": unusedImports,
-  },
-  rules: {
-    "import/order": [
-      "error",
-      {
-        groups: ["builtin", "external", "internal"],
-        alphabetize: { order: "asc", caseInsensitive: true },
-        "newlines-between": "always",
+export default [
+  {
+    files: ['src/**/*.{js,jsx,ts,tsx}'],
+    ignores: ['**/.next/**/*'],
+    plugins: {
+      import: importPlugin,
+      'unused-imports': unusedImports,
+      '@next/next': eslintPluginNext,
+    },
+    languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true, 
       },
-    ],
-    "import/newline-after-import": "error",
-    "import/no-duplicates": "error",
-    "unused-imports/no-unused-imports": "error",
+    },
+    rules: {
+      ...eslintPluginNext.configs.recommended.rules,
+      'import/order': [
+        'error',
+        {
+          groups: ['builtin', 'external', 'internal'],
+          alphabetize: { order: 'asc', caseInsensitive: true },
+          'newlines-between': 'always',
+        },
+      ],
+      'import/newline-after-import': 'error',
+      'import/no-duplicates': 'error',
+      'unused-imports/no-unused-imports': 'error',
+      ...prettierConfig.rules,
+    },
   },
-};
+];

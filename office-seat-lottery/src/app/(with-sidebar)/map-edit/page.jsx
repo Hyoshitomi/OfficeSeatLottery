@@ -1,55 +1,141 @@
-"use client"; // クライアントコンポーネントとして指定
+'use client'
 
-import { SiteHeader } from "@/components/sidebar/site-header";
-import { useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { useState, useRef, useEffect } from 'react'
+import { SiteHeader } from '@/components/sidebar/site-header'
+import SeatCanvas from '@/components/seat/SeatCanvas'
+import SidebarRight from '@/components/sidebar/right-sidebar'
 
-export default function Home() {
-  // プレビュー用の画像パスを管理する状態
-  const [previewImage, setPreviewImage] = useState("/sheet/座席表.png");
+export default function Page() {
+  const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
+  const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
+  const [boxes, setBoxes] = useState([])
+  const [tableName, setTableName] = useState("A")
+  const [isLoading, setIsLoading] = useState(false) // 追加
+  const fileInputRef = useRef(null)
 
-  // 画像がドロップされた際の処理
-  const onDrop = (acceptedFiles) => {
-    if (acceptedFiles.length > 0) {
-      const file = acceptedFiles[0];
-      const dataUrl = URL.createObjectURL(file);
-      setPreviewImage(dataUrl);
+  // 初回マウント時にDBから座席データを取得
+  useEffect(() => {
+    const fetchSeats = async () => {
+      setIsLoading(true) // 取得前にローディング開始
+      try {
+        const res = await fetch('/api/seats')
+        if (res.ok) {
+          const seats = await res.json()
+          setBoxes(
+            seats.map(seat => ({
+              id: seat.seatId,
+              name: `${seat.tableId}${seat.seatNumber}`,
+              status:
+                seat.status === 1 ? 'movable' :
+                seat.status === 2 ? 'fixed' :
+                seat.status === 3 ? 'unused' :
+                seat.status === 4 ? 'reserved' : 'movable',
+              x: seat.imageX,
+              y: seat.imageY,
+            }))
+          )
+        }
+      } finally {
+        setIsLoading(false) // 完了時にローディング終了
+      }
+    }
+    fetchSeats()
+  }, [])
+
+  const handleImgLoad = e => {
+    setImgSize({
+      width: e.currentTarget.naturalWidth,
+      height: e.currentTarget.naturalHeight,
+    })
+  }
+
+  // 保存ボタン押下時にAPIへboxesを送信
+  const handleSave = async () => {
+    const res = await fetch('/api/seats', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ boxes }),
+    });
+    if (res.ok) {
+      alert('保存しました！');
+    } else {
+      alert('保存に失敗しました');
     }
   };
 
-  // react-dropzone の設定（クリックによるダイアログを無効化）
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: { "image/*": [] }, // 画像ファイルのみ受け入れる
-    multiple: false, // 1つのファイルのみ許可
-    noClick: true // クリックでのファイル選択を無効化
-  });
+  const handleFileChange = file => {
+    setPreviewImage(URL.createObjectURL(file))
+  }
+
+  const handleStop = (id, x, y) =>
+    setBoxes(prev => prev.map(b => b.id === id ? { ...b, x, y } : b))
+
+  const handleUpdate = (id, newName, newStatus, newX, newY) =>
+    setBoxes(prev =>
+      prev.map(b =>
+        b.id === id
+          ? {
+              ...b,
+              name: newName,
+              status: newStatus,
+              x: newX !== undefined ? newX : b.x,
+              y: newY !== undefined ? newY : b.y,
+            }
+          : b
+      )
+    )
+
+  const handleDelete = id =>
+    setBoxes(prev => prev.filter(b => b.id !== id))
+
+  const handleAddBox = () => {
+    const nextId = Date.now()
+    const offset = 8
+    const boxW = 100
+    const boxH = 40
+    const gap = 8
+    const plusSize = 32
+    // テーブル名でカウント
+    const aCount = boxes.filter(b => new RegExp(`^${tableName}\\d+$`).test(b.name)).length
+    const name = `${tableName}${aCount + 1}`
+    const x = imgSize.width - offset - plusSize - gap - boxW
+    const y = offset + boxH
+    setBoxes(prev => [
+      ...prev,
+      { id: nextId, name, status: 'movable', x, y }
+    ])
+  }
 
   return (
     <>
       <SiteHeader title="座席図編集" />
-      <main
-        {...getRootProps()}
-        className={`flex-1 overflow-hidden p-4 flex items-center justify-center transition-all duration-200 relative ${
-          isDragActive ? "border-2 border-dashed border-blue-500" : "border-2 border-solid border-transparent"
-        }`}
-      >
-        <input {...getInputProps()} />
-        <div className="h-full w-full flex items-center justify-center relative overflow-hidden">
-          <img
-            src={previewImage}
-            alt="プレビュー画像"
-            className={`max-h-full max-w-full object-contain relative z-10 transition-all duration-200 ${
-              isDragActive ? "blur-md" : ""
-            }`}
-          />
-          {isDragActive && (
-            <div className="absolute inset-0 flex items-center justify-center text-blue-500 text-lg font-medium z-20">
-              ドラッグ＆ドロップで画像を変更できます
+      <div className="flex flex-row h-[calc(100vh-56px)]">
+        <div className="flex-1 flex flex-col items-center justify-center">
+          {isLoading ? (
+            <div className="flex items-center justify-center h-full w-full">
+              <div className="text-xl font-bold animate-pulse">Loading...</div>
             </div>
+          ) : (
+            <SeatCanvas
+              src={previewImage}
+              imgSize={imgSize}
+              boxes={boxes}
+              onImgLoad={handleImgLoad}
+              onDragStop={handleStop}
+              onUpdate={handleUpdate}
+              onDelete={handleDelete}
+              onAddBox={handleAddBox}
+            />
           )}
         </div>
-      </main>
+        <SidebarRight
+          fileInputRef={fileInputRef}
+          onFileChange={handleFileChange}
+          tableName={tableName}
+          setTableName={setTableName}
+          onSave={handleSave}
+        />
+      </div>
     </>
-  );
+  )
 }

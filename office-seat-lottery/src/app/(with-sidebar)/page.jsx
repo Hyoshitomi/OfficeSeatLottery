@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { SiteHeader } from "@/components/sidebar/site-header";
-import ResizableBox from '@/components/namebox/ResizableNameBox';
 
 export default async function Home() {
   const [value, setValue] = useState("");
@@ -17,22 +16,6 @@ export default async function Home() {
         </div>
         <div>
           <h1>座席表示例</h1>
-          <ResizableBox
-            text="山田 太郎"
-            borderColor="red-500"
-            width={200}
-            height={100}
-            borderWidth={4}
-            borderRadius="xl"
-          />
-          <ResizableBox
-            text="佐藤 花子"
-            borderColor="green-500"
-            width={160}
-            height={80}
-            borderWidth={2}
-            borderRadius="md"
-          />
         </div>
       </main>
     </>
