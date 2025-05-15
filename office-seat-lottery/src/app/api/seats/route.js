@@ -15,6 +15,7 @@ export async function POST(request) {
   try {
     const { boxes } = await request.json();
 
+    // 1. 送信データをパース
     const seats = boxes.map(box => {
       const match = box.name.match(/^([A-Z]+)(\d+)$/);
       const tableId = match ? match[1] : null;
@@ -35,15 +36,55 @@ export async function POST(request) {
       };
     }).filter(seat => seat.seatId);
 
-    // トランザクションで全削除→一括登録
-    await prisma.$transaction([
-      prisma.m_SEAT.deleteMany({}), // 既存データ全削除
-      prisma.m_SEAT.createMany({ data: seats }) // 新規一括登録
-    ]);
+    // 2. DBから現状の座席一覧を取得
+    const dbSeats = await prisma.m_SEAT.findMany();
+    const dbSeatIds = new Set(dbSeats.map(s => s.seatId));
+    const reqSeatIds = new Set(seats.map(s => s.seatId));
+
+    // 3. 削除対象seatId（DBにあるがリクエストにないもの）
+    const deleteSeatIds = dbSeats
+      .filter(s => !reqSeatIds.has(s.seatId))
+      .map(s => s.seatId);
+
+    // 4. 更新対象seatId（両方に存在するもの）
+    const updateSeats = seats.filter(s => dbSeatIds.has(s.seatId));
+
+    // 5. 新規追加seatId（リクエストにはあるがDBにないもの）
+    const insertSeats = seats.filter(s => !dbSeatIds.has(s.seatId));
+
+    // 6. トランザクションで処理
+    await prisma.$transaction(async (tx) => {
+      // 削除（関連テーブルも削除）
+      for (const seatId of deleteSeatIds) {
+        // 関連データ削除
+        await tx.m_SEAT_APPOINT.deleteMany({ where: { seatId } });
+        await tx.t_SEAT_POSITION.deleteMany({ where: { seatId } });
+        // 座席削除
+        await tx.m_SEAT.delete({ where: { seatId } });
+      }
+
+      // 更新
+      for (const seat of updateSeats) {
+        await tx.m_SEAT.update({
+          where: { seatId: seat.seatId },
+          data: {
+            tableId: seat.tableId,
+            seatNumber: seat.seatNumber,
+            status: seat.status,
+            imageX: seat.imageX,
+            imageY: seat.imageY,
+          }
+        });
+      }
+
+      // 追加
+      if (insertSeats.length > 0) {
+        await tx.m_SEAT.createMany({ data: insertSeats });
+      }
+    });
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
-
