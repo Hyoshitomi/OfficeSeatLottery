@@ -129,20 +129,23 @@ exports.Prisma.M_SEATScalarFieldEnum = {
   imageY: 'imageY'
 };
 
-exports.Prisma.T_TODAY_POSITIONScalarFieldEnum = {
+exports.Prisma.M_SEAT_APPOINTScalarFieldEnum = {
   id: 'id',
-  date: 'date',
   seatId: 'seatId',
-  lotteryNumber: 'lotteryNumber',
-  userId: 'userId'
+  userId: 'userId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  created: 'created',
+  updated: 'updated'
 };
 
-exports.Prisma.T_PAST_POSITIONScalarFieldEnum = {
+exports.Prisma.T_SEAT_POSITIONScalarFieldEnum = {
   id: 'id',
   date: 'date',
   seatId: 'seatId',
-  lotteryNumber: 'lotteryNumber',
-  userId: 'userId'
+  userId: 'userId',
+  created: 'created',
+  updated: 'updated'
 };
 
 exports.Prisma.M_USERScalarFieldEnum = {
@@ -174,8 +177,8 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   M_SEAT: 'M_SEAT',
-  T_TODAY_POSITION: 'T_TODAY_POSITION',
-  T_PAST_POSITION: 'T_PAST_POSITION',
+  M_SEAT_APPOINT: 'M_SEAT_APPOINT',
+  T_SEAT_POSITION: 'T_SEAT_POSITION',
   M_USER: 'M_USER'
 };
 

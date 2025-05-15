@@ -125,6 +125,7 @@ export default function Page() {
               onUpdate={handleUpdate}
               onDelete={handleDelete}
               onAddBox={handleAddBox}
+              move={true} //編集可能
             />
           )}
         </div>

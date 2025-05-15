@@ -1,5 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
+import Link from 'next/link';
+
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -113,9 +115,6 @@ export function LoginForm({ className, ...props }) {
                       )}
                     </button>
                   </div>
-                  <a href="/contact" className="mr-auto text-sm underline-offset-4 hover:underline">
-                      管理者に連絡してパスワードをリセット
-                  </a>
                 </div>
 
                 {error && <div className="text-sm text-red-500 text-center">{error}</div>}
@@ -123,6 +122,9 @@ export function LoginForm({ className, ...props }) {
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "認証中..." : "Login"}
                 </Button>
+                <Link href="/contact" className="mr-auto text-sm underline-offset-4 hover:underline">
+                  管理者に連絡してパスワードをリセット
+                </Link>
               </div>
             </div>
           </form>

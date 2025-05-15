@@ -12,6 +12,7 @@ export default function SeatCanvas({
   onUpdate,
   onDelete,
   onAddBox,
+  move = false,
 }) {
   return (
     <div className="relative">
@@ -40,10 +41,11 @@ export default function SeatCanvas({
             onDragStop={onDragStop}
             onUpdate={onUpdate}
             onDelete={onDelete}
+            move={move}
           />
         </div>
       ))}
-      <AddBoxButton onClick={onAddBox} />
+      {move && <AddBoxButton onClick={onAddBox} />}
     </div>
   )
 }
