@@ -15,7 +15,7 @@ export default function Page() {
     const fetchSeats = async () => {
       setIsLoading(true)
       try {
-        const res = await fetch('/api/seatsMap')
+        const res = await fetch('/api/seats/map')
         if (res.ok) {
           const seats = await res.json()
           setBoxes(

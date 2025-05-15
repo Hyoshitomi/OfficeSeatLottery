@@ -10,10 +10,7 @@ import {
   IconMail,
   IconUsers,
 } from "@tabler/icons-react"
-
-import { NavData } from "@/components/sidebar/nav/nav-data"
-import { NavMain } from "@/components/sidebar/nav/nav-main"
-import { NavSecondary } from "@/components/sidebar/nav/nav-secondary"
+import { SidebarNav } from "@/components/sidebar/nav/SidebarNav";
 import { NavUser } from "@/components/sidebar/nav/nav-user"
 import {
   Sidebar,
@@ -66,7 +63,7 @@ export function AppSidebar({
     ],
     navSecondary: [
       {
-        title: "問い合わせ",
+        name: "問い合わせ",
         url: "/contact",
         icon: IconMail,
       },
@@ -93,9 +90,19 @@ export function AppSidebar({
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
-        <NavData items={data.dataList} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <SidebarNav
+          items={data.navMain}
+          className="flex flex-col gap-2"
+        />
+        <SidebarNav
+          items={data.dataList}
+          className="group-data-[collapsible=icon]:hidden"
+          label="管理者"
+        />
+        <SidebarNav 
+          items={data.navSecondary} 
+          className="mt-auto" 
+        />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

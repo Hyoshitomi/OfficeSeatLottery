@@ -66,7 +66,7 @@ export async function POST(request) {
     const usedSeatIds = usedSeats.map(s => s.seatId);
     const availableSeatIds = allSeatIds.filter(id => !usedSeatIds.includes(id));
     if (availableSeatIds.length < filteredUserIds.length) {
-      return NextResponse.json({ error: '空き座席が足りません' }, { status: 400 });
+      return NextResponse.json({ error: '空き座席が足りません。本日は集中コーナーを使用してください。' }, { status: 400 });
     }
 
     // 5. シャッフル
