@@ -15,14 +15,14 @@ export default function Page() {
     const fetchSeats = async () => {
       setIsLoading(true)
       try {
-        const res = await fetch('/api/seats')
+        const res = await fetch('/api/seatsMap')
         if (res.ok) {
           const seats = await res.json()
           setBoxes(
             seats.map(seat => ({
               id: seat.seatId,
               // APIのnameをそのまま使う
-              name: seat.name ?? '(名前未設定)',
+              name: seat.name ?? '',
               status:
                 seat.status === 1 ? 'movable' :
                 seat.status === 2 ? 'fixed' :

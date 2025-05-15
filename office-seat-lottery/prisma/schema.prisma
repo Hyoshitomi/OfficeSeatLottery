@@ -21,7 +21,27 @@ model M_SEAT {
   imageX      Int
   imageY      Int
 
-   seatPositions T_SEAT_POSITION[] @relation("SeatToSeatPosition")
+  seatAppointments M_SEAT_APPOINT[]
+  seatPositions T_SEAT_POSITION[] @relation("SeatToSeatPosition")
+}
+
+
+// 予約座席テーブル
+model M_SEAT_APPOINT {
+  id        Int      @id @default(autoincrement())
+  seatId    String
+  userId    Int
+  startDate DateTime
+  endDate   DateTime
+  created   DateTime
+  updated   DateTime?
+
+  // リレーション
+  seat      M_SEAT   @relation(fields: [seatId], references: [seatId])
+  user      M_USER   @relation(fields: [userId], references: [userId])
+
+  @@index([seatId])
+  @@index([userId])
 }
 
 // 座席抽選結果
@@ -51,6 +71,7 @@ model M_USER {
   adminFlag      Boolean
   deleteFlag     Boolean
 
+  seatAppointments M_SEAT_APPOINT[]
   seatPositions T_SEAT_POSITION[] @relation("UserToSeatPosition")
 }
 

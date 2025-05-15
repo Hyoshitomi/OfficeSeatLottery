@@ -10,9 +10,10 @@ export async function GET() {
   tomorrow.setDate(today.getDate() + 1);
 
   try {
-    // t_SEAT_POSITION, m_SEAT, m_USERをJOIN
-    const positions = await prisma.t_SEAT_POSITION.findMany({
+    // status=1の座席：T_SEAT_POSITIONから当日分を取得
+    const status1Positions = await prisma.t_SEAT_POSITION.findMany({
       where: {
+        seat: { status: 1 },
         date: {
           gte: today,
           lt: tomorrow
@@ -20,31 +21,44 @@ export async function GET() {
       },
       include: {
         seat: true,
-        user: true,
+        user: true
       }
     });
 
-    // nameロジックを適用
-    const seats = positions.map(pos => {
-      let name = '';
-      if (pos.user) {
-        name = pos.user.showName || pos.user.lastName || '(名前未設定)';
-      } else {
-        name = '(名前未設定)';
+    // status=2,4の座席：M_SEAT_APPOINTから当日が予約範囲に含まれるものを取得
+    const status2And4Appointments = await prisma.m_SEAT_APPOINT.findMany({
+      where: {
+        seat: { status: { in: [2, 4] } },
+        startDate: { lte: today },
+        endDate: { gte: today }
+      },
+      include: {
+        seat: true,
+        user: true
       }
-      return {
-        seatId: pos.seatId,
-        name,
-        status: pos.seat ? pos.seat.status : null,
-        imageX: pos.seat ? pos.seat.imageX : null,
-        imageY: pos.seat ? pos.seat.imageY : null,
-      };
     });
+
+    // 2つの配列を統合し、レスポンス用に整形
+    const seats = [
+      ...status1Positions.map(pos => ({
+        seatId: pos.seatId,
+        name: pos.user ? (pos.user.showName || pos.user.lastName || '(名前未設定)') : '(名前未設定)',
+        status: pos.seat.status,
+        imageX: pos.seat.imageX,
+        imageY: pos.seat.imageY,
+      })),
+      ...status2And4Appointments.map(app => ({
+        seatId: app.seatId,
+        name: app.user ? (app.user.showName || app.user.lastName || '(名前未設定)') : '(名前未設定)',
+        status: app.seat.status,
+        imageX: app.seat.imageX,
+        imageY: app.seat.imageY,
+      }))
+    ];
 
     return NextResponse.json(seats, { status: 200 });
   } catch (e) {
-    console.error(e); // 追加: エラー内容をログ出力
+    console.error(e); // エラー内容をログ出力
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
-

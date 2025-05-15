@@ -129,6 +129,16 @@ exports.Prisma.M_SEATScalarFieldEnum = {
   imageY: 'imageY'
 };
 
+exports.Prisma.M_SEAT_APPOINTScalarFieldEnum = {
+  id: 'id',
+  seatId: 'seatId',
+  userId: 'userId',
+  startDate: 'startDate',
+  endDate: 'endDate',
+  created: 'created',
+  updated: 'updated'
+};
+
 exports.Prisma.T_SEAT_POSITIONScalarFieldEnum = {
   id: 'id',
   date: 'date',
@@ -167,6 +177,7 @@ exports.Prisma.NullsOrder = {
 
 exports.Prisma.ModelName = {
   M_SEAT: 'M_SEAT',
+  M_SEAT_APPOINT: 'M_SEAT_APPOINT',
   T_SEAT_POSITION: 'T_SEAT_POSITION',
   M_USER: 'M_USER'
 };
