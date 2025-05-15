@@ -13,7 +13,7 @@ export default function Page() {
   // 初回マウント時にDBから座席データを取得
   useEffect(() => {
     const fetchSeats = async () => {
-      setIsLoading(true) // 取得前にローディング開始
+      setIsLoading(true)
       try {
         const res = await fetch('/api/seats')
         if (res.ok) {
@@ -21,24 +21,31 @@ export default function Page() {
           setBoxes(
             seats.map(seat => ({
               id: seat.seatId,
-              name: `${seat.tableId}${seat.seatNumber}`,
+              // APIのnameをそのまま使う
+              name: seat.name ?? '(名前未設定)',
               status:
                 seat.status === 1 ? 'movable' :
                 seat.status === 2 ? 'fixed' :
                 seat.status === 3 ? 'unused' :
                 seat.status === 4 ? 'reserved' : 'movable',
-              x: seat.imageX,
-              y: seat.imageY,
+              x: seat.imageX ?? 0,
+              y: seat.imageY ?? 0,
             }))
           )
+        } else {
+          // エラー時の処理
+          setBoxes([])
         }
+      } catch (e) {
+        // 通信エラー時の処理
+        setBoxes([])
       } finally {
-        setIsLoading(false) // 完了時にローディング終了
+        setIsLoading(false)
       }
     }
     fetchSeats()
   }, [])
-
+  
   const handleImgLoad = e => {
     setImgSize({
       width: e.currentTarget.naturalWidth,

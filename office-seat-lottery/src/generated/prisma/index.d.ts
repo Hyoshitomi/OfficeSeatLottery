@@ -1046,6 +1046,67 @@ export namespace Prisma {
    */
 
 
+  /**
+   * Count Type M_SEATCountOutputType
+   */
+
+  export type M_SEATCountOutputType = {
+    seatPositions: number
+  }
+
+  export type M_SEATCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seatPositions?: boolean | M_SEATCountOutputTypeCountSeatPositionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * M_SEATCountOutputType without action
+   */
+  export type M_SEATCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_SEATCountOutputType
+     */
+    select?: M_SEATCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * M_SEATCountOutputType without action
+   */
+  export type M_SEATCountOutputTypeCountSeatPositionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: T_SEAT_POSITIONWhereInput
+  }
+
+
+  /**
+   * Count Type M_USERCountOutputType
+   */
+
+  export type M_USERCountOutputType = {
+    seatPositions: number
+  }
+
+  export type M_USERCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seatPositions?: boolean | M_USERCountOutputTypeCountSeatPositionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * M_USERCountOutputType without action
+   */
+  export type M_USERCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_USERCountOutputType
+     */
+    select?: M_USERCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * M_USERCountOutputType without action
+   */
+  export type M_USERCountOutputTypeCountSeatPositionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: T_SEAT_POSITIONWhereInput
+  }
+
 
   /**
    * Models
@@ -1269,6 +1330,8 @@ export namespace Prisma {
     status?: boolean
     imageX?: boolean
     imageY?: boolean
+    seatPositions?: boolean | M_SEAT$seatPositionsArgs<ExtArgs>
+    _count?: boolean | M_SEATCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["m_SEAT"]>
 
   export type M_SEATSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1299,10 +1362,18 @@ export namespace Prisma {
   }
 
   export type M_SEATOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"seatId" | "tableId" | "seatNumber" | "status" | "imageX" | "imageY", ExtArgs["result"]["m_SEAT"]>
+  export type M_SEATInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seatPositions?: boolean | M_SEAT$seatPositionsArgs<ExtArgs>
+    _count?: boolean | M_SEATCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type M_SEATIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type M_SEATIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $M_SEATPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "M_SEAT"
-    objects: {}
+    objects: {
+      seatPositions: Prisma.$T_SEAT_POSITIONPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       seatId: string
       tableId: string
@@ -1704,6 +1775,7 @@ export namespace Prisma {
    */
   export interface Prisma__M_SEATClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    seatPositions<T extends M_SEAT$seatPositionsArgs<ExtArgs> = {}>(args?: Subset<T, M_SEAT$seatPositionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1756,6 +1828,10 @@ export namespace Prisma {
      */
     omit?: M_SEATOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
+    /**
      * Filter, which M_SEAT to fetch.
      */
     where: M_SEATWhereUniqueInput
@@ -1774,6 +1850,10 @@ export namespace Prisma {
      */
     omit?: M_SEATOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
+    /**
      * Filter, which M_SEAT to fetch.
      */
     where: M_SEATWhereUniqueInput
@@ -1791,6 +1871,10 @@ export namespace Prisma {
      * Omit specific fields from the M_SEAT
      */
     omit?: M_SEATOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
     /**
      * Filter, which M_SEAT to fetch.
      */
@@ -1840,6 +1924,10 @@ export namespace Prisma {
      */
     omit?: M_SEATOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
+    /**
      * Filter, which M_SEAT to fetch.
      */
     where?: M_SEATWhereInput
@@ -1888,6 +1976,10 @@ export namespace Prisma {
      */
     omit?: M_SEATOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
+    /**
      * Filter, which M_SEATS to fetch.
      */
     where?: M_SEATWhereInput
@@ -1930,6 +2022,10 @@ export namespace Prisma {
      * Omit specific fields from the M_SEAT
      */
     omit?: M_SEATOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
     /**
      * The data needed to create a M_SEAT.
      */
@@ -1978,6 +2074,10 @@ export namespace Prisma {
      * Omit specific fields from the M_SEAT
      */
     omit?: M_SEATOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
     /**
      * The data needed to update a M_SEAT.
      */
@@ -2045,6 +2145,10 @@ export namespace Prisma {
      */
     omit?: M_SEATOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
+    /**
      * The filter to search for the M_SEAT to update in case it exists.
      */
     where: M_SEATWhereUniqueInput
@@ -2071,6 +2175,10 @@ export namespace Prisma {
      */
     omit?: M_SEATOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
+    /**
      * Filter which M_SEAT to delete.
      */
     where: M_SEATWhereUniqueInput
@@ -2091,6 +2199,30 @@ export namespace Prisma {
   }
 
   /**
+   * M_SEAT.seatPositions
+   */
+  export type M_SEAT$seatPositionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the T_SEAT_POSITION
+     */
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the T_SEAT_POSITION
+     */
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
+    where?: T_SEAT_POSITIONWhereInput
+    orderBy?: T_SEAT_POSITIONOrderByWithRelationInput | T_SEAT_POSITIONOrderByWithRelationInput[]
+    cursor?: T_SEAT_POSITIONWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: T_SEAT_POSITIONScalarFieldEnum | T_SEAT_POSITIONScalarFieldEnum[]
+  }
+
+  /**
    * M_SEAT without action
    */
   export type M_SEATDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2102,6 +2234,10 @@ export namespace Prisma {
      * Omit specific fields from the M_SEAT
      */
     omit?: M_SEATOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_SEATInclude<ExtArgs> | null
   }
 
 
@@ -2315,6 +2451,8 @@ export namespace Prisma {
     userId?: boolean
     created?: boolean
     updated?: boolean
+    seat?: boolean | M_SEATDefaultArgs<ExtArgs>
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["t_SEAT_POSITION"]>
 
   export type T_SEAT_POSITIONSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2324,6 +2462,8 @@ export namespace Prisma {
     userId?: boolean
     created?: boolean
     updated?: boolean
+    seat?: boolean | M_SEATDefaultArgs<ExtArgs>
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["t_SEAT_POSITION"]>
 
   export type T_SEAT_POSITIONSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2333,6 +2473,8 @@ export namespace Prisma {
     userId?: boolean
     created?: boolean
     updated?: boolean
+    seat?: boolean | M_SEATDefaultArgs<ExtArgs>
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["t_SEAT_POSITION"]>
 
   export type T_SEAT_POSITIONSelectScalar = {
@@ -2345,10 +2487,25 @@ export namespace Prisma {
   }
 
   export type T_SEAT_POSITIONOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "date" | "seatId" | "userId" | "created" | "updated", ExtArgs["result"]["t_SEAT_POSITION"]>
+  export type T_SEAT_POSITIONInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seat?: boolean | M_SEATDefaultArgs<ExtArgs>
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }
+  export type T_SEAT_POSITIONIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seat?: boolean | M_SEATDefaultArgs<ExtArgs>
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }
+  export type T_SEAT_POSITIONIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seat?: boolean | M_SEATDefaultArgs<ExtArgs>
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }
 
   export type $T_SEAT_POSITIONPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "T_SEAT_POSITION"
-    objects: {}
+    objects: {
+      seat: Prisma.$M_SEATPayload<ExtArgs>
+      user: Prisma.$M_USERPayload<ExtArgs>
+    }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       date: Date
@@ -2750,6 +2907,8 @@ export namespace Prisma {
    */
   export interface Prisma__T_SEAT_POSITIONClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    seat<T extends M_SEATDefaultArgs<ExtArgs> = {}>(args?: Subset<T, M_SEATDefaultArgs<ExtArgs>>): Prisma__M_SEATClient<$Result.GetResult<Prisma.$M_SEATPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends M_USERDefaultArgs<ExtArgs> = {}>(args?: Subset<T, M_USERDefaultArgs<ExtArgs>>): Prisma__M_USERClient<$Result.GetResult<Prisma.$M_USERPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2802,6 +2961,10 @@ export namespace Prisma {
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
+    /**
      * Filter, which T_SEAT_POSITION to fetch.
      */
     where: T_SEAT_POSITIONWhereUniqueInput
@@ -2820,6 +2983,10 @@ export namespace Prisma {
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
+    /**
      * Filter, which T_SEAT_POSITION to fetch.
      */
     where: T_SEAT_POSITIONWhereUniqueInput
@@ -2837,6 +3004,10 @@ export namespace Prisma {
      * Omit specific fields from the T_SEAT_POSITION
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
     /**
      * Filter, which T_SEAT_POSITION to fetch.
      */
@@ -2886,6 +3057,10 @@ export namespace Prisma {
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
+    /**
      * Filter, which T_SEAT_POSITION to fetch.
      */
     where?: T_SEAT_POSITIONWhereInput
@@ -2934,6 +3109,10 @@ export namespace Prisma {
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
+    /**
      * Filter, which T_SEAT_POSITIONS to fetch.
      */
     where?: T_SEAT_POSITIONWhereInput
@@ -2977,6 +3156,10 @@ export namespace Prisma {
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
+    /**
      * The data needed to create a T_SEAT_POSITION.
      */
     data: XOR<T_SEAT_POSITIONCreateInput, T_SEAT_POSITIONUncheckedCreateInput>
@@ -3010,6 +3193,10 @@ export namespace Prisma {
      */
     data: T_SEAT_POSITIONCreateManyInput | T_SEAT_POSITIONCreateManyInput[]
     skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3024,6 +3211,10 @@ export namespace Prisma {
      * Omit specific fields from the T_SEAT_POSITION
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
     /**
      * The data needed to update a T_SEAT_POSITION.
      */
@@ -3076,6 +3267,10 @@ export namespace Prisma {
      * Limit how many T_SEAT_POSITIONS to update.
      */
     limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -3090,6 +3285,10 @@ export namespace Prisma {
      * Omit specific fields from the T_SEAT_POSITION
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
     /**
      * The filter to search for the T_SEAT_POSITION to update in case it exists.
      */
@@ -3116,6 +3315,10 @@ export namespace Prisma {
      * Omit specific fields from the T_SEAT_POSITION
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
     /**
      * Filter which T_SEAT_POSITION to delete.
      */
@@ -3148,6 +3351,10 @@ export namespace Prisma {
      * Omit specific fields from the T_SEAT_POSITION
      */
     omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
   }
 
 
@@ -3373,6 +3580,8 @@ export namespace Prisma {
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
+    seatPositions?: boolean | M_USER$seatPositionsArgs<ExtArgs>
+    _count?: boolean | M_USERCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["m_USER"]>
 
   export type M_USERSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3409,10 +3618,18 @@ export namespace Prisma {
   }
 
   export type M_USEROmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "employeeNumber" | "lastName" | "firstName" | "showName" | "password" | "adminFlag" | "deleteFlag", ExtArgs["result"]["m_USER"]>
+  export type M_USERInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    seatPositions?: boolean | M_USER$seatPositionsArgs<ExtArgs>
+    _count?: boolean | M_USERCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type M_USERIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type M_USERIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $M_USERPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "M_USER"
-    objects: {}
+    objects: {
+      seatPositions: Prisma.$T_SEAT_POSITIONPayload<ExtArgs>[]
+    }
     scalars: $Extensions.GetPayloadResult<{
       userId: number
       employeeNumber: string
@@ -3816,6 +4033,7 @@ export namespace Prisma {
    */
   export interface Prisma__M_USERClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    seatPositions<T extends M_USER$seatPositionsArgs<ExtArgs> = {}>(args?: Subset<T, M_USER$seatPositionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3870,6 +4088,10 @@ export namespace Prisma {
      */
     omit?: M_USEROmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
+    /**
      * Filter, which M_USER to fetch.
      */
     where: M_USERWhereUniqueInput
@@ -3888,6 +4110,10 @@ export namespace Prisma {
      */
     omit?: M_USEROmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
+    /**
      * Filter, which M_USER to fetch.
      */
     where: M_USERWhereUniqueInput
@@ -3905,6 +4131,10 @@ export namespace Prisma {
      * Omit specific fields from the M_USER
      */
     omit?: M_USEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
     /**
      * Filter, which M_USER to fetch.
      */
@@ -3954,6 +4184,10 @@ export namespace Prisma {
      */
     omit?: M_USEROmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
+    /**
      * Filter, which M_USER to fetch.
      */
     where?: M_USERWhereInput
@@ -4002,6 +4236,10 @@ export namespace Prisma {
      */
     omit?: M_USEROmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
+    /**
      * Filter, which M_USERS to fetch.
      */
     where?: M_USERWhereInput
@@ -4044,6 +4282,10 @@ export namespace Prisma {
      * Omit specific fields from the M_USER
      */
     omit?: M_USEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
     /**
      * The data needed to create a M_USER.
      */
@@ -4092,6 +4334,10 @@ export namespace Prisma {
      * Omit specific fields from the M_USER
      */
     omit?: M_USEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
     /**
      * The data needed to update a M_USER.
      */
@@ -4159,6 +4405,10 @@ export namespace Prisma {
      */
     omit?: M_USEROmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
+    /**
      * The filter to search for the M_USER to update in case it exists.
      */
     where: M_USERWhereUniqueInput
@@ -4185,6 +4435,10 @@ export namespace Prisma {
      */
     omit?: M_USEROmit<ExtArgs> | null
     /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
+    /**
      * Filter which M_USER to delete.
      */
     where: M_USERWhereUniqueInput
@@ -4205,6 +4459,30 @@ export namespace Prisma {
   }
 
   /**
+   * M_USER.seatPositions
+   */
+  export type M_USER$seatPositionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the T_SEAT_POSITION
+     */
+    select?: T_SEAT_POSITIONSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the T_SEAT_POSITION
+     */
+    omit?: T_SEAT_POSITIONOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: T_SEAT_POSITIONInclude<ExtArgs> | null
+    where?: T_SEAT_POSITIONWhereInput
+    orderBy?: T_SEAT_POSITIONOrderByWithRelationInput | T_SEAT_POSITIONOrderByWithRelationInput[]
+    cursor?: T_SEAT_POSITIONWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: T_SEAT_POSITIONScalarFieldEnum | T_SEAT_POSITIONScalarFieldEnum[]
+  }
+
+  /**
    * M_USER without action
    */
   export type M_USERDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4216,6 +4494,10 @@ export namespace Prisma {
      * Omit specific fields from the M_USER
      */
     omit?: M_USEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_USERInclude<ExtArgs> | null
   }
 
 
@@ -4376,6 +4658,7 @@ export namespace Prisma {
     status?: IntFilter<"M_SEAT"> | number
     imageX?: IntFilter<"M_SEAT"> | number
     imageY?: IntFilter<"M_SEAT"> | number
+    seatPositions?: T_SEAT_POSITIONListRelationFilter
   }
 
   export type M_SEATOrderByWithRelationInput = {
@@ -4385,6 +4668,7 @@ export namespace Prisma {
     status?: SortOrder
     imageX?: SortOrder
     imageY?: SortOrder
+    seatPositions?: T_SEAT_POSITIONOrderByRelationAggregateInput
   }
 
   export type M_SEATWhereUniqueInput = Prisma.AtLeast<{
@@ -4397,6 +4681,7 @@ export namespace Prisma {
     status?: IntFilter<"M_SEAT"> | number
     imageX?: IntFilter<"M_SEAT"> | number
     imageY?: IntFilter<"M_SEAT"> | number
+    seatPositions?: T_SEAT_POSITIONListRelationFilter
   }, "seatId">
 
   export type M_SEATOrderByWithAggregationInput = {
@@ -4435,6 +4720,8 @@ export namespace Prisma {
     userId?: IntFilter<"T_SEAT_POSITION"> | number
     created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
     updated?: DateTimeNullableFilter<"T_SEAT_POSITION"> | Date | string | null
+    seat?: XOR<M_SEATScalarRelationFilter, M_SEATWhereInput>
+    user?: XOR<M_USERScalarRelationFilter, M_USERWhereInput>
   }
 
   export type T_SEAT_POSITIONOrderByWithRelationInput = {
@@ -4444,6 +4731,8 @@ export namespace Prisma {
     userId?: SortOrder
     created?: SortOrder
     updated?: SortOrderInput | SortOrder
+    seat?: M_SEATOrderByWithRelationInput
+    user?: M_USEROrderByWithRelationInput
   }
 
   export type T_SEAT_POSITIONWhereUniqueInput = Prisma.AtLeast<{
@@ -4457,6 +4746,8 @@ export namespace Prisma {
     userId?: IntFilter<"T_SEAT_POSITION"> | number
     created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
     updated?: DateTimeNullableFilter<"T_SEAT_POSITION"> | Date | string | null
+    seat?: XOR<M_SEATScalarRelationFilter, M_SEATWhereInput>
+    user?: XOR<M_USERScalarRelationFilter, M_USERWhereInput>
   }, "id" | "date_userId">
 
   export type T_SEAT_POSITIONOrderByWithAggregationInput = {
@@ -4497,6 +4788,7 @@ export namespace Prisma {
     password?: StringFilter<"M_USER"> | string
     adminFlag?: BoolFilter<"M_USER"> | boolean
     deleteFlag?: BoolFilter<"M_USER"> | boolean
+    seatPositions?: T_SEAT_POSITIONListRelationFilter
   }
 
   export type M_USEROrderByWithRelationInput = {
@@ -4508,6 +4800,7 @@ export namespace Prisma {
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
+    seatPositions?: T_SEAT_POSITIONOrderByRelationAggregateInput
   }
 
   export type M_USERWhereUniqueInput = Prisma.AtLeast<{
@@ -4522,6 +4815,7 @@ export namespace Prisma {
     password?: StringFilter<"M_USER"> | string
     adminFlag?: BoolFilter<"M_USER"> | boolean
     deleteFlag?: BoolFilter<"M_USER"> | boolean
+    seatPositions?: T_SEAT_POSITIONListRelationFilter
   }, "userId" | "employeeNumber">
 
   export type M_USEROrderByWithAggregationInput = {
@@ -4561,6 +4855,7 @@ export namespace Prisma {
     status: number
     imageX: number
     imageY: number
+    seatPositions?: T_SEAT_POSITIONCreateNestedManyWithoutSeatInput
   }
 
   export type M_SEATUncheckedCreateInput = {
@@ -4570,6 +4865,7 @@ export namespace Prisma {
     status: number
     imageX: number
     imageY: number
+    seatPositions?: T_SEAT_POSITIONUncheckedCreateNestedManyWithoutSeatInput
   }
 
   export type M_SEATUpdateInput = {
@@ -4579,6 +4875,7 @@ export namespace Prisma {
     status?: IntFieldUpdateOperationsInput | number
     imageX?: IntFieldUpdateOperationsInput | number
     imageY?: IntFieldUpdateOperationsInput | number
+    seatPositions?: T_SEAT_POSITIONUpdateManyWithoutSeatNestedInput
   }
 
   export type M_SEATUncheckedUpdateInput = {
@@ -4588,6 +4885,7 @@ export namespace Prisma {
     status?: IntFieldUpdateOperationsInput | number
     imageX?: IntFieldUpdateOperationsInput | number
     imageY?: IntFieldUpdateOperationsInput | number
+    seatPositions?: T_SEAT_POSITIONUncheckedUpdateManyWithoutSeatNestedInput
   }
 
   export type M_SEATCreateManyInput = {
@@ -4619,10 +4917,10 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONCreateInput = {
     date: Date | string
-    seatId: string
-    userId: number
     created: Date | string
     updated?: Date | string | null
+    seat: M_SEATCreateNestedOneWithoutSeatPositionsInput
+    user: M_USERCreateNestedOneWithoutSeatPositionsInput
   }
 
   export type T_SEAT_POSITIONUncheckedCreateInput = {
@@ -4636,10 +4934,10 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONUpdateInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: StringFieldUpdateOperationsInput | string
-    userId?: IntFieldUpdateOperationsInput | number
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    seat?: M_SEATUpdateOneRequiredWithoutSeatPositionsNestedInput
+    user?: M_USERUpdateOneRequiredWithoutSeatPositionsNestedInput
   }
 
   export type T_SEAT_POSITIONUncheckedUpdateInput = {
@@ -4662,8 +4960,6 @@ export namespace Prisma {
 
   export type T_SEAT_POSITIONUpdateManyMutationInput = {
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    seatId?: StringFieldUpdateOperationsInput | string
-    userId?: IntFieldUpdateOperationsInput | number
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
@@ -4685,6 +4981,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    seatPositions?: T_SEAT_POSITIONCreateNestedManyWithoutUserInput
   }
 
   export type M_USERUncheckedCreateInput = {
@@ -4696,6 +4993,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    seatPositions?: T_SEAT_POSITIONUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type M_USERUpdateInput = {
@@ -4706,6 +5004,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    seatPositions?: T_SEAT_POSITIONUpdateManyWithoutUserNestedInput
   }
 
   export type M_USERUncheckedUpdateInput = {
@@ -4717,6 +5016,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    seatPositions?: T_SEAT_POSITIONUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type M_USERCreateManyInput = {
@@ -4775,6 +5075,16 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type T_SEAT_POSITIONListRelationFilter = {
+    every?: T_SEAT_POSITIONWhereInput
+    some?: T_SEAT_POSITIONWhereInput
+    none?: T_SEAT_POSITIONWhereInput
+  }
+
+  export type T_SEAT_POSITIONOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type M_SEATCountOrderByAggregateInput = {
@@ -4872,6 +5182,16 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
+  export type M_SEATScalarRelationFilter = {
+    is?: M_SEATWhereInput
+    isNot?: M_SEATWhereInput
+  }
+
+  export type M_USERScalarRelationFilter = {
+    is?: M_USERWhereInput
+    isNot?: M_USERWhereInput
   }
 
   export type SortOrderInput = {
@@ -5036,6 +5356,20 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
+  export type T_SEAT_POSITIONCreateNestedManyWithoutSeatInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutSeatInput, T_SEAT_POSITIONUncheckedCreateWithoutSeatInput> | T_SEAT_POSITIONCreateWithoutSeatInput[] | T_SEAT_POSITIONUncheckedCreateWithoutSeatInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutSeatInput | T_SEAT_POSITIONCreateOrConnectWithoutSeatInput[]
+    createMany?: T_SEAT_POSITIONCreateManySeatInputEnvelope
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+  }
+
+  export type T_SEAT_POSITIONUncheckedCreateNestedManyWithoutSeatInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutSeatInput, T_SEAT_POSITIONUncheckedCreateWithoutSeatInput> | T_SEAT_POSITIONCreateWithoutSeatInput[] | T_SEAT_POSITIONUncheckedCreateWithoutSeatInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutSeatInput | T_SEAT_POSITIONCreateOrConnectWithoutSeatInput[]
+    createMany?: T_SEAT_POSITIONCreateManySeatInputEnvelope
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -5048,6 +5382,46 @@ export namespace Prisma {
     divide?: number
   }
 
+  export type T_SEAT_POSITIONUpdateManyWithoutSeatNestedInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutSeatInput, T_SEAT_POSITIONUncheckedCreateWithoutSeatInput> | T_SEAT_POSITIONCreateWithoutSeatInput[] | T_SEAT_POSITIONUncheckedCreateWithoutSeatInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutSeatInput | T_SEAT_POSITIONCreateOrConnectWithoutSeatInput[]
+    upsert?: T_SEAT_POSITIONUpsertWithWhereUniqueWithoutSeatInput | T_SEAT_POSITIONUpsertWithWhereUniqueWithoutSeatInput[]
+    createMany?: T_SEAT_POSITIONCreateManySeatInputEnvelope
+    set?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    disconnect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    delete?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    update?: T_SEAT_POSITIONUpdateWithWhereUniqueWithoutSeatInput | T_SEAT_POSITIONUpdateWithWhereUniqueWithoutSeatInput[]
+    updateMany?: T_SEAT_POSITIONUpdateManyWithWhereWithoutSeatInput | T_SEAT_POSITIONUpdateManyWithWhereWithoutSeatInput[]
+    deleteMany?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
+  }
+
+  export type T_SEAT_POSITIONUncheckedUpdateManyWithoutSeatNestedInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutSeatInput, T_SEAT_POSITIONUncheckedCreateWithoutSeatInput> | T_SEAT_POSITIONCreateWithoutSeatInput[] | T_SEAT_POSITIONUncheckedCreateWithoutSeatInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutSeatInput | T_SEAT_POSITIONCreateOrConnectWithoutSeatInput[]
+    upsert?: T_SEAT_POSITIONUpsertWithWhereUniqueWithoutSeatInput | T_SEAT_POSITIONUpsertWithWhereUniqueWithoutSeatInput[]
+    createMany?: T_SEAT_POSITIONCreateManySeatInputEnvelope
+    set?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    disconnect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    delete?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    update?: T_SEAT_POSITIONUpdateWithWhereUniqueWithoutSeatInput | T_SEAT_POSITIONUpdateWithWhereUniqueWithoutSeatInput[]
+    updateMany?: T_SEAT_POSITIONUpdateManyWithWhereWithoutSeatInput | T_SEAT_POSITIONUpdateManyWithWhereWithoutSeatInput[]
+    deleteMany?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
+  }
+
+  export type M_SEATCreateNestedOneWithoutSeatPositionsInput = {
+    create?: XOR<M_SEATCreateWithoutSeatPositionsInput, M_SEATUncheckedCreateWithoutSeatPositionsInput>
+    connectOrCreate?: M_SEATCreateOrConnectWithoutSeatPositionsInput
+    connect?: M_SEATWhereUniqueInput
+  }
+
+  export type M_USERCreateNestedOneWithoutSeatPositionsInput = {
+    create?: XOR<M_USERCreateWithoutSeatPositionsInput, M_USERUncheckedCreateWithoutSeatPositionsInput>
+    connectOrCreate?: M_USERCreateOrConnectWithoutSeatPositionsInput
+    connect?: M_USERWhereUniqueInput
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -5056,12 +5430,70 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type M_SEATUpdateOneRequiredWithoutSeatPositionsNestedInput = {
+    create?: XOR<M_SEATCreateWithoutSeatPositionsInput, M_SEATUncheckedCreateWithoutSeatPositionsInput>
+    connectOrCreate?: M_SEATCreateOrConnectWithoutSeatPositionsInput
+    upsert?: M_SEATUpsertWithoutSeatPositionsInput
+    connect?: M_SEATWhereUniqueInput
+    update?: XOR<XOR<M_SEATUpdateToOneWithWhereWithoutSeatPositionsInput, M_SEATUpdateWithoutSeatPositionsInput>, M_SEATUncheckedUpdateWithoutSeatPositionsInput>
+  }
+
+  export type M_USERUpdateOneRequiredWithoutSeatPositionsNestedInput = {
+    create?: XOR<M_USERCreateWithoutSeatPositionsInput, M_USERUncheckedCreateWithoutSeatPositionsInput>
+    connectOrCreate?: M_USERCreateOrConnectWithoutSeatPositionsInput
+    upsert?: M_USERUpsertWithoutSeatPositionsInput
+    connect?: M_USERWhereUniqueInput
+    update?: XOR<XOR<M_USERUpdateToOneWithWhereWithoutSeatPositionsInput, M_USERUpdateWithoutSeatPositionsInput>, M_USERUncheckedUpdateWithoutSeatPositionsInput>
+  }
+
+  export type T_SEAT_POSITIONCreateNestedManyWithoutUserInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutUserInput, T_SEAT_POSITIONUncheckedCreateWithoutUserInput> | T_SEAT_POSITIONCreateWithoutUserInput[] | T_SEAT_POSITIONUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutUserInput | T_SEAT_POSITIONCreateOrConnectWithoutUserInput[]
+    createMany?: T_SEAT_POSITIONCreateManyUserInputEnvelope
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+  }
+
+  export type T_SEAT_POSITIONUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutUserInput, T_SEAT_POSITIONUncheckedCreateWithoutUserInput> | T_SEAT_POSITIONCreateWithoutUserInput[] | T_SEAT_POSITIONUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutUserInput | T_SEAT_POSITIONCreateOrConnectWithoutUserInput[]
+    createMany?: T_SEAT_POSITIONCreateManyUserInputEnvelope
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+  }
+
   export type NullableStringFieldUpdateOperationsInput = {
     set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type T_SEAT_POSITIONUpdateManyWithoutUserNestedInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutUserInput, T_SEAT_POSITIONUncheckedCreateWithoutUserInput> | T_SEAT_POSITIONCreateWithoutUserInput[] | T_SEAT_POSITIONUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutUserInput | T_SEAT_POSITIONCreateOrConnectWithoutUserInput[]
+    upsert?: T_SEAT_POSITIONUpsertWithWhereUniqueWithoutUserInput | T_SEAT_POSITIONUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: T_SEAT_POSITIONCreateManyUserInputEnvelope
+    set?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    disconnect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    delete?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    update?: T_SEAT_POSITIONUpdateWithWhereUniqueWithoutUserInput | T_SEAT_POSITIONUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput | T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
+  }
+
+  export type T_SEAT_POSITIONUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<T_SEAT_POSITIONCreateWithoutUserInput, T_SEAT_POSITIONUncheckedCreateWithoutUserInput> | T_SEAT_POSITIONCreateWithoutUserInput[] | T_SEAT_POSITIONUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutUserInput | T_SEAT_POSITIONCreateOrConnectWithoutUserInput[]
+    upsert?: T_SEAT_POSITIONUpsertWithWhereUniqueWithoutUserInput | T_SEAT_POSITIONUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: T_SEAT_POSITIONCreateManyUserInputEnvelope
+    set?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    disconnect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    delete?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+    update?: T_SEAT_POSITIONUpdateWithWhereUniqueWithoutUserInput | T_SEAT_POSITIONUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput | T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -5236,6 +5668,272 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedBoolFilter<$PrismaModel>
     _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type T_SEAT_POSITIONCreateWithoutSeatInput = {
+    date: Date | string
+    created: Date | string
+    updated?: Date | string | null
+    user: M_USERCreateNestedOneWithoutSeatPositionsInput
+  }
+
+  export type T_SEAT_POSITIONUncheckedCreateWithoutSeatInput = {
+    id?: number
+    date: Date | string
+    userId: number
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type T_SEAT_POSITIONCreateOrConnectWithoutSeatInput = {
+    where: T_SEAT_POSITIONWhereUniqueInput
+    create: XOR<T_SEAT_POSITIONCreateWithoutSeatInput, T_SEAT_POSITIONUncheckedCreateWithoutSeatInput>
+  }
+
+  export type T_SEAT_POSITIONCreateManySeatInputEnvelope = {
+    data: T_SEAT_POSITIONCreateManySeatInput | T_SEAT_POSITIONCreateManySeatInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type T_SEAT_POSITIONUpsertWithWhereUniqueWithoutSeatInput = {
+    where: T_SEAT_POSITIONWhereUniqueInput
+    update: XOR<T_SEAT_POSITIONUpdateWithoutSeatInput, T_SEAT_POSITIONUncheckedUpdateWithoutSeatInput>
+    create: XOR<T_SEAT_POSITIONCreateWithoutSeatInput, T_SEAT_POSITIONUncheckedCreateWithoutSeatInput>
+  }
+
+  export type T_SEAT_POSITIONUpdateWithWhereUniqueWithoutSeatInput = {
+    where: T_SEAT_POSITIONWhereUniqueInput
+    data: XOR<T_SEAT_POSITIONUpdateWithoutSeatInput, T_SEAT_POSITIONUncheckedUpdateWithoutSeatInput>
+  }
+
+  export type T_SEAT_POSITIONUpdateManyWithWhereWithoutSeatInput = {
+    where: T_SEAT_POSITIONScalarWhereInput
+    data: XOR<T_SEAT_POSITIONUpdateManyMutationInput, T_SEAT_POSITIONUncheckedUpdateManyWithoutSeatInput>
+  }
+
+  export type T_SEAT_POSITIONScalarWhereInput = {
+    AND?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
+    OR?: T_SEAT_POSITIONScalarWhereInput[]
+    NOT?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
+    id?: IntFilter<"T_SEAT_POSITION"> | number
+    date?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    seatId?: StringFilter<"T_SEAT_POSITION"> | string
+    userId?: IntFilter<"T_SEAT_POSITION"> | number
+    created?: DateTimeFilter<"T_SEAT_POSITION"> | Date | string
+    updated?: DateTimeNullableFilter<"T_SEAT_POSITION"> | Date | string | null
+  }
+
+  export type M_SEATCreateWithoutSeatPositionsInput = {
+    seatId: string
+    tableId: string
+    seatNumber: number
+    status: number
+    imageX: number
+    imageY: number
+  }
+
+  export type M_SEATUncheckedCreateWithoutSeatPositionsInput = {
+    seatId: string
+    tableId: string
+    seatNumber: number
+    status: number
+    imageX: number
+    imageY: number
+  }
+
+  export type M_SEATCreateOrConnectWithoutSeatPositionsInput = {
+    where: M_SEATWhereUniqueInput
+    create: XOR<M_SEATCreateWithoutSeatPositionsInput, M_SEATUncheckedCreateWithoutSeatPositionsInput>
+  }
+
+  export type M_USERCreateWithoutSeatPositionsInput = {
+    employeeNumber: string
+    lastName: string
+    firstName: string
+    showName?: string | null
+    password: string
+    adminFlag: boolean
+    deleteFlag: boolean
+  }
+
+  export type M_USERUncheckedCreateWithoutSeatPositionsInput = {
+    userId?: number
+    employeeNumber: string
+    lastName: string
+    firstName: string
+    showName?: string | null
+    password: string
+    adminFlag: boolean
+    deleteFlag: boolean
+  }
+
+  export type M_USERCreateOrConnectWithoutSeatPositionsInput = {
+    where: M_USERWhereUniqueInput
+    create: XOR<M_USERCreateWithoutSeatPositionsInput, M_USERUncheckedCreateWithoutSeatPositionsInput>
+  }
+
+  export type M_SEATUpsertWithoutSeatPositionsInput = {
+    update: XOR<M_SEATUpdateWithoutSeatPositionsInput, M_SEATUncheckedUpdateWithoutSeatPositionsInput>
+    create: XOR<M_SEATCreateWithoutSeatPositionsInput, M_SEATUncheckedCreateWithoutSeatPositionsInput>
+    where?: M_SEATWhereInput
+  }
+
+  export type M_SEATUpdateToOneWithWhereWithoutSeatPositionsInput = {
+    where?: M_SEATWhereInput
+    data: XOR<M_SEATUpdateWithoutSeatPositionsInput, M_SEATUncheckedUpdateWithoutSeatPositionsInput>
+  }
+
+  export type M_SEATUpdateWithoutSeatPositionsInput = {
+    seatId?: StringFieldUpdateOperationsInput | string
+    tableId?: StringFieldUpdateOperationsInput | string
+    seatNumber?: IntFieldUpdateOperationsInput | number
+    status?: IntFieldUpdateOperationsInput | number
+    imageX?: IntFieldUpdateOperationsInput | number
+    imageY?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type M_SEATUncheckedUpdateWithoutSeatPositionsInput = {
+    seatId?: StringFieldUpdateOperationsInput | string
+    tableId?: StringFieldUpdateOperationsInput | string
+    seatNumber?: IntFieldUpdateOperationsInput | number
+    status?: IntFieldUpdateOperationsInput | number
+    imageX?: IntFieldUpdateOperationsInput | number
+    imageY?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type M_USERUpsertWithoutSeatPositionsInput = {
+    update: XOR<M_USERUpdateWithoutSeatPositionsInput, M_USERUncheckedUpdateWithoutSeatPositionsInput>
+    create: XOR<M_USERCreateWithoutSeatPositionsInput, M_USERUncheckedCreateWithoutSeatPositionsInput>
+    where?: M_USERWhereInput
+  }
+
+  export type M_USERUpdateToOneWithWhereWithoutSeatPositionsInput = {
+    where?: M_USERWhereInput
+    data: XOR<M_USERUpdateWithoutSeatPositionsInput, M_USERUncheckedUpdateWithoutSeatPositionsInput>
+  }
+
+  export type M_USERUpdateWithoutSeatPositionsInput = {
+    employeeNumber?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    adminFlag?: BoolFieldUpdateOperationsInput | boolean
+    deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type M_USERUncheckedUpdateWithoutSeatPositionsInput = {
+    userId?: IntFieldUpdateOperationsInput | number
+    employeeNumber?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    adminFlag?: BoolFieldUpdateOperationsInput | boolean
+    deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type T_SEAT_POSITIONCreateWithoutUserInput = {
+    date: Date | string
+    created: Date | string
+    updated?: Date | string | null
+    seat: M_SEATCreateNestedOneWithoutSeatPositionsInput
+  }
+
+  export type T_SEAT_POSITIONUncheckedCreateWithoutUserInput = {
+    id?: number
+    date: Date | string
+    seatId: string
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type T_SEAT_POSITIONCreateOrConnectWithoutUserInput = {
+    where: T_SEAT_POSITIONWhereUniqueInput
+    create: XOR<T_SEAT_POSITIONCreateWithoutUserInput, T_SEAT_POSITIONUncheckedCreateWithoutUserInput>
+  }
+
+  export type T_SEAT_POSITIONCreateManyUserInputEnvelope = {
+    data: T_SEAT_POSITIONCreateManyUserInput | T_SEAT_POSITIONCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type T_SEAT_POSITIONUpsertWithWhereUniqueWithoutUserInput = {
+    where: T_SEAT_POSITIONWhereUniqueInput
+    update: XOR<T_SEAT_POSITIONUpdateWithoutUserInput, T_SEAT_POSITIONUncheckedUpdateWithoutUserInput>
+    create: XOR<T_SEAT_POSITIONCreateWithoutUserInput, T_SEAT_POSITIONUncheckedCreateWithoutUserInput>
+  }
+
+  export type T_SEAT_POSITIONUpdateWithWhereUniqueWithoutUserInput = {
+    where: T_SEAT_POSITIONWhereUniqueInput
+    data: XOR<T_SEAT_POSITIONUpdateWithoutUserInput, T_SEAT_POSITIONUncheckedUpdateWithoutUserInput>
+  }
+
+  export type T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput = {
+    where: T_SEAT_POSITIONScalarWhereInput
+    data: XOR<T_SEAT_POSITIONUpdateManyMutationInput, T_SEAT_POSITIONUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type T_SEAT_POSITIONCreateManySeatInput = {
+    id?: number
+    date: Date | string
+    userId: number
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type T_SEAT_POSITIONUpdateWithoutSeatInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: M_USERUpdateOneRequiredWithoutSeatPositionsNestedInput
+  }
+
+  export type T_SEAT_POSITIONUncheckedUpdateWithoutSeatInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type T_SEAT_POSITIONUncheckedUpdateManyWithoutSeatInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    userId?: IntFieldUpdateOperationsInput | number
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type T_SEAT_POSITIONCreateManyUserInput = {
+    id?: number
+    date: Date | string
+    seatId: string
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type T_SEAT_POSITIONUpdateWithoutUserInput = {
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    seat?: M_SEATUpdateOneRequiredWithoutSeatPositionsNestedInput
+  }
+
+  export type T_SEAT_POSITIONUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    seatId?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type T_SEAT_POSITIONUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    seatId?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 

@@ -7,8 +7,9 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_URL_NON_POOLING")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 // 座席テーブル
@@ -19,6 +20,8 @@ model M_SEAT {
   status      Int                  // 1:流動 2:固定 3:不使用 4:予約
   imageX      Int
   imageY      Int
+
+   seatPositions T_SEAT_POSITION[] @relation("SeatToSeatPosition")
 }
 
 // 座席抽選結果
@@ -30,6 +33,9 @@ model T_SEAT_POSITION {
   created       DateTime
   updated       DateTime?
 
+  seat          M_SEAT   @relation("SeatToSeatPosition", fields: [seatId], references: [seatId])
+  user          M_USER   @relation("UserToSeatPosition", fields: [userId], references: [userId])
+
   @@unique([date, userId])
 }
 
@@ -40,10 +46,12 @@ model M_USER {
   employeeNumber String  @unique
   lastName       String
   firstName      String
-  showName       String?          
+  showName       String?
   password       String
   adminFlag      Boolean
   deleteFlag     Boolean
+
+  seatPositions T_SEAT_POSITION[] @relation("UserToSeatPosition")
 }
 
 

@@ -17,21 +17,41 @@ export async function POST(request) {
   const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
 
   try {
-    // 1. employeeNumberからuserIdを取得
+    // 1. ユーザーチェック
     const users = await prisma.m_USER.findMany({
       where: { employeeNumber: { in: employeeNumbers.map(String) } },
       select: { userId: true }
     });
     const userIds = users.map(u => u.userId);
+    if (userIds.length === 0) {
+      return NextResponse.json({ error: '該当するユーザーが存在しません' }, { status: 400 });
+    }
 
-    // 2. status=1のseatId取得
+    // 2. 座席マスタチェック
     const seats = await prisma.m_SEAT.findMany({
       where: { status: 1 },
       select: { seatId: true }
     });
     const allSeatIds = seats.map(s => s.seatId);
+    if (allSeatIds.length === 0) {
+      return NextResponse.json({ error: '利用可能な座席がありません' }, { status: 400 });
+    }
 
-    // 3. 今日既に割り当てられているseatIdを取得
+    // 3. テーブル登録済みチェック（ユーザー重複チェック）
+    const existingRecords = await prisma.t_SEAT_POSITION.findMany({
+      where: {
+        date: today,
+        userId: { in: userIds }
+      },
+      select: { userId: true }
+    });
+    const duplicateUserIds = new Set(existingRecords.map(r => r.userId));
+    const filteredUserIds = userIds.filter(id => !duplicateUserIds.has(id));
+    if (filteredUserIds.length === 0) {
+      return NextResponse.json({ error: 'すでに全てのユーザーが登録済みです' }, { status: 400 });
+    }
+
+    // 4. 残り座席数チェック
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const usedSeats = await prisma.t_SEAT_POSITION.findMany({
@@ -44,9 +64,10 @@ export async function POST(request) {
       select: { seatId: true }
     });
     const usedSeatIds = usedSeats.map(s => s.seatId);
-
-    // 4. 利用可能なseatIdを抽出
     const availableSeatIds = allSeatIds.filter(id => !usedSeatIds.includes(id));
+    if (availableSeatIds.length < filteredUserIds.length) {
+      return NextResponse.json({ error: '空き座席が足りません' }, { status: 400 });
+    }
 
     // 5. シャッフル
     for (let i = availableSeatIds.length - 1; i > 0; i--) {
@@ -54,12 +75,8 @@ export async function POST(request) {
       [availableSeatIds[i], availableSeatIds[j]] = [availableSeatIds[j], availableSeatIds[i]];
     }
 
-    if (availableSeatIds.length < userIds.length) {
-      return NextResponse.json({ error: '空き座席が足りません' }, { status: 400 });
-    }
-
     // 6. 登録データ作成
-    const createData = userIds.map((userId, idx) => ({
+    const createData = filteredUserIds.map((userId, idx) => ({
       date: today,
       seatId: availableSeatIds[idx],
       userId,
