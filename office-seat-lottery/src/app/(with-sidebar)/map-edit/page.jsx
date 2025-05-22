@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
-import SidebarRight from '@/components/sidebar/right-sidebar'
+import SidebarRight from '@/components/sidebar/right-sidebar-edit'
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
@@ -18,7 +18,7 @@ export default function Page() {
     const fetchSeats = async () => {
       setIsLoading(true) // 取得前にローディング開始
       try {
-        const res = await fetch('/api/seats')
+        const res = await fetch('/api/seats/edit')
         if (res.ok) {
           const seats = await res.json()
           setBoxes(
@@ -51,7 +51,7 @@ export default function Page() {
 
   // 保存ボタン押下時にAPIへboxesを送信
   const handleSave = async () => {
-    const res = await fetch('/api/seats', {
+    const res = await fetch('/api/seats/edit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ boxes }),

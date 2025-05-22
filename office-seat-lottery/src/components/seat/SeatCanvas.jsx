@@ -1,5 +1,3 @@
-'use client'
-
 import NameBox from './NameBox'
 import AddBoxButton from './AddBoxButton'
 
