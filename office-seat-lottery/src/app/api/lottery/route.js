@@ -3,93 +3,108 @@ import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
-export async function POST(request) {
-  // bodyの取得
-  const body = await request.json();
-  const { employeeNumbers } = body;
+function toStartOfUTCDay(date) {
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+}
 
-  if (!Array.isArray(employeeNumbers) || employeeNumbers.length === 0) {
-    return NextResponse.json({ error: 'employeeNumbers is required' }, { status: 400 });
+function getTomorrow(date) {
+  const tomorrow = new Date(date);
+  tomorrow.setUTCDate(date.getUTCDate() + 1);
+  return tomorrow;
+}
+
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+  return arr;
+}
 
-  // 今日の日付（00:00:00に揃える）
+export async function POST(request) {
   const now = new Date();
-  const today = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate()));
+  const today = toStartOfUTCDay(now);
 
   try {
-    // 1. ユーザーチェック
-    const users = await prisma.m_USER.findMany({
-      where: { employeeNumber: { in: employeeNumbers.map(String) } },
-      select: { userId: true }
-    });
+    // --- 1. リクエストバリデーション ---
+    const body = await request.json();
+    const { employeeNumbers } = body;
+    if (!Array.isArray(employeeNumbers) || employeeNumbers.length === 0) {
+      return errorResponse('社員番号リストが必要です', 400);
+    }
+
+    // --- 2. 必要な情報を一括取得 ---
+    // ユーザー情報・利用可能座席・本日登録済みユーザー・本日利用済み座席を同時取得
+    const [users, seats, todayRecords] = await Promise.all([
+      prisma.m_USER.findMany({
+        where: { employeeNumber: { in: employeeNumbers.map(String) } },
+        select: { userId: true }
+      }),
+      prisma.m_SEAT.findMany({
+        where: { status: 1 },
+        select: { seatId: true }
+      }),
+      prisma.t_SEAT_POSITION.findMany({
+        where: {
+          date: today,
+        },
+        select: { userId: true, seatId: true }
+      })
+    ]);
+
+    // --- 3. ユーザーチェック ---
     const userIds = users.map(u => u.userId);
     if (userIds.length === 0) {
-      return NextResponse.json({ error: '該当するユーザーが存在しません' }, { status: 400 });
+      return errorResponse('該当するユーザーが存在しません', 400);
     }
 
-    // 2. 座席マスタチェック
-    const seats = await prisma.m_SEAT.findMany({
-      where: { status: 1 },
-      select: { seatId: true }
-    });
+    // --- 4. 利用可能座席チェック ---
     const allSeatIds = seats.map(s => s.seatId);
     if (allSeatIds.length === 0) {
-      return NextResponse.json({ error: '利用可能な座席がありません' }, { status: 400 });
+      return errorResponse('利用可能な座席がありません', 400);
     }
 
-    // 3. テーブル登録済みチェック（ユーザー重複チェック）
-    const existingRecords = await prisma.t_SEAT_POSITION.findMany({
-      where: {
-        date: today,
-        userId: { in: userIds }
-      },
-      select: { userId: true }
-    });
-    const duplicateUserIds = new Set(existingRecords.map(r => r.userId));
-    const filteredUserIds = userIds.filter(id => !duplicateUserIds.has(id));
-    if (filteredUserIds.length === 0) {
-      return NextResponse.json({ error: 'すでに全てのユーザーが登録済みです' }, { status: 400 });
+    // --- 5. 本日登録済みユーザー・使用済み座席のセット化 ---
+    const registeredUserIds = new Set(todayRecords.map(r => r.userId));
+    const usedSeatIds = new Set(todayRecords.map(r => r.seatId));
+
+    // --- 6. 未登録ユーザーの抽出 ---
+    const targetUserIds = userIds.filter(id => !registeredUserIds.has(id));
+    if (targetUserIds.length === 0) {
+      return errorResponse('全てのユーザーが既に登録済みです', 400);
     }
 
-    // 4. 残り座席数チェック
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    const usedSeats = await prisma.t_SEAT_POSITION.findMany({
-      where: {
-        date: {
-          gte: today,
-          lt: tomorrow
-        }
-      },
-      select: { seatId: true }
-    });
-    const usedSeatIds = usedSeats.map(s => s.seatId);
-    const availableSeatIds = allSeatIds.filter(id => !usedSeatIds.includes(id));
-    if (availableSeatIds.length < filteredUserIds.length) {
-      return NextResponse.json({ error: '空き座席が足りません。本日は集中コーナーを使用してください。' }, { status: 400 });
+    // --- 7. 空き座席抽出 ---
+    const availableSeatIds = allSeatIds.filter(id => !usedSeatIds.has(id));
+    if (availableSeatIds.length < targetUserIds.length) {
+      return errorResponse('空き座席が足りません。本日は集中コーナーを使用してください。', 400);
     }
 
-    // 5. シャッフル
-    for (let i = availableSeatIds.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [availableSeatIds[i], availableSeatIds[j]] = [availableSeatIds[j], availableSeatIds[i]];
-    }
-
-    // 6. 登録データ作成
-    const createData = filteredUserIds.map((userId, idx) => ({
+    // --- 8. シャッフル・割り当て ---
+    const shuffledSeatIds = shuffleArray(availableSeatIds).slice(0, targetUserIds.length);
+    const createData = targetUserIds.map((userId, idx) => ({
       date: today,
-      seatId: availableSeatIds[idx],
+      seatId: shuffledSeatIds[idx],
       userId,
       created: now,
       updated: null
     }));
 
-    // 7. 登録
-    const result = await prisma.t_SEAT_POSITION.createMany({ data: createData });
+    // --- 9. 登録 ---
+    const dbResult = await prisma.t_SEAT_POSITION.createMany({ data: createData });
 
-    return NextResponse.json({ result: createData, dbResult: result }, { status: 200 });
+    return NextResponse.json({ result: createData, dbResult }, { status: 200 });
+
   } catch (error) {
     console.error("[API] DB登録エラー:", error);
-    return NextResponse.json({ error: String(error) }, { status: 500 });
+    return errorResponse('サーバーエラーが発生しました', 500, error);
   }
+}
+
+function errorResponse(message, status, error) {
+  if (error) {
+    console.error("[API] エラー詳細:", error);
+  }
+  return NextResponse.json({ error: message }, { status });
 }

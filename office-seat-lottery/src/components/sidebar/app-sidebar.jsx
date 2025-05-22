@@ -43,11 +43,11 @@ export function AppSidebar({
         url: "/map",
         icon: IconArmchair,
       },
-      {
-        name: "チーム予約",
-        url: "/appoint",
-        icon: IconUsers,
-      },
+      // {
+      //   name: "チーム予約",
+      //   url: "/appoint",
+      //   icon: IconUsers,
+      // },
     ],
     dataList: [
       {
@@ -55,11 +55,11 @@ export function AppSidebar({
         url: "/map-edit",
         icon: IconEdit,
       },
-      {
-        name: "データ管理",
-        url: "/data-management",
-        icon: IconDatabase,
-      },
+      // {
+      //   name: "データ管理",
+      //   url: "/data-management",
+      //   icon: IconDatabase,
+      // },
     ],
     navSecondary: [
       {
