@@ -63,7 +63,6 @@ export default function NameBox({
                 y={position.y}
                 onUpdate={onUpdate}
                 onDelete={onDelete}
-                onClose={() => setOpen(false)}
               />
             </PopoverContent>
           )}

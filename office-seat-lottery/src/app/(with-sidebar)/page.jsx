@@ -2,18 +2,9 @@
 import { useEffect, useState } from "react"
 import { SiteHeader } from '@/components/sidebar/site-header'
 import { MultiSelect } from "@/components/multi-select"
-import { Cat, Dog, Fish, Rabbit, Turtle, Ticket } from "lucide-react"
+import { Ticket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-
-
-// const employeeList = [
-//   { value: "10001", label: "山田太郎", icon: Turtle },
-//   { value: "10002", label: "佐藤花子", icon: Cat },
-//   { value: "10003", label: "鈴木一郎", icon: Dog },
-//   { value: "10004", label: "田中美咲", icon: Rabbit },
-//   { value: "10005", label: "伊藤健太", icon: Fish },
-// ]
 
 export default function Home() {
   const [employeeList, setEmployeeList] = useState([])
@@ -35,7 +26,7 @@ export default function Home() {
   // 抽選処理を実行する関数
   async function handleLottery() {
     if (selectedEmployees.length === 0) {
-      alert("社員番号を選択してください")
+      alert("社員を選択してください")
       return
     }
 
@@ -77,14 +68,14 @@ export default function Home() {
           <CardContent className="space-y-6">
             <div className="space-y-2">
               <label htmlFor="employee-select" className="text-lg font-medium">
-                社員番号選択
+                社員名
               </label>
               <MultiSelect
                 id="employee-select"
                 options={employeeList}
                 onValueChange={setSelectedEmployees}
                 defaultValue={[]}
-                placeholder="社員番号を選択してください"
+                placeholder="社員名を選択してください"
                 variant="inverted"
                 maxCount={5}
                 className="w-full"
