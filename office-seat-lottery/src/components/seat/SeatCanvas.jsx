@@ -9,6 +9,7 @@ export default function SeatCanvas({
   onDragStop,
   onUpdate,
   onDelete,
+  onExit,
   onAddBox,
   move = false,
 }) {
@@ -39,6 +40,7 @@ export default function SeatCanvas({
             onDragStop={onDragStop}
             onUpdate={onUpdate}
             onDelete={onDelete}
+            onExit={onExit}
             move={move}
           />
         </div>

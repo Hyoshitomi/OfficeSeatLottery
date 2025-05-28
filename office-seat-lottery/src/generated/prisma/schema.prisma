@@ -14,14 +14,35 @@ datasource db {
 
 // 座席テーブル
 model M_SEAT {
-  seatId     String @id // 例: "A1"
-  tableId    String // 例: "A"
-  seatNumber Int // 例: 1
-  status     Int // 1:流動 2:固定 3:不使用 4:予約
+  seatId     String @id
+  tableId    String
+  seatNumber Int
+  status     Int
   imageX     Int
   imageY     Int
 
-  seatPositions T_SEAT_POSITION[] @relation("SeatToSeatPosition")
+  seatAppointments M_SEAT_APPOINT[]
+  seatPositions    T_SEAT_POSITION[] @relation("SeatToSeatPosition")
+
+  @@index([status])
+  @@index([tableId])
+}
+
+// 予約座席テーブル
+model M_SEAT_APPOINT {
+  id        Int       @id @default(autoincrement())
+  seatId    String
+  userId    Int
+  startDate DateTime
+  endDate   DateTime
+  created   DateTime
+  updated   DateTime?
+
+  seat M_SEAT @relation(fields: [seatId], references: [seatId])
+  user M_USER @relation(fields: [userId], references: [userId])
+
+  @@index([seatId])
+  @@index([userId])
 }
 
 // 座席抽選結果
@@ -37,6 +58,9 @@ model T_SEAT_POSITION {
   user M_USER @relation("UserToSeatPosition", fields: [userId], references: [userId])
 
   @@unique([date, userId])
+  @@index([date])
+  @@index([seatId])
+  @@index([userId])
 }
 
 // ユーザー情報
@@ -50,7 +74,10 @@ model M_USER {
   adminFlag      Boolean
   deleteFlag     Boolean
 
-  seatPositions T_SEAT_POSITION[] @relation("UserToSeatPosition")
+  seatAppointments M_SEAT_APPOINT[]
+  seatPositions    T_SEAT_POSITION[] @relation("UserToSeatPosition")
+
+  @@index([employeeNumber])
 }
 
 // // 会議テーブル

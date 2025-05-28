@@ -4,19 +4,37 @@ import { useState, useRef, useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-edit'
+import { Progress } from "@/components/ui/progress"
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
   const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
   const [boxes, setBoxes] = useState([])
   const [tableName, setTableName] = useState("A")
-  const [isLoading, setIsLoading] = useState(false) // 追加
+  const [isLoading, setIsLoading] = useState(false)
+  const [progress, setProgress] = useState(0)
   const fileInputRef = useRef(null)
+
+  // 疑似プログレスバー
+  useEffect(() => {
+    if (!isLoading) {
+      setProgress(100)
+      return
+    }
+    setProgress(0)
+    const timer = setInterval(() => {
+      setProgress(prev => {
+        if (prev < 95) return Math.min(prev + Math.random() * 5, 95)
+        return prev
+      })
+    }, 100)
+    return () => clearInterval(timer)
+  }, [isLoading])
 
   // 初回マウント時にDBから座席データを取得
   useEffect(() => {
     const fetchSeats = async () => {
-      setIsLoading(true) // 取得前にローディング開始
+      setIsLoading(true)
       try {
         const res = await fetch('/api/seats/edit')
         if (res.ok) {
@@ -35,8 +53,14 @@ export default function Page() {
             }))
           )
         }
-      } finally {
-        setIsLoading(false) // 完了時にローディング終了
+        // ここで100%に
+        setProgress(100)
+        // 100%を一瞬見せてから画面を表示
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 400) // 0.4秒だけ100%を見せる
+      } catch {
+        setIsLoading(false)
       }
     }
     fetchSeats()
@@ -113,7 +137,12 @@ export default function Page() {
         <div className="flex-1 flex flex-col items-center justify-center">
           {isLoading ? (
             <div className="flex items-center justify-center h-full w-full">
-              <div className="text-xl font-bold animate-pulse">Loading...</div>
+              <div className="w-2/3 max-w-md">
+                <Progress value={progress} className="h-4" />
+                <div className="text-center mt-2 text-sm text-gray-500">
+                  {progress < 100 ? `読み込み中... (${Math.floor(progress)}%)` : "完了"}
+                </div>
+              </div>
             </div>
           ) : (
             <SeatCanvas
@@ -125,7 +154,7 @@ export default function Page() {
               onUpdate={handleUpdate}
               onDelete={handleDelete}
               onAddBox={handleAddBox}
-              move={true} //編集可能
+              move={true}
             />
           )}
         </div>

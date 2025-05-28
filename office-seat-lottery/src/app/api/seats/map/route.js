@@ -62,3 +62,21 @@ export async function GET() {
     return NextResponse.json({ error: e.message }, { status: 500 });
   }
 }
+
+
+export async function DELETE(request) {
+  try {
+    const { seatId } = await request.json();
+    if (!seatId) {
+      return NextResponse.json({ error: 'seatId is required' }, { status: 400 });
+    }
+
+    await prisma.$transaction(async (tx) => {
+      await tx.t_SEAT_POSITION.deleteMany({ where: { seatId } });
+    });
+
+    return NextResponse.json({ ok: true }, { status: 200 });
+  } catch (e) {
+    return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}

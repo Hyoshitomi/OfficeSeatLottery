@@ -63,48 +63,8 @@ export default function Page() {
     }
   };
 
-  const handleFileChange = file => {
-    setPreviewImage(URL.createObjectURL(file))
-  }
-
   const handleStop = (id, x, y) =>
     setBoxes(prev => prev.map(b => b.id === id ? { ...b, x, y } : b))
-
-  const handleUpdate = (id, newName, newStatus, newX, newY) =>
-    setBoxes(prev =>
-      prev.map(b =>
-        b.id === id
-          ? {
-              ...b,
-              name: newName,
-              status: newStatus,
-              x: newX !== undefined ? newX : b.x,
-              y: newY !== undefined ? newY : b.y,
-            }
-          : b
-      )
-    )
-
-  const handleDelete = id =>
-    setBoxes(prev => prev.filter(b => b.id !== id))
-
-  const handleAddBox = () => {
-    const nextId = Date.now()
-    const offset = 8
-    const boxW = 100
-    const boxH = 40
-    const gap = 8
-    const plusSize = 32
-    // テーブル名でカウント
-    const aCount = boxes.filter(b => new RegExp(`^${tableName}\\d+$`).test(b.name)).length
-    const name = `${tableName}${aCount + 1}`
-    const x = imgSize.width - offset - plusSize - gap - boxW
-    const y = offset + boxH
-    setBoxes(prev => [
-      ...prev,
-      { id: nextId, name, status: 'movable', x, y }
-    ])
-  }
 
   return (
     <>
@@ -122,9 +82,6 @@ export default function Page() {
               boxes={boxes}
               onImgLoad={handleImgLoad}
               onDragStop={handleStop}
-              onUpdate={handleUpdate}
-              onDelete={handleDelete}
-              onAddBox={handleAddBox}
               move={false} //編集不可能
             />
           )}
