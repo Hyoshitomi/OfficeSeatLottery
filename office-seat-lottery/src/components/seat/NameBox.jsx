@@ -24,14 +24,14 @@ export default function NameBox({
   onDragStop,
   onUpdate,
   onDelete,
+  onExit,
   move = false, 
 }) {
   const nodeRef = useRef(null)
   const [open, setOpen] = useState(false)
 
-  // 編集不可時は右クリックでPopoverを開けなくする
+  // moveに関係なく右クリックでPopoverを開く
   const handleContextMenu = e => {
-    if (!move) return
     e.preventDefault()
     setOpen(true)
   }
@@ -53,19 +53,19 @@ export default function NameBox({
           <PopoverTrigger asChild>
             <div>{name}</div>
           </PopoverTrigger>
-          {move && (
-            <PopoverContent side="right" align="center" className="p-0 bg-transparent border-0 shadow-none">
-              <NameBoxPopOver
-                id={id}
-                name={name}
-                status={status}
-                x={position.x}
-                y={position.y}
-                onUpdate={onUpdate}
-                onDelete={onDelete}
-              />
-            </PopoverContent>
-          )}
+          <PopoverContent side="right" align="center" className="p-0 bg-transparent border-0 shadow-none">
+          <NameBoxPopOver
+            id={id}
+            name={name}
+            status={status}
+            x={position.x}
+            y={position.y}
+            onUpdate={onUpdate}
+            onDelete={onDelete}
+            move={move}
+            onExit={onExit} // 追加
+          />
+          </PopoverContent>
         </Popover>
       </div>
     </Draggable>

@@ -1,16 +1,35 @@
 "use client"
+
 import { useEffect, useState } from "react"
 import { SiteHeader } from '@/components/sidebar/site-header'
 import { MultiSelect } from "@/components/multi-select"
 import { Ticket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Progress } from "@/components/ui/progress" // 追加
 
 export default function Home() {
   const [employeeList, setEmployeeList] = useState([])
   const [selectedEmployees, setSelectedEmployees] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const [progress, setProgress] = useState(0)
   const [result, setResult] = useState(null)
+
+  // 疑似プログレスバー
+  useEffect(() => {
+    if (!isLoading) {
+      setProgress(100)
+      return
+    }
+    setProgress(0)
+    const timer = setInterval(() => {
+      setProgress(prev => {
+        if (prev < 95) return Math.min(prev + Math.random() * 5, 95)
+        return prev
+      })
+    }, 100)
+    return () => clearInterval(timer)
+  }, [isLoading])
 
   // APIから社員リストを取得
   useEffect(() => {
@@ -45,7 +64,13 @@ export default function Home() {
       const data = await res.json()
 
       if (res.ok) {
-        setResult(`抽選が終了しました。座席表タブから結果を確認してください。`)
+        setResult(
+          <>
+            抽選が終了しました。
+            <br />
+            座席表タブから結果を確認してください。
+          </>
+        )  
       } else {
         alert(data.error || "抽選処理中にエラーが発生しました")
       }
@@ -53,7 +78,8 @@ export default function Home() {
       console.error("抽選処理エラー:", error)
       alert("抽選処理中にエラーが発生しました")
     } finally {
-      setIsLoading(false)
+      setProgress(100)
+      setTimeout(() => setIsLoading(false), 400) // 100%を一瞬見せてから解除
     }
   }
 
@@ -92,6 +118,16 @@ export default function Home() {
                 <Ticket className="ml-2 h-5 w-5" />
               </Button>
             </div>
+
+            {/* 抽選中のプログレスバーとメッセージ */}
+            {isLoading && (
+              <div className="mt-6">
+                <Progress value={progress} className="h-4" />
+                <div className="text-center mt-2 text-sm text-gray-500">
+                  {progress < 100 ? `抽選処理中... (${Math.floor(progress)}%)` : "完了"}
+                </div>
+              </div>
+            )}
 
             {result && (
               <div className="mt-6 p-4 bg-muted rounded-lg text-center">
