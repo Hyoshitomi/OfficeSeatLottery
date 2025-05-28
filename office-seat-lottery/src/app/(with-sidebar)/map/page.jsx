@@ -3,12 +3,30 @@
 import { useState, useRef, useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
+import { Progress } from "@/components/ui/progress"
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
   const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
   const [boxes, setBoxes] = useState([])
-  const [isLoading, setIsLoading] = useState(false) 
+  const [isLoading, setIsLoading] = useState(false)
+  const [progress, setProgress] = useState(0) 
+
+  // 疑似プログレスバー
+  useEffect(() => {
+    if (!isLoading) {
+      setProgress(100)
+      return
+    }
+    setProgress(0)
+    const timer = setInterval(() => {
+      setProgress(prev => {
+        if (prev < 95) return Math.min(prev + Math.random() * 5, 95)
+        return prev
+      })
+    }, 100)
+    return () => clearInterval(timer)
+  }, [isLoading])
 
   // 初回マウント時にDBから座席データを取得
   useEffect(() => {
@@ -21,7 +39,6 @@ export default function Page() {
           setBoxes(
             seats.map(seat => ({
               id: seat.seatId,
-              // APIのnameをそのまま使う
               name: seat.name ?? '',
               status:
                 seat.status === 1 ? 'movable' :
@@ -33,19 +50,23 @@ export default function Page() {
             }))
           )
         } else {
-          // エラー時の処理
           setBoxes([])
         }
+        setProgress(100)
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 400) // 0.4秒ほど100%を見せる
       } catch (e) {
-        // 通信エラー時の処理
         setBoxes([])
-      } finally {
-        setIsLoading(false)
+        setProgress(100)
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 400)
       }
     }
     fetchSeats()
   }, [])
-  
+
   const handleImgLoad = e => {
     setImgSize({
       width: e.currentTarget.naturalWidth,
@@ -55,41 +76,20 @@ export default function Page() {
 
   const handleStop = (id, x, y) =>
     setBoxes(prev => prev.map(b => b.id === id ? { ...b, x, y } : b))
-
-  const handleUpdate = (id, newName, newStatus, newX, newY) =>
-    setBoxes(prev =>
-      prev.map(b =>
-        b.id === id
-          ? {
-              ...b,
-              name: newName,
-              status: newStatus,
-              x: newX !== undefined ? newX : b.x,
-              y: newY !== undefined ? newY : b.y,
-            }
-          : b
-      )
-    )
-
-  const handleDelete = id =>
-    setBoxes(prev => prev.filter(b => b.id !== id))
-
-  const handleAddBox = () => {
-    const nextId = Date.now()
-    const offset = 8
-    const boxW = 100
-    const boxH = 40
-    const gap = 8
-    const plusSize = 32
-    // テーブル名でカウント
-    const aCount = boxes.filter(b => new RegExp(`^${tableName}\\d+$`).test(b.name)).length
-    const name = `${tableName}${aCount + 1}`
-    const x = imgSize.width - offset - plusSize - gap - boxW
-    const y = offset + boxH
-    setBoxes(prev => [
-      ...prev,
-      { id: nextId, name, status: 'movable', x, y }
-    ])
+  
+  const handleExit = async (seatId) => {
+    setBoxes(prev => prev.filter(b => b.id !== seatId))
+    const res = await fetch('/api/seats/map', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ seatId }),
+    });
+    if (res.ok) {
+      alert('席を解放しました');
+      // 状態更新など
+    } else {
+      alert('解放に失敗しました');
+    }
   }
 
   return (
@@ -99,7 +99,12 @@ export default function Page() {
         <div className="flex-1 flex flex-col items-center justify-center">
           {isLoading ? (
             <div className="flex items-center justify-center h-full w-full">
-              <div className="text-xl font-bold animate-pulse">Loading...</div>
+              <div className="w-2/3 max-w-md">
+                <Progress value={progress} className="h-4" />
+                <div className="text-center mt-2 text-sm text-gray-500">
+                  {progress < 100 ? `読み込み中... (${Math.floor(progress)}%)` : "完了"}
+                </div>
+              </div>
             </div>
           ) : (
             <SeatCanvas
@@ -108,9 +113,7 @@ export default function Page() {
               boxes={boxes}
               onImgLoad={handleImgLoad}
               onDragStop={handleStop}
-              onUpdate={handleUpdate}
-              onDelete={handleDelete}
-              onAddBox={handleAddBox}
+              onExit={handleExit}
               move={false}
             />
           )}

@@ -1,5 +1,5 @@
 import * as React from "react"
-import SaveButton from '@/components/seat/SaveButton'
+import { Button } from '@/components/ui/button'
 import AppointDataInput from '@/components/sidebar/nav/nav-appoint-data'
 
 import {
@@ -30,7 +30,7 @@ export default function SidebarRight({
         <SidebarMenu>
           <SidebarMenuItem>
             <div className="flex flex-col items-center gap-4 w-full">
-              <SaveButton onClick={onSave} />
+              <Button className="w-[90%]" onClick={onSave}>保存</Button>
             </div>
           </SidebarMenuItem>
         </SidebarMenu>
