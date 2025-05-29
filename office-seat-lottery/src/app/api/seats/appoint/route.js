@@ -5,23 +5,22 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     const seats = await prisma.m_SEAT.findMany({
-        where: {
-          status: 1
-        }
+      where: { status: 1 }
     });
     return NextResponse.json(seats, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 });
   }
 }
 
 export async function POST(request) {
   try {
-    const { boxes } = await request.json();
+    const body = await request.json();
+    const boxes = Array.isArray(body.boxes) ? body.boxes : [];
 
     // 1. 送信データをパース
     const seats = boxes.map(box => {
-      const match = box.name.match(/^([A-Z]+)(\d+)$/);
+      const match = typeof box.name === 'string' ? box.name.match(/^([A-Z]+)(\d+)$/) : null;
       const tableId = match ? match[1] : null;
       const seatNumber = match ? Number(match[2]) : null;
       let statusNum = 1;
@@ -60,10 +59,8 @@ export async function POST(request) {
     await prisma.$transaction(async (tx) => {
       // 削除（関連テーブルも削除）
       for (const seatId of deleteSeatIds) {
-        // 関連データ削除
         await tx.m_SEAT_APPOINT.deleteMany({ where: { seatId } });
         await tx.t_SEAT_POSITION.deleteMany({ where: { seatId } });
-        // 座席削除
         await tx.m_SEAT.delete({ where: { seatId } });
       }
 
@@ -89,6 +86,6 @@ export async function POST(request) {
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 });
   }
 }

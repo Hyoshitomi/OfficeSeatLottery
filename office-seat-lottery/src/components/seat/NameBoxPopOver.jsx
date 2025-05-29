@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
+import { toast } from "sonner" // 追加
 
 const statusOptions = [
   { value: 'movable', label: '流動' },
@@ -40,7 +41,7 @@ export default function NameBoxPopOver({
     }
   }, [id, editName, editStatus, x, y, onUpdate, move])
 
-  // move=false かつ statusが'movable' かつ 13時以降のみ解放ボタン表示
+  // move=false かつ statusが'movable' かつ 9時以降のみ解放ボタン表示
   if (!move) {
     if (status !== 'movable' || !isAfter) {
       return <></>
@@ -64,7 +65,9 @@ export default function NameBoxPopOver({
             <Button
               variant="destructive"
               onClick={() => {
+                // 解放時にトーストを表示
                 onExit?.(id)
+                toast.success("席を解放しました")
                 setShowConfirm(false)
               }}
             >
@@ -107,7 +110,10 @@ export default function NameBoxPopOver({
         </div>
         <Button
           variant="destructive"
-          onClick={() => { onDelete?.(id) }}
+          onClick={() => {
+            onDelete?.(id)
+            toast.success("座席を削除しました")
+          }}
         >
           削除
         </Button>

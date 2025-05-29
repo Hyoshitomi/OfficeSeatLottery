@@ -13,7 +13,6 @@ export default function AppointDataInput() {
         <div className="space-y-2">
           <Textarea
             value = "A"
-            // onChange={onChange}
             placeholder="テーブルIDを入力"
             className="focus-visible:ring-2 focus-visible:ring-offset-0 focus-visible:ring-blue-500"
           />

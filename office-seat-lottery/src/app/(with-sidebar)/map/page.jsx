@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
 import { Progress } from "@/components/ui/progress"
+import { toast } from "sonner" // 追加
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
@@ -33,7 +34,15 @@ export default function Page() {
     const fetchSeats = async () => {
       setIsLoading(true)
       try {
-        const res = await fetch('/api/seats/map')
+        // システム日付をYYYY-MM-DD形式で取得
+        const now = new Date()
+        const yyyy = now.getFullYear()
+        const mm = String(now.getMonth() + 1).padStart(2, '0')
+        const dd = String(now.getDate()).padStart(2, '0')
+        const dateStr = `${yyyy}-${mm}-${dd}`
+  
+        // 日付をクエリパラメータで渡す
+        const res = await fetch(`/api/seats/map?date=${dateStr}`)
         if (res.ok) {
           const seats = await res.json()
           setBoxes(
@@ -55,7 +64,7 @@ export default function Page() {
         setProgress(100)
         setTimeout(() => {
           setIsLoading(false)
-        }, 400) // 0.4秒ほど100%を見せる
+        }, 400)
       } catch (e) {
         setBoxes([])
         setProgress(100)
@@ -66,7 +75,7 @@ export default function Page() {
     }
     fetchSeats()
   }, [])
-
+  
   const handleImgLoad = e => {
     setImgSize({
       width: e.currentTarget.naturalWidth,
@@ -85,10 +94,10 @@ export default function Page() {
       body: JSON.stringify({ seatId }),
     });
     if (res.ok) {
-      alert('席を解放しました');
+      toast.success('席を解放しました') // 変更
       // 状態更新など
     } else {
-      alert('解放に失敗しました');
+      toast.error('解放に失敗しました') // 変更
     }
   }
 
