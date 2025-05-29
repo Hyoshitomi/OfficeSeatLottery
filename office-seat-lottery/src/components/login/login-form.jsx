@@ -53,7 +53,7 @@ export function LoginForm({ className, callbackUrl, ...props }) {
         if (redirectUrl.startsWith('/login')) {
           redirectUrl = '/';
         }
-        router.push(redirectUrl);
+        window.location.replace(redirectUrl);
       }
     } catch (err) {
       toast.error("認証エラーが発生しました"); // 変更
