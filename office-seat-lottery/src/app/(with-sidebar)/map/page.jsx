@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
 import { Progress } from "@/components/ui/progress"
+import { toast } from "sonner" // 追加
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
@@ -85,10 +86,10 @@ export default function Page() {
       body: JSON.stringify({ seatId }),
     });
     if (res.ok) {
-      alert('席を解放しました');
+      toast.success('席を解放しました') // 変更
       // 状態更新など
     } else {
-      alert('解放に失敗しました');
+      toast.error('解放に失敗しました') // 変更
     }
   }
 

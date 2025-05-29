@@ -58,11 +58,10 @@ export async function GET() {
 
     return NextResponse.json(seats, { status: 200 });
   } catch (e) {
-    console.error(e); // エラー内容をログ出力
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
-
 
 export async function DELETE(request) {
   try {
@@ -77,6 +76,7 @@ export async function DELETE(request) {
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

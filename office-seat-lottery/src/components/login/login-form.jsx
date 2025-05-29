@@ -1,7 +1,7 @@
 "use client";
+
 import { useState, useCallback } from "react";
 import Link from 'next/link';
-
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,30 +11,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import { useDebouncedCallback } from "use-debounce";
 import { signIn } from "next-auth/react";
+import { toast } from "sonner"; // 追加
 
 export function LoginForm({ className, ...props }) {
   const [employeeNumber, setEmployeeNumber] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const router = useRouter();
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setError("");
 
     // バリデーション
     if (!employeeNumber.match(/^[a-zA-Z0-9]+$/)) {
-      setError("社員番号は半角英数字のみ入力可能です");
+      toast.error("社員番号は半角英数字のみ入力可能です"); // 変更
       setIsLoading(false);
       return;
     }
 
     if (!password.match(/^[a-zA-Z0-9!?_$#]+$/)) {
-      setError("使用可能な文字: 半角英数字と!?_$#");
+      toast.error("使用可能な文字: 半角英数字と!?_$#"); // 変更
       setIsLoading(false);
       return;
     }
@@ -48,12 +46,12 @@ export function LoginForm({ className, ...props }) {
       });
 
       if (res?.error) {
-        setError("社員番号またはパスワードが正しくありません");
+        toast.error("社員番号またはパスワードが正しくありません"); // 変更
       } else if (res?.ok) {
         router.push(res.url || '/');
       }
     } catch (err) {
-      setError("認証エラーが発生しました");
+      toast.error("認証エラーが発生しました"); // 変更
     } finally {
       setIsLoading(false);
     }
@@ -116,8 +114,6 @@ export function LoginForm({ className, ...props }) {
                     </button>
                   </div>
                 </div>
-
-                {error && <div className="text-sm text-red-500 text-center">{error}</div>}
 
                 <Button type="submit" className="w-full" disabled={isLoading}>
                   {isLoading ? "認証中..." : "Login"}

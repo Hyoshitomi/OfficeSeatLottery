@@ -7,7 +7,9 @@ export async function GET() {
     const seats = await prisma.m_SEAT.findMany();
     return NextResponse.json(seats, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    // 安全にエラーメッセージを返す
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 
@@ -16,8 +18,8 @@ export async function POST(request) {
     const { boxes } = await request.json();
 
     // 1. 送信データをパース
-    const seats = boxes.map(box => {
-      const match = box.name.match(/^([A-Z]+)(\d+)$/);
+    const seats = Array.isArray(boxes) ? boxes.map(box => {
+      const match = typeof box.name === 'string' ? box.name.match(/^([A-Z]+)(\d+)$/) : null;
       const tableId = match ? match[1] : null;
       const seatNumber = match ? Number(match[2]) : null;
       let statusNum = 1;
@@ -31,10 +33,10 @@ export async function POST(request) {
         tableId,
         seatNumber,
         status: statusNum,
-        imageX: Math.round(box.x),
-        imageY: Math.round(box.y),
+        imageX: typeof box.x === 'number' ? Math.round(box.x) : 0,
+        imageY: typeof box.y === 'number' ? Math.round(box.y) : 0,
       };
-    }).filter(seat => seat.seatId);
+    }).filter(seat => seat.seatId) : [];
 
     // 2. DBから現状の座席一覧を取得
     const dbSeats = await prisma.m_SEAT.findMany();
@@ -56,10 +58,8 @@ export async function POST(request) {
     await prisma.$transaction(async (tx) => {
       // 削除（関連テーブルも削除）
       for (const seatId of deleteSeatIds) {
-        // 関連データ削除
         await tx.m_SEAT_APPOINT.deleteMany({ where: { seatId } });
         await tx.t_SEAT_POSITION.deleteMany({ where: { seatId } });
-        // 座席削除
         await tx.m_SEAT.delete({ where: { seatId } });
       }
 
@@ -85,6 +85,8 @@ export async function POST(request) {
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    // 安全にエラーメッセージを返す
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

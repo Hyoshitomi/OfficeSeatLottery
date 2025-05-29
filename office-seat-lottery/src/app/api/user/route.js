@@ -61,10 +61,10 @@ export async function GET() {
 
     return NextResponse.json(employeeList, { status: 200 });
   } catch (e) {
-    return NextResponse.json({ error: e.message }, { status: 500 });
+    const message = e instanceof Error ? e.message : String(e);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
-
 
 const SALT_ROUNDS = 12; // bcryptのラウンド数
 export async function PATCH(request) {
@@ -111,7 +111,7 @@ export async function PATCH(request) {
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (e) {
-    // エラー内容はログ等で記録し、レスポンスには詳細を出さない
+    // エラー内容はレスポンスには詳細を出さない
     return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }

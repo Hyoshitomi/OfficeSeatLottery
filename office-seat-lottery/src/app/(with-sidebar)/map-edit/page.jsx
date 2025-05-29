@@ -6,6 +6,7 @@ import SeatCanvas from '@/components/seat/SeatCanvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-edit'
 import { Progress } from "@/components/ui/progress"
 import { useSession } from "next-auth/react";
+import { toast } from "sonner" // 追加
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
@@ -84,9 +85,9 @@ export default function Page() {
       body: JSON.stringify({ boxes }),
     });
     if (res.ok) {
-      alert('保存しました！');
+      toast.success('保存しました！'); // 変更
     } else {
-      alert('保存に失敗しました');
+      toast.error('保存に失敗しました'); // 変更
     }
   };
 
