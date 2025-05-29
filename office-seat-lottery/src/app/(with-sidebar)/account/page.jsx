@@ -7,8 +7,10 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Separator } from "@/components/ui/separator"
-import { Camera, Eye, EyeOff, Check, X } from "lucide-react"
+import { Eye, EyeOff, Check, X } from "lucide-react"
 import { useSession } from "next-auth/react";
+import { Progress } from "@/components/ui/progress"
+import { toast } from "sonner"
 
 export default function MyPage() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
@@ -17,7 +19,7 @@ export default function MyPage() {
   const [validationAttempted, setValidationAttempted] = useState(false)
   const { data: session } = useSession();
   const user = session?.user;
-  
+
   const [formData, setFormData] = useState({
     name: `${user?.lastName} ${user?.firstName}` ?? "取得失敗",
     employeeId: user?.employeeNumber ?? "取得失敗",
@@ -28,7 +30,11 @@ export default function MyPage() {
 
   const [profileImage, setProfileImage] = useState(`/avatars/${user?.employeeNumber}.png`)
 
-  // パスワード要件チェック関数を更新
+  // プログレスバー用
+  const [isLoading, setIsLoading] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  // パスワード要件チェック関数
   const checkPasswordRequirements = (password) => {
     return {
       length: password.length >= 8,
@@ -47,11 +53,23 @@ export default function MyPage() {
     if (field === "name" || field === "employeeId") {
       return
     }
-
     setFormData((prev) => ({
       ...prev,
       [field]: value,
     }))
+  }
+
+  // 疑似プログレスバー
+  const startProgress = () => {
+    setIsLoading(true)
+    setProgress(0)
+    const timer = setInterval(() => {
+      setProgress((prev) => {
+        if (prev < 95) return Math.min(prev + Math.random() * 5, 95)
+        return prev
+      })
+    }, 100)
+    return timer
   }
 
   const handleSave = async () => {
@@ -59,28 +77,23 @@ export default function MyPage() {
 
     // パスワード変更がある場合のバリデーション
     if (formData.newPassword) {
-      // パスワード要件チェック
       if (!allRequirementsMet) {
-        alert("パスワードが要件を満たしていません")
+        toast.error("パスワードが要件を満たしていません")
         return
       }
-
-      // パスワード確認チェック
       if (formData.newPassword !== formData.confirmPassword) {
-        alert("新しいパスワードと確認用パスワードが一致しません")
+        toast.error("新しいパスワードと確認用パスワードが一致しません")
         return
       }
-
-      // 現在のパスワードが入力されているかチェック
       if (!formData.currentPassword) {
-        alert("現在のパスワードを入力してください")
+        toast.error("現在のパスワードを入力してください")
         return
       }
     }
 
     // パスワード変更がある場合のみAPIを呼び出す
     if (formData.newPassword) {
-      // ここでAPIを呼び出す
+      const timer = startProgress()
       try {
         const res = await fetch("/api/user", {
           method: "PATCH",
@@ -92,28 +105,34 @@ export default function MyPage() {
             newPassword: formData.newPassword,
           }),
         });
-
-        const data = await res.json();
-
-        if (res.ok) {
-          alert("パスワードが変更されました");
-          setFormData((prev) => ({
-            ...prev,
-            currentPassword: "",
-            newPassword: "",
-            confirmPassword: "",
-          }));
-          setValidationAttempted(false);
-        } else {
-          alert(data.error || "パスワード変更に失敗しました");
-        }
+        const data = await res.json()
+        clearInterval(timer)
+        setProgress(100)
+        setTimeout(() => {
+          setIsLoading(false)
+          if (res.ok) {
+            toast.success("パスワードが変更されました")
+            setFormData((prev) => ({
+              ...prev,
+              currentPassword: "",
+              newPassword: "",
+              confirmPassword: "",
+            }))
+            setValidationAttempted(false)
+          } else {
+            toast.error(data.error || "パスワード変更に失敗しました")
+          }
+        }, 400)
       } catch (error) {
-        alert("通信エラーが発生しました");
+        clearInterval(timer)
+        setIsLoading(false)
+        toast.error("通信エラーが発生しました")
       }
-      return;
+      return
     }
 
-  alert("プロフィールが更新されました")
+    // プロフィールのみ更新（ここではAPI呼び出し省略）
+    toast.success("プロフィールが更新されました")
     setValidationAttempted(false)
   }
 
@@ -148,6 +167,16 @@ export default function MyPage() {
           <p className="text-gray-600 mt-2">プロフィール情報の確認とパスワード変更ができます</p>
         </div>
 
+        {/* プログレスバー表示 */}
+        {isLoading && (
+          <div className="mb-6">
+            <Progress value={progress} className="h-3" />
+            <div className="text-center mt-2 text-sm text-gray-500">
+              {progress < 100 ? `処理中... (${Math.floor(progress)}%)` : "完了"}
+            </div>
+          </div>
+        )}
+
         <div className="space-y-6">
           {/* プロフィール情報カード */}
           <Card>
@@ -166,7 +195,7 @@ export default function MyPage() {
                   </div>
                 </div>
               )}
-              
+
               <Separator />
 
               {/* 名前 */}
@@ -331,7 +360,7 @@ export default function MyPage() {
 
           {/* 保存ボタン */}
           <div className="flex justify-end">
-            <Button onClick={handleSave} size="lg" className="px-8">
+            <Button onClick={handleSave} size="lg" className="px-8" disabled={isLoading}>
               変更を保存
             </Button>
           </div>
