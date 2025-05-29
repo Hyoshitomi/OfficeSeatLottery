@@ -136,7 +136,9 @@ export default function Page() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           bg: bgURL,
-          boxes: boxes
+          boxes: boxes,
+          width: imgSize.width,
+          height: imgSize.height  
         })
       })
       if (!res.ok) {

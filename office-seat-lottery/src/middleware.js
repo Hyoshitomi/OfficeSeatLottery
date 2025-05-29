@@ -1,20 +1,30 @@
-import { withAuth } from "next-auth/middleware";
-import { NextResponse } from "next/server"; // ← これが必要
+import { getToken } from "next-auth/jwt";
+import { NextResponse } from "next/server";
 
-export default withAuth(
-  function middleware(req) {
-    // 認証されていない場合は自動で /login へリダイレクトされるため、通常は何も書かなくてOK
-    return NextResponse.next();
-  },
-  {
-    pages: {
-      signIn: "/login",
-    },
+export default async function middleware(req) {
+  const token = await getToken({ req });
+  const isAuthenticated = !!token;
+
+  // 認証済みで /login にアクセスした場合はトップページへリダイレクト
+  if (req.nextUrl.pathname.startsWith("/login") && isAuthenticated) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
-);
+
+  // 未認証で /login 以外にアクセスした場合はログイン画面へ
+  if (
+    !isAuthenticated &&
+    !req.nextUrl.pathname.startsWith("/login") &&
+    !req.nextUrl.pathname.startsWith("/contact")
+  ) {
+    return NextResponse.redirect(new URL("/login", req.url));
+  }
+
+  // それ以外は通常通り
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
-    "/((?!login|contact|api|_next/|favicon.ico|BMClogo_clear.png).*)",
+    "/((?!api|_next/static|_next/image|.*\\.png$).*)",
   ],
 };
