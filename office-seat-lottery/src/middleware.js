@@ -15,6 +15,6 @@ export default withAuth(
 
 export const config = {
   matcher: [
-    "/((?!login|api|_next/|favicon.ico|BMClogo_clear.png).*)",
+    "/((?!login|contact|api|_next/|favicon.ico|BMClogo_clear.png).*)",
   ],
 };

@@ -20,16 +20,18 @@ export const authOptions = {
           const user = await prisma.M_USER.findUnique({
             where: { employeeNumber: credentials.employeeNumber },
           });
+          console.log("user:", user);
           if (
             user &&
-            !user.isDeleted &&
+            !user.deleteFlag &&
             (await bcrypt.compare(credentials.password, user.password))
           ) {
             return {
-              id: user.id,
+              userId: user.userId,
               employeeNumber: user.employeeNumber,
-              isAdmin: user.isAdmin,
+              adminFlag: user.adminFlag,
               lastName: user.lastName,
+              firstName: user.firstName,
             };
           }
           return null;
@@ -43,19 +45,23 @@ export const authOptions = {
   session: { strategy: "jwt" },
   callbacks: {
     async session({ session, token }) {
+      if (!session.user) session.user = {};
       if (token) {
-        session.user.id = token.sub;
+        session.user.userId = token.userId || token.sub;
         session.user.employeeNumber = token.employeeNumber;
-        session.user.isAdmin = token.isAdmin;
+        session.user.adminFlag = token.adminFlag;
         session.user.lastName = token.lastName;
+        session.user.firstName = token.firstName;
       }
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
+        token.userId = user.userId; 
         token.employeeNumber = user.employeeNumber;
-        token.isAdmin = user.isAdmin;
+        token.adminFlag = user.adminFlag;
         token.lastName = user.lastName;
+        token.firstName = user.firstName;
       }
       return token;
     },

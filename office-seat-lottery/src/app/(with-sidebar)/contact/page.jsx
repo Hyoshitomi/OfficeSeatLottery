@@ -7,6 +7,7 @@ import { SiteHeader } from '@/components/sidebar/site-header'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { FormInput } from '@/components/form/form-input'
+import { toast } from "sonner" // 追加
 
 const FormSchema = z.object({
   email: z.string().email({ message: 'メールアドレスの形式が正しくありません' }),
@@ -30,9 +31,30 @@ export default function Home() {
     },
     resolver: zodResolver(FormSchema),
   })
-  const onSubmit = form.handleSubmit(data => {
-    console.log(data)
-  })
+
+  // 送信処理
+  const onSubmit = form.handleSubmit(
+    async (data) => {
+      try {
+        // ここでAPI送信処理など
+        // await fetch(...)
+
+        toast.success('送信が完了しました。')
+        form.reset()
+      } catch (error) {
+        toast.error('送信に失敗しました。もう一度お試しください。')
+      }
+    },
+    (errors) => {
+      // バリデーションエラー時
+      const firstError = Object.values(errors)[0]
+      if (firstError && firstError.message) {
+        toast.error(firstError.message )
+      } else {
+        toast.error('入力内容をご確認ください。')
+      }
+    }
+  )
 
   const inquiryType = form.watch('inquiryType')
 
@@ -60,7 +82,7 @@ export default function Home() {
               />
               <FormInput
                 control={form.control}
-                name="emmployeeNumber"
+                name="employeeNumber"
                 label="社員番号"
                 placeholder="社員番号を入力してください"
               />

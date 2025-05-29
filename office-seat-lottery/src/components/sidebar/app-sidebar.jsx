@@ -7,6 +7,7 @@ import {
   IconDatabase,
   IconDice,
   IconEdit,
+  IconFileTypePng,
   IconMail,
   IconUsers,
 } from "@tabler/icons-react"
@@ -43,11 +44,11 @@ export function AppSidebar({
         url: "/map",
         icon: IconArmchair,
       },
-      // {
-      //   name: "チーム予約",
-      //   url: "/appoint",
-      //   icon: IconUsers,
-      // },
+      {
+        name: "チーム予約",
+        url: "/appoint",
+        icon: IconUsers,
+      },
     ],
     dataList: [
       {
@@ -55,11 +56,16 @@ export function AppSidebar({
         url: "/map-edit",
         icon: IconEdit,
       },
-      // {
-      //   name: "データ管理",
-      //   url: "/data-management",
-      //   icon: IconDatabase,
-      // },
+      {
+        name: "座席図 画像",
+        url: "/map-img",
+        icon: IconFileTypePng,
+      },
+      {
+        name: "データ管理",
+        url: "/data-management",
+        icon: IconDatabase,
+      },
     ],
     navSecondary: [
       {
@@ -94,11 +100,13 @@ export function AppSidebar({
           items={data.navMain}
           className="flex flex-col gap-2"
         />
-        <SidebarNav
-          items={data.dataList}
-          className="group-data-[collapsible=icon]:hidden"
-          label="管理者"
-        />
+        {user?.adminFlag && (
+          <SidebarNav
+            items={data.dataList}
+            className="group-data-[collapsible=icon]:hidden"
+            label="管理者"
+          />
+        )}
         <SidebarNav 
           items={data.navSecondary} 
           className="mt-auto" 
