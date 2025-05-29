@@ -5,6 +5,7 @@ import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/SeatCanvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-edit'
 import { Progress } from "@/components/ui/progress"
+import { useSession } from "next-auth/react";
 
 export default function Page() {
   const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
@@ -14,6 +15,8 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const fileInputRef = useRef(null)
+  const { data: session } = useSession();
+  const user = session?.user;
 
   // 疑似プログレスバー
   useEffect(() => {
@@ -130,6 +133,18 @@ export default function Page() {
     ])
   }
 
+  if (!user?.adminFlag) {
+    return (
+      <>
+        <SiteHeader title="座席図編集"/>
+        <main className="flex-1 overflow-auto p-4">
+          <div>
+            <p>ここは管理者のみ閲覧可能なページです。</p>
+          </div>
+        </main>
+      </>
+    )
+  }
   return (
     <>
       <SiteHeader title="座席図編集" />

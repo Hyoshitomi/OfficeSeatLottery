@@ -1,12 +1,13 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { SiteHeader } from '@/components/sidebar/site-header'
+import { SiteHeader } from "@/components/sidebar/site-header"
 import { MultiSelect } from "@/components/multi-select"
 import { Ticket } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress" // 追加
+import { Progress } from "@/components/ui/progress"
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   const [employeeList, setEmployeeList] = useState([])
@@ -14,6 +15,9 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [result, setResult] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)
+  const { data: session } = useSession();
+  const user = session?.user;
 
   // 疑似プログレスバー
   useEffect(() => {
@@ -23,7 +27,7 @@ export default function Home() {
     }
     setProgress(0)
     const timer = setInterval(() => {
-      setProgress(prev => {
+      setProgress((prev) => {
         if (prev < 95) return Math.min(prev + Math.random() * 5, 95)
         return prev
       })
@@ -31,16 +35,25 @@ export default function Home() {
     return () => clearInterval(timer)
   }, [isLoading])
 
-  // APIから社員リストを取得
+  // APIから社員リストを取得（管理者の場合のみ）
   useEffect(() => {
-    fetch("/api/user")
-      .then(res => res.json())
-      .then(data => setEmployeeList(data))
-      .catch(e => {
-        alert("社員リストの取得に失敗しました")
-        setEmployeeList([])
-      })
-  }, [])
+    // 現在のユーザー情報を取得
+    setCurrentUser(user)
+    // 非管理者の場合は自分の社員番号を自動選択
+    if (!user?.adminFlag) {
+      setSelectedEmployees([user?.employeeNumber])
+    }
+
+    if (currentUser?.adminFlag) {
+      fetch("/api/user")
+        .then((res) => res.json())
+        .then((data) => setEmployeeList(data))
+        .catch((e) => {
+          alert("社員リストの取得に失敗しました")
+          setEmployeeList([])
+        })
+    }
+  }, [currentUser])
 
   // 抽選処理を実行する関数
   async function handleLottery() {
@@ -69,8 +82,8 @@ export default function Home() {
             抽選が終了しました。
             <br />
             座席表タブから結果を確認してください。
-          </>
-        )  
+          </>,
+        )
       } else {
         alert(data.error || "抽選処理中にエラーが発生しました")
       }
@@ -92,21 +105,32 @@ export default function Home() {
             <CardTitle className="text-2xl font-bold">席抽選システム</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <label htmlFor="employee-select" className="text-lg font-medium">
-                社員名
-              </label>
-              <MultiSelect
-                id="employee-select"
-                options={employeeList}
-                onValueChange={setSelectedEmployees}
-                defaultValue={[]}
-                placeholder="社員名を選択してください"
-                variant="inverted"
-                maxCount={5}
-                className="w-full"
-              />
-            </div>
+            {/* 管理者の場合のみ社員選択を表示 */}
+            {currentUser?.adminFlag && (
+              <div className="space-y-2">
+                <label htmlFor="employee-select" className="text-lg font-medium">
+                  社員名
+                </label>
+                <MultiSelect
+                  id="employee-select"
+                  options={employeeList}
+                  onValueChange={setSelectedEmployees}
+                  defaultValue={[]}
+                  placeholder="社員名を選択してください"
+                  variant="inverted"
+                  maxCount={5}
+                  className="w-full"
+                />
+              </div>
+            )}
+
+            {/* 非管理者の場合の説明文 */}
+            {!currentUser?.adminFlag && (
+              <div className="text-center p-4 bg-muted rounded-lg">
+                <p className="text-lg font-medium">あなたの席を抽選します</p>
+                <p className="text-sm text-muted-foreground mt-1">抽選ボタンを押して席を決定してください</p>
+              </div>
+            )}
 
             <div className="pt-4">
               <Button

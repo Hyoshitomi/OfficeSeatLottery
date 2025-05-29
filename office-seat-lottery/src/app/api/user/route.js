@@ -1,5 +1,9 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from "@/generated/prisma";
+import bcrypt from 'bcryptjs';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/authOptions";
+
 const prisma = new PrismaClient();
 
 export async function GET() {
@@ -58,5 +62,56 @@ export async function GET() {
     return NextResponse.json(employeeList, { status: 200 });
   } catch (e) {
     return NextResponse.json({ error: e.message }, { status: 500 });
+  }
+}
+
+
+const SALT_ROUNDS = 12; // bcryptのラウンド数
+export async function PATCH(request) {
+  try {
+    // セッション認証（API保護）
+    const session = await getServerSession(authOptions);
+    if (!session?.user?.employeeNumber) {
+      return NextResponse.json({ error: '認証が必要です' }, { status: 401 });
+    }
+
+    const { currentPassword, newPassword } = await request.json();
+
+    // DBからユーザー取得
+    const user = await prisma.m_USER.findUnique({
+      where: { employeeNumber: session.user.employeeNumber }
+    });
+    if (!user) {
+      return NextResponse.json({ error: 'ユーザーが存在しません' }, { status: 404 });
+    }
+    if (user.deleteFlag) {
+      return NextResponse.json({ error: '無効なユーザーです' }, { status: 403 });
+    }
+
+    // 現在のパスワード照合
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return NextResponse.json({ error: '現在のパスワードが正しくありません' }, { status: 401 });
+    }
+
+    // 新旧パスワードの差分チェック
+    const isSame = await bcrypt.compare(newPassword, user.password);
+    if (isSame) {
+      return NextResponse.json({ error: '新しいパスワードが現在のものと同じです' }, { status: 400 });
+    }
+
+    // 新パスワードをハッシュ化
+    const hashedPassword = await bcrypt.hash(newPassword, SALT_ROUNDS);
+
+    // パスワード更新
+    await prisma.m_USER.update({
+      where: { employeeNumber: session.user.employeeNumber },
+      data: { password: hashedPassword }
+    });
+
+    return NextResponse.json({ ok: true }, { status: 200 });
+  } catch (e) {
+    // エラー内容はログ等で記録し、レスポンスには詳細を出さない
+    return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }
