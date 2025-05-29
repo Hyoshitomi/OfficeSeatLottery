@@ -1,8 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { LoginForm } from "@/components/login/login-form"
+import { useSearchParams } from 'next/navigation';
 
 export default function LoginPage() {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
+
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
@@ -11,7 +15,7 @@ export default function LoginPage() {
             <Image src="/BMClogo_clear.png" alt="BMC" width={120} height={120} />
           </div>
         </Link>
-        <LoginForm />
+        <LoginForm callbackUrl={callbackUrl}/>
       </div>
     </div>
   );
