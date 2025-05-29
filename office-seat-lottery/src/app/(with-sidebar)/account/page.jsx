@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 import { Progress } from "@/components/ui/progress"
 import { toast } from "sonner"
 
-export default function MyPage() {
+export default function Home() {
   const [showCurrentPassword, setShowCurrentPassword] = useState(false)
   const [showNewPassword, setShowNewPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)

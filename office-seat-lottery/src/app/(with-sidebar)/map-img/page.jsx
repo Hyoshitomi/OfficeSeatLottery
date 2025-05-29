@@ -130,12 +130,12 @@ export default function Page() {
     setIsLoading(true); // プログレスバー開始
     setProgress(0);
     try {
-      const absBg = getAbsoluteUrl(previewImage)
+      const bgURL = encodeURI(getAbsoluteUrl(previewImage))
       const res = await fetch('/api/seats/imgPng', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          bg: absBg,
+          bg: bgURL,
           boxes: boxes
         })
       })
