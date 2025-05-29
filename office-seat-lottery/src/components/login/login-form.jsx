@@ -13,7 +13,7 @@ import { useDebouncedCallback } from "use-debounce";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner"; // 追加
 
-export function LoginForm({ className, ...props }) {
+export function LoginForm({ className, callbackUrl, ...props }) {
   const [employeeNumber, setEmployeeNumber] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -42,23 +42,18 @@ export function LoginForm({ className, ...props }) {
         redirect: false,
         employeeNumber,
         password,
-        callbackUrl,
+        callbackUrl: callbackUrl,
       });
 
       if (res?.error) {
-        toast.error("社員番号またはパスワードが正しくありません"); // 変更
+        toast.error("社員番号またはパスワードが正しくありません");
       } else if (res?.ok) {
-        // Sessionが反映されるまでポーリング
-        const waitSession = async () => {
-          for (let i = 0; i < 10; i++) {
-            await new Promise(r => setTimeout(r, 200));
-            if (status === "authenticated") {
-              router.push(res.url || '/');
-              break;
-            }
-          }
-        };
-        waitSession();
+        let redirectUrl = res.url || '/';
+        // ログイン画面ならトップページへ
+        if (redirectUrl.startsWith('/login')) {
+          redirectUrl = '/';
+        }
+        router.push(redirectUrl);
       }
     } catch (err) {
       toast.error("認証エラーが発生しました"); // 変更
