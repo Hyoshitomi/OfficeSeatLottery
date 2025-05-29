@@ -3,6 +3,7 @@ import "./globals.css";
 import NextAuthSessionProvider from "@/components/login/session-provider";
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Analytics } from '@vercel/analytics/next';
+import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <NextAuthSessionProvider>
           {children}
+          <Toaster richColors position="top-right" />
           <SpeedInsights />
           <Analytics />
         </NextAuthSessionProvider>
