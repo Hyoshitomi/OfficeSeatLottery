@@ -34,7 +34,15 @@ export default function Page() {
     const fetchSeats = async () => {
       setIsLoading(true)
       try {
-        const res = await fetch('/api/seats/map')
+        // システム日付をYYYY-MM-DD形式で取得
+        const now = new Date()
+        const yyyy = now.getFullYear()
+        const mm = String(now.getMonth() + 1).padStart(2, '0')
+        const dd = String(now.getDate()).padStart(2, '0')
+        const dateStr = `${yyyy}-${mm}-${dd}`
+  
+        // 日付をクエリパラメータで渡す
+        const res = await fetch(`/api/seats/map?date=${dateStr}`)
         if (res.ok) {
           const seats = await res.json()
           setBoxes(
@@ -56,7 +64,7 @@ export default function Page() {
         setProgress(100)
         setTimeout(() => {
           setIsLoading(false)
-        }, 400) // 0.4秒ほど100%を見せる
+        }, 400)
       } catch (e) {
         setBoxes([])
         setProgress(100)
@@ -67,7 +75,7 @@ export default function Page() {
     }
     fetchSeats()
   }, [])
-
+  
   const handleImgLoad = e => {
     setImgSize({
       width: e.currentTarget.naturalWidth,

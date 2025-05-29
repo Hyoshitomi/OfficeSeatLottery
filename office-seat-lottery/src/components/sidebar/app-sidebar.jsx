@@ -7,6 +7,7 @@ import {
   IconDatabase,
   IconDice,
   IconEdit,
+  IconFileTypePng,
   IconMail,
   IconUsers,
 } from "@tabler/icons-react"
@@ -54,6 +55,11 @@ export function AppSidebar({
         name: "座席図 編集",
         url: "/map-edit",
         icon: IconEdit,
+      },
+      {
+        name: "座席図 画像",
+        url: "/map-img",
+        icon: IconFileTypePng,
       },
       {
         name: "データ管理",

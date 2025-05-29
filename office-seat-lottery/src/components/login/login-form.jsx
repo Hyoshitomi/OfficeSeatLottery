@@ -48,7 +48,17 @@ export function LoginForm({ className, ...props }) {
       if (res?.error) {
         toast.error("社員番号またはパスワードが正しくありません"); // 変更
       } else if (res?.ok) {
-        router.push(res.url || '/');
+        // Sessionが反映されるまでポーリング
+        const waitSession = async () => {
+          for (let i = 0; i < 10; i++) {
+            await new Promise(r => setTimeout(r, 200));
+            if (status === "authenticated") {
+              router.push(res.url || '/');
+              break;
+            }
+          }
+        };
+        waitSession();
       }
     } catch (err) {
       toast.error("認証エラーが発生しました"); // 変更
