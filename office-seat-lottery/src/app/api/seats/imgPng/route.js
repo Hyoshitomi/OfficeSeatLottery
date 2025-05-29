@@ -4,12 +4,17 @@ export const runtime = 'edge'
 
 export async function POST(req) {
   try {
-    const { bg, boxes } = await req.json()
+    const { bg, boxes, width, height } = await req.json()
 
-    const width = 850
-    const height = 760
+    // width/heightが未指定の場合はエラー
+    if (!width || !height) {
+      return new Response(
+        JSON.stringify({ error: '画像サイズ（width, height）が指定されていません' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
 
-    // statusごとのスタイル
+    // statusごとのスタイルはそのまま
     const statusStyle = {
       movable: {
         border: '2px solid #1AA7FF',
