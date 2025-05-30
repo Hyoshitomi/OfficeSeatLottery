@@ -186,7 +186,11 @@ export default function Page() {
   }
   return (
     <>
-      <SiteHeader title={`${format(selectedDate, "yyyy年MM月dd日")}の座席図`} />
+      <SiteHeader title={
+        selectedDate
+          ? `${format(selectedDate, "yyyy年MM月dd日")}の座席図`
+          : "座席図"
+      } />
       <div className="flex flex-row h-[calc(100vh-56px)]">
         {!showSeatMap ? (
           <div className="flex-1 flex flex-col items-center justify-center">
