@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
-import SeatCanvas from '@/components/seat/SeatCanvas'
+import SeatCanvas from '@/components/seat/seat-canvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-appoint'
 
 export default function Page() {

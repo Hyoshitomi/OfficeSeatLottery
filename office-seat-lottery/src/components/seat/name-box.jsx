@@ -7,7 +7,7 @@ import {
   PopoverTrigger,
   PopoverContent,
 } from '@/components/ui/popover'
-import NameBoxPopOver from '@/components/seat/NameBoxPopOver'
+import NameBoxPopOver from '@/components/seat/name-box-pop-over'
 
 const statusStyle = {
   movable: 'border-[#1AA7FF] bg-[#FFFFFF] text-black',
