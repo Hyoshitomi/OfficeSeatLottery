@@ -1,5 +1,5 @@
-import NameBox from './NameBox'
-import AddBoxButton from './AddBoxButton'
+import NameBox from './name-box'
+import AddBoxButton from './add-box-button'
 
 export default function SeatCanvas({
   src,

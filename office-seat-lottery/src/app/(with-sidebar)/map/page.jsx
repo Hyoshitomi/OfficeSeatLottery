@@ -1,105 +1,33 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useEffect } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
-import SeatCanvas from '@/components/seat/SeatCanvas'
-import { Progress } from "@/components/ui/progress"
-import { toast } from "sonner" // 追加
+import SeatCanvas from '@/components/seat/seat-canvas'
+import { ProgressLoader } from '@/components/common/progress-loader'
+import { useProgress } from '@/hooks/use-progress'
+import { useSeats } from '@/hooks/use-seat'
+import { useImage } from '@/hooks/use-image'
+import { useDate } from '@/hooks/use-date'
 
-export default function Page() {
-  const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
-  const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
-  const [boxes, setBoxes] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [progress, setProgress] = useState(0) 
+export default function MapPage() {
+  const { isLoading, progress, startProgress, completeProgress } = useProgress()
+  const { boxes, imgSize, fetchSeats, exitSeat, updateBox, handleImgLoad } = useSeats()
+  const { previewImage } = useImage()
+  const { getDateString } = useDate()
 
-  // 疑似プログレスバー
   useEffect(() => {
-    if (!isLoading) {
-      setProgress(100)
-      return
-    }
-    setProgress(0)
-    const timer = setInterval(() => {
-      setProgress(prev => {
-        if (prev < 95) return Math.min(prev + Math.random() * 5, 95)
-        return prev
-      })
-    }, 100)
-    return () => clearInterval(timer)
-  }, [isLoading])
-
-  // 初回マウント時にDBから座席データを取得
-  useEffect(() => {
-    const fetchSeats = async () => {
-      setIsLoading(true)
+    const loadSeats = async () => {
+      const timer = startProgress()
       try {
-        // システム日付をYYYY-MM-DD形式で取得
-        const now = new Date()
-        const yyyy = now.getFullYear()
-        const mm = String(now.getMonth() + 1).padStart(2, '0')
-        const dd = String(now.getDate()).padStart(2, '0')
-        const dateStr = `${yyyy}-${mm}-${dd}`
-  
-        // 日付をクエリパラメータで渡す
-        const res = await fetch(`/api/seats/map?date=${dateStr}`)
-        if (res.ok) {
-          const seats = await res.json()
-          setBoxes(
-            seats.map(seat => ({
-              id: seat.seatId,
-              name: seat.name ?? '',
-              status:
-                seat.status === 1 ? 'movable' :
-                seat.status === 2 ? 'fixed' :
-                seat.status === 3 ? 'unused' :
-                seat.status === 4 ? 'reserved' : 'movable',
-              x: seat.imageX ?? 0,
-              y: seat.imageY ?? 0,
-            }))
-          )
-        } else {
-          setBoxes([])
-        }
-        setProgress(100)
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 400)
-      } catch (e) {
-        setBoxes([])
-        setProgress(100)
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 400)
+        await fetchSeats('/api/seats/map', getDateString())
+      } finally {
+        completeProgress(timer)
       }
     }
-    fetchSeats()
+    loadSeats()
   }, [])
-  
-  const handleImgLoad = e => {
-    setImgSize({
-      width: e.currentTarget.naturalWidth,
-      height: e.currentTarget.naturalHeight,
-    })
-  }
 
-  const handleStop = (id, x, y) =>
-    setBoxes(prev => prev.map(b => b.id === id ? { ...b, x, y } : b))
-  
-  const handleExit = async (seatId) => {
-    setBoxes(prev => prev.filter(b => b.id !== seatId))
-    const res = await fetch('/api/seats/map', {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ seatId }),
-    });
-    if (res.ok) {
-      toast.success('席を解放しました') // 変更
-      // 状態更新など
-    } else {
-      toast.error('解放に失敗しました') // 変更
-    }
-  }
+  const handleStop = (id, x, y) => updateBox(id, { x, y })
 
   return (
     <>
@@ -107,14 +35,7 @@ export default function Page() {
       <div className="flex flex-row h-[calc(100vh-56px)]">
         <div className="flex-1 flex flex-col items-center justify-center">
           {isLoading ? (
-            <div className="flex items-center justify-center h-full w-full">
-              <div className="w-2/3 max-w-md">
-                <Progress value={progress} className="h-4" />
-                <div className="text-center mt-2 text-sm text-gray-500">
-                  {progress < 100 ? `読み込み中... (${Math.floor(progress)}%)` : "完了"}
-                </div>
-              </div>
-            </div>
+            <ProgressLoader progress={progress} />
           ) : (
             <SeatCanvas
               src={previewImage}
@@ -122,7 +43,7 @@ export default function Page() {
               boxes={boxes}
               onImgLoad={handleImgLoad}
               onDragStop={handleStop}
-              onExit={handleExit}
+              onExit={exitSeat}
               move={false}
             />
           )}
