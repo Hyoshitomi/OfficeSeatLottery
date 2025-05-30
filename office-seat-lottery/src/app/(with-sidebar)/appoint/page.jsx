@@ -1,80 +1,64 @@
 'use client'
 
-import { useState, useRef, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SeatCanvas from '@/components/seat/seat-canvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-appoint'
+import { ProgressLoader } from '@/components/common/progress-loader'
+import { useProgress } from '@/hooks/use-progress'
+import { useSeats } from '@/hooks/use-seat'
+import { useImage } from '@/hooks/use-image'
+import { useDate } from '@/hooks/use-date'
 
-export default function Page() {
-  const [previewImage, setPreviewImage] = useState('/sheet/座席表.png')
-  const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
-  const [boxes, setBoxes] = useState([])
-  const [tableName, setTableName] = useState("A")
-  const [isLoading, setIsLoading] = useState(false) // 追加
-  const fileInputRef = useRef(null)
+export default function Home() {
+  const { isLoading, progress, startProgress, completeProgress } = useProgress()
+  const { boxes, imgSize, fetchSeats, exitSeat, updateBox, handleImgLoad } = useSeats()
+  const { previewImage, fileInputRef } = useImage()
+  const { getDateString } = useDate()
+  const [selectedSeatIds, setSelectedSeatIds] = useState([]) // 選択中の座席ID配列
 
-  // 初回マウント時にDBから座席データを取得
   useEffect(() => {
-    const fetchSeats = async () => {
-      setIsLoading(true) // 取得前にローディング開始
+    const loadSeats = async () => {
+      const timer = startProgress()
       try {
-        const res = await fetch('/api/seats/appoint')
-        if (res.ok) {
-          const seats = await res.json()
-          setBoxes(
-            seats.map(seat => ({
-              id: seat.seatId,
-              name: ``,
-              status:
-                seat.status === 1 ? 'movable' :
-                seat.status === 2 ? 'fixed' :
-                seat.status === 3 ? 'unused' :
-                seat.status === 4 ? 'reserved' : 'movable',
-              x: seat.imageX,
-              y: seat.imageY,
-            }))
-          )
-        }
+        await fetchSeats('/api/seats/edit')
       } finally {
-        setIsLoading(false) // 完了時にローディング終了
+        completeProgress(timer)
       }
     }
-    fetchSeats()
+    loadSeats()
   }, [])
 
-  const handleImgLoad = e => {
-    setImgSize({
-      width: e.currentTarget.naturalWidth,
-      height: e.currentTarget.naturalHeight,
+  const handleStop = (id, x, y) => updateBox(id, { x, y })
+  
+  // 座席クリック時の処理（複数選択対応）
+  const handleSeatClick = (seatId) => {
+    setSelectedSeatIds(prev => {
+      if (prev.includes(seatId)) {
+        // 既に選択されている場合は選択解除
+        return prev.filter(id => id !== seatId)
+      } else {
+        // 新しい座席を選択に追加
+        return [...prev, seatId]
+      }
     })
   }
 
-  // 保存ボタン押下時にAPIへboxesを送信
-  const handleSave = async () => {
-    const res = await fetch('/api/appoint', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ boxes }),
-    });
-    if (res.ok) {
-      alert('保存しました！');
-    } else {
-      alert('保存に失敗しました');
+  const handleSelect = () => {
+    // 「予約日を選択する」ボタンクリック時に selectedSeatIds を使用
+    if (selectedSeatIds.length > 0) {
+      console.log('選択された座席IDs:', selectedSeatIds)
+      // ここで予約処理を実行
     }
-  };
-
-  const handleStop = (id, x, y) =>
-    setBoxes(prev => prev.map(b => b.id === id ? { ...b, x, y } : b))
+  }
 
   return (
     <>
-      <SiteHeader title="予約" />
+      <SiteHeader title="座席図" />
       <div className="flex flex-row h-[calc(100vh-56px)]">
         <div className="flex-1 flex flex-col items-center justify-center">
           {isLoading ? (
-            <div className="flex items-center justify-center h-full w-full">
-              <div className="text-xl font-bold animate-pulse">Loading...</div>
-            </div>
+            <ProgressLoader progress={progress} />
           ) : (
             <SeatCanvas
               src={previewImage}
@@ -82,12 +66,18 @@ export default function Page() {
               boxes={boxes}
               onImgLoad={handleImgLoad}
               onDragStop={handleStop}
-              move={false} //編集不可能
+              onExit={exitSeat}
+              onSeatClick={handleSeatClick}
+              selectedSeatIds={selectedSeatIds}
+              appoint={true}
+              move={false}
             />
           )}
         </div>
         <SidebarRight
-          onSave={handleSave}
+          fileInputRef={fileInputRef}
+          onSelect={handleSelect}
+          selectedSeatIds={selectedSeatIds}
         />
       </div>
     </>

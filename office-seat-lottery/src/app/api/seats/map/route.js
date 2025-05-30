@@ -20,55 +20,77 @@ export async function GET(request) {
 
   // 00:00:00に揃える
   const targetDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-  const nextDay = new Date(targetDay);
-  nextDay.setDate(targetDay.getDate() + 1);
 
   try {
-    // status=1の座席
-    const status1Positions = await prisma.t_SEAT_POSITION.findMany({
+    // 全座席を取得（status=1または4のみ）
+    const allSeats = await prisma.m_SEAT.findMany({
       where: {
-        seat: { status: 1 },
-        date: {
-          gte: targetDay,
-          lt: nextDay
+        status: { in: [1, 4] }
+      },
+      include: {
+        seatAppointments: {
+          where: {
+            startDate: { lte: targetDay },
+            endDate: { gte: targetDay }
+          },
+          include: {
+            user: true
+          }
+        },
+        seatPositions: {
+          where: {
+            date: targetDay  // 完全一致
+          },
+          include: {
+            user: true
+          }
         }
-      },
-      include: {
-        seat: true,
-        user: true
       }
     });
 
-    // status=2,4の座席
-    const status2And4Appointments = await prisma.m_SEAT_APPOINT.findMany({
-      where: {
-        seat: { status: { in: [2, 4] } },
-        startDate: { lte: targetDay },
-        endDate: { gte: targetDay }
-      },
-      include: {
-        seat: true,
-        user: true
-      }
-    });
+    const seats = [];
 
-    // レスポンス整形
-    const seats = [
-      ...status1Positions.map(pos => ({
-        seatId: pos.seatId,
-        name: pos.user ? (pos.user.showName || pos.user.lastName || '(名前未設定)') : '(名前未設定)',
-        status: pos.seat.status,
-        imageX: pos.seat.imageX,
-        imageY: pos.seat.imageY,
-      })),
-      ...status2And4Appointments.map(app => ({
-        seatId: app.seatId,
-        name: app.user ? (app.user.showName || app.user.lastName || '(名前未設定)') : '(名前未設定)',
-        status: app.seat.status,
-        imageX: app.seat.imageX,
-        imageY: app.seat.imageY,
-      }))
-    ];
+    for (const seat of allSeats) {
+      let finalStatus;
+      let userName = '(名前未設定)';
+
+      // M_SEAT_APPOINTテーブルで範囲内のデータをチェック
+      if (seat.seatAppointments.length > 0) {
+        const appointment = seat.seatAppointments[0]; // 条件に合致する予約
+        
+        // endDateが9999/12/31かチェック
+        const endDate = new Date(appointment.endDate);
+        const maxDate = new Date('9999-12-31');
+        
+        if (endDate.getTime() === maxDate.getTime()) {
+          finalStatus = 2; // 固定
+        } else {
+          finalStatus = 4; // 予約
+        }
+        
+        userName = appointment.user?.showName || appointment.user?.lastName || '(名前未設定)';
+      } else {
+        // M_SEAT_APPOINTに範囲内のデータが無い場合
+        finalStatus = 1; // 流動
+        
+        // status1の場合はt_seat_positionから該当日のデータを取得
+        if (seat.seatPositions.length > 0) {
+          const position = seat.seatPositions[0];
+          userName = position.user?.showName || position.user?.lastName || '(名前未設定)';
+        } else {
+          // 該当日のデータが無い場合は取得しない
+          continue;
+        }
+      }
+
+      seats.push({
+        seatId: seat.seatId,
+        name: userName,
+        status: finalStatus,
+        imageX: seat.imageX,
+        imageY: seat.imageY,
+      });
+    }
 
     return NextResponse.json(seats, { status: 200 });
   } catch (e) {

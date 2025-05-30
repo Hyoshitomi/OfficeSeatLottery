@@ -1,13 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
-import { toast } from "sonner" // 追加
+import { toast } from "sonner"
 
 const statusOptions = [
-  { value: 'movable', label: '流動' },
-  { value: 'fixed', label: '固定' },
+  { value: 'movable', label: '使用' },
   { value: 'unused', label: '不使用' },
-  { value: 'reserved', label: '予約' },
 ]
 
 export default function NameBoxPopOver({
@@ -22,7 +20,7 @@ export default function NameBoxPopOver({
   onExit,
 }) {
   const [editName, setEditName] = useState(name)
-  const [editStatus, setEditStatus] = useState(status)
+  const [editStatus, setEditStatus] = useState(status || 'movable') // デフォルトは'movable'（1）
   const [showConfirm, setShowConfirm] = useState(false)
   const [isAfter, setIsAfter] = useState(false)
 
@@ -94,16 +92,24 @@ export default function NameBoxPopOver({
         value={editName}
         onChange={e => setEditName(e.target.value)}
       />
+      
       <label className="text-xs text-gray-500 mt-2">ステータス</label>
-      <select
-        className="border rounded px-2 py-1"
-        value={editStatus}
-        onChange={e => setEditStatus(e.target.value)}
-      >
+      <div className="flex gap-4">
         {statusOptions.map(opt => (
-          <option key={opt.value} value={opt.value}>{opt.label}</option>
+          <label key={opt.value} className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="status"
+              value={opt.value}
+              checked={editStatus === opt.value}
+              onChange={e => setEditStatus(e.target.value)}
+              className="w-4 h-4"
+            />
+            <span className="text-sm">{opt.label}</span>
+          </label>
         ))}
-      </select>
+      </div>
+      
       <div className="flex justify-between mt-3">
         <div className="mt-2 text-xs text-gray-500">
           座標 :  ({x}, {y})
