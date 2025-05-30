@@ -18,6 +18,7 @@ export default function NameBoxPopOver({
   onUpdate, 
   onDelete, 
   onExit,
+  appoint = false,
 }) {
   const [editName, setEditName] = useState(name)
   const [editStatus, setEditStatus] = useState(status || 'movable') // デフォルトは'movable'（1）
@@ -39,8 +40,11 @@ export default function NameBoxPopOver({
     }
   }, [id, editName, editStatus, x, y, onUpdate, move])
 
+  // 予約画面時にはポップオーバーを表示しない
+  if (appoint)return <></>
+
   // move=false かつ statusが'movable' かつ 9時以降のみ解放ボタン表示
-  if (!move) {
+  if (!move || !appoint) {
     if (status !== 'movable' || !isAfter) {
       return <></>
     }

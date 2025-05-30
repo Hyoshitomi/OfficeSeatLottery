@@ -9,13 +9,15 @@ import { useProgress } from '@/hooks/use-progress'
 import { useSeats } from '@/hooks/use-seat'
 import { useImage } from '@/hooks/use-image'
 import { useDate } from '@/hooks/use-date'
+import ReservationTabs from '@/components/form/reservation-tabs'
 
-export default function Home() {
+export default function MapPage() {
   const { isLoading, progress, startProgress, completeProgress } = useProgress()
   const { boxes, imgSize, fetchSeats, exitSeat, updateBox, handleImgLoad } = useSeats()
   const { previewImage, fileInputRef } = useImage()
   const { getDateString } = useDate()
   const [selectedSeatIds, setSelectedSeatIds] = useState([]) // 選択中の座席ID配列
+  const [showReservation, setShowReservation] = useState(false) // 予約画面表示フラグ
 
   useEffect(() => {
     const loadSeats = async () => {
@@ -45,41 +47,56 @@ export default function Home() {
   }
 
   const handleSelect = () => {
-    // 「予約日を選択する」ボタンクリック時に selectedSeatIds を使用
+    // 「予約日を選択する」ボタンクリック時の処理
     if (selectedSeatIds.length > 0) {
       console.log('選択された座席IDs:', selectedSeatIds)
-      // ここで予約処理を実行
+      setShowReservation(true) // 予約画面を表示
     }
+  }
+
+  // 予約画面から戻る処理
+  const handleBackToMap = () => {
+    setShowReservation(false)
+    setSelectedSeatIds([]) // 選択をリセット
   }
 
   return (
     <>
-      <SiteHeader title="座席図" />
-      <div className="flex flex-row h-[calc(100vh-56px)]">
-        <div className="flex-1 flex flex-col items-center justify-center">
-          {isLoading ? (
-            <ProgressLoader progress={progress} />
-          ) : (
-            <SeatCanvas
-              src={previewImage}
-              imgSize={imgSize}
-              boxes={boxes}
-              onImgLoad={handleImgLoad}
-              onDragStop={handleStop}
-              onExit={exitSeat}
-              onSeatClick={handleSeatClick}
-              selectedSeatIds={selectedSeatIds}
-              appoint={true}
-              move={false}
-            />
-          )}
-        </div>
-        <SidebarRight
-          fileInputRef={fileInputRef}
-          onSelect={handleSelect}
+      <SiteHeader title={showReservation ? "予約設定" : "座席図"} />
+      {showReservation ? (
+        // 予約設定画面
+        <ReservationTabs 
           selectedSeatIds={selectedSeatIds}
+          onBack={handleBackToMap}
         />
-      </div>
+      ) : (
+        // 座席選択画面
+        <div className="flex flex-row h-[calc(100vh-56px)]">
+          <div className="flex-1 flex flex-col items-center justify-center">
+            {isLoading ? (
+              <ProgressLoader progress={progress} />
+            ) : (
+              <SeatCanvas
+                src={previewImage}
+                imgSize={imgSize}
+                boxes={boxes}
+                onImgLoad={handleImgLoad}
+                onDragStop={handleStop}
+                onExit={exitSeat}
+                onSeatClick={handleSeatClick}
+                selectedSeatIds={selectedSeatIds}
+                appoint={true}
+                move={false}
+              />
+            )}
+          </div>
+          <SidebarRight
+            fileInputRef={fileInputRef}
+            onSelect={handleSelect}
+            selectedSeatIds={selectedSeatIds}
+          />
+        </div>
+      )}
     </>
   )
 }

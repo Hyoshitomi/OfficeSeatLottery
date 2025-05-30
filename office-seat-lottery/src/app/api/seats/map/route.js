@@ -1,100 +1,202 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from "@/generated/prisma";
+
 const prisma = new PrismaClient();
 
+// 定数定義
+const SEAT_STATUS = {
+  ACTIVE: 1,
+  FIXED: 2,
+  FLOWING: 1,
+  RESERVED: 4,
+  MAINTENANCE: 4
+};
+
+const DEFAULT_USER_NAME = '(名前未設定)';
+const MAX_DATE = new Date('9999-12-31');
+
 export async function GET(request) {
-  // クエリパラメータから日付を取得（例: ?date=2025-06-01）
+  try {
+    const dateStr = extractDateFromRequest(request);
+    const targetDay = parseAndValidateDate(dateStr);
+    const allSeats = await fetchSeatsWithRelations(targetDay);
+    const seats = processSeats(allSeats, targetDay);
+
+    return NextResponse.json(seats, { status: 200 });
+  } catch (error) {
+    return handleError(error);
+  }
+}
+
+/**
+ * リクエストから日付パラメータを抽出
+ * @param {Request} request - HTTPリクエスト
+ * @returns {string} 日付文字列
+ */
+function extractDateFromRequest(request) {
   const { searchParams } = new URL(request.url);
   const dateStr = searchParams.get('date');
 
-  // 日付が指定されていなければエラー
   if (!dateStr) {
-    return NextResponse.json({ error: 'dateパラメータが必要です (例: ?date=2025-06-01)' }, { status: 400 });
+    throw new Error('dateパラメータが必要です (例: ?date=2025-06-01)');
   }
 
-  // 日付の妥当性チェック
+  return dateStr;
+}
+
+/**
+ * 日付文字列を解析・検証してUTC日付を返す
+ * @param {string} dateStr - 日付文字列
+ * @returns {Date} UTC日付オブジェクト
+ */
+function parseAndValidateDate(dateStr) {
   const date = new Date(dateStr);
+  
   if (isNaN(date.getTime())) {
-    return NextResponse.json({ error: 'dateパラメータが不正です' }, { status: 400 });
+    throw new Error('dateパラメータが不正です');
   }
 
   // 00:00:00に揃える
-  const targetDay = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+}
 
-  try {
-    // 全座席を取得（status=1または4のみ）
-    const allSeats = await prisma.m_SEAT.findMany({
-      where: {
-        status: { in: [1, 4] }
-      },
-      include: {
-        seatAppointments: {
-          where: {
-            startDate: { lte: targetDay },
-            endDate: { gte: targetDay }
-          },
-          include: {
-            user: true
-          }
+/**
+ * 座席データとリレーションを取得
+ * @param {Date} targetDay - 対象日
+ * @returns {Promise<Array>} 座席データ配列
+ */
+async function fetchSeatsWithRelations(targetDay) {
+  return await prisma.m_SEAT.findMany({
+    where: {
+      status: { in: [SEAT_STATUS.ACTIVE, SEAT_STATUS.MAINTENANCE] }
+    },
+    include: {
+      seatAppointments: {
+        where: {
+          startDate: { lte: targetDay },
+          endDate: { gte: targetDay }
         },
-        seatPositions: {
-          where: {
-            date: targetDay  // 完全一致
-          },
-          include: {
-            user: true
-          }
+        include: {
+          user: true
+        }
+      },
+      seatPositions: {
+        where: {
+          date: targetDay
+        },
+        include: {
+          user: true
         }
       }
-    });
-
-    const seats = [];
-
-    for (const seat of allSeats) {
-      let finalStatus;
-      let userName = '(名前未設定)';
-
-      // M_SEAT_APPOINTテーブルで範囲内のデータをチェック
-      if (seat.seatAppointments.length > 0) {
-        const appointment = seat.seatAppointments[0]; // 条件に合致する予約
-        
-        // endDateが9999/12/31かチェック
-        const endDate = new Date(appointment.endDate);
-        const maxDate = new Date('9999-12-31');
-        
-        if (endDate.getTime() === maxDate.getTime()) {
-          finalStatus = 2; // 固定
-        } else {
-          finalStatus = 4; // 予約
-        }
-        
-        userName = appointment.user?.showName || appointment.user?.lastName || '(名前未設定)';
-      } else {
-        // M_SEAT_APPOINTに範囲内のデータが無い場合
-        finalStatus = 1; // 流動
-        
-        // status1の場合はt_seat_positionから該当日のデータを取得
-        if (seat.seatPositions.length > 0) {
-          const position = seat.seatPositions[0];
-          userName = position.user?.showName || position.user?.lastName || '(名前未設定)';
-        } else {
-          // 該当日のデータが無い場合は取得しない
-          continue;
-        }
-      }
-
-      seats.push({
-        seatId: seat.seatId,
-        name: userName,
-        status: finalStatus,
-        imageX: seat.imageX,
-        imageY: seat.imageY,
-      });
     }
+  });
+}
 
-    return NextResponse.json(seats, { status: 200 });
-  } catch (e) {
-    const message = e instanceof Error ? e.message : String(e);
-    return NextResponse.json({ error: message }, { status: 500 });
+/**
+ * 座席データを処理してレスポンス用の配列を作成
+ * @param {Array} allSeats - 全座席データ
+ * @param {Date} targetDay - 対象日
+ * @returns {Array} 処理済み座席データ配列
+ */
+function processSeats(allSeats, targetDay) {
+  const seats = [];
+
+  for (const seat of allSeats) {
+    const seatData = processSingleSeat(seat);
+    
+    if (seatData) {
+      seats.push(seatData);
+    }
   }
+
+  return seats;
+}
+
+/**
+ * 単一の座席データを処理
+ * @param {Object} seat - 座席データ
+ * @returns {Object|null} 処理済み座席データまたはnull
+ */
+function processSingleSeat(seat) {
+  // 予約データがある場合
+  if (seat.seatAppointments.length > 0) {
+    return processAppointmentSeat(seat);
+  }
+
+  // 流動席の場合
+  return processFlowingSeat(seat);
+}
+
+/**
+ * 予約がある座席を処理
+ * @param {Object} seat - 座席データ
+ * @returns {Object} 処理済み座席データ
+ */
+function processAppointmentSeat(seat) {
+  const appointment = seat.seatAppointments[0];
+  const endDate = new Date(appointment.endDate);
+  
+  const status = isFixedAppointment(endDate) ? SEAT_STATUS.FIXED : SEAT_STATUS.RESERVED;
+  const userName = getUserName(appointment.user);
+
+  return {
+    seatId: seat.seatId,
+    name: userName,
+    status,
+    imageX: seat.imageX,
+    imageY: seat.imageY,
+  };
+}
+
+/**
+ * 流動席を処理
+ * @param {Object} seat - 座席データ
+ * @returns {Object|null} 処理済み座席データまたはnull
+ */
+function processFlowingSeat(seat) {
+  // 該当日のポジションデータがない場合はスキップ
+  if (seat.seatPositions.length === 0) {
+    return null;
+  }
+
+  const position = seat.seatPositions[0];
+  const userName = getUserName(position.user);
+
+  return {
+    seatId: seat.seatId,
+    name: userName,
+    status: SEAT_STATUS.FLOWING,
+    imageX: seat.imageX,
+    imageY: seat.imageY,
+  };
+}
+
+/**
+ * 固定予約かどうかを判定
+ * @param {Date} endDate - 終了日
+ * @returns {boolean} 固定予約の場合true
+ */
+function isFixedAppointment(endDate) {
+  return endDate.getTime() === MAX_DATE.getTime();
+}
+
+/**
+ * ユーザー名を取得（優先順位: showName > lastName > デフォルト）
+ * @param {Object} user - ユーザーデータ
+ * @returns {string} ユーザー名
+ */
+function getUserName(user) {
+  return user?.showName || user?.lastName || DEFAULT_USER_NAME;
+}
+
+/**
+ * エラーハンドリング
+ * @param {Error|unknown} error - エラーオブジェクト
+ * @returns {NextResponse} エラーレスポンス
+ */
+function handleError(error) {
+  const message = error instanceof Error ? error.message : String(error);
+  const status = message.includes('パラメータ') ? 400 : 500;
+  
+  return NextResponse.json({ error: message }, { status });
 }
