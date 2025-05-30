@@ -118,8 +118,6 @@ export default function Home() {
           <p className="text-gray-600 mt-2">プロフィール情報の確認とパスワード変更ができます</p>
         </div>
 
-        <ProgressBar isLoading={isLoading} progress={progress} />
-
         <div className="space-y-6">
           <ProfileCard
             name={formData.name}
@@ -142,6 +140,7 @@ export default function Home() {
             </Button>
           </div>
         </div>
+        <ProgressBar isLoading={isLoading} progress={progress} />
       </div>
     </div>
   )

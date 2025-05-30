@@ -11,7 +11,7 @@ import {
   IconMail,
   IconUsers,
 } from "@tabler/icons-react"
-import { SidebarNav } from "@/components/sidebar/nav/SidebarNav";
+import { SidebarNav } from "@/components/sidebar/nav/sidebar-nav";
 import { NavUser } from "@/components/sidebar/nav/nav-user"
 import {
   Sidebar,

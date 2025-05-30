@@ -1,5 +1,5 @@
 import * as React from "react"
-import ImageUploader from '@/components/seat/ImageUploader'
+import ImageUploader from '@/components/seat/image-uploader'
 import { Button } from '@/components/ui/button'
 import TableNameInput from '@/components/sidebar/nav/nav-tablename'
 
