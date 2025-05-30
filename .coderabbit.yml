@@ -1,0 +1,60 @@
+# CodeRabbit設定ファイル
+language: ja-JP
+tone_instructions: "建設的で教育的なトーンで、具体的な改善案を含めてレビューしてください。"
+
+# レビュー設定
+reviews:
+  request_changes_workflow: true  # 重要な問題がある場合は変更要求
+  high_level_summary: true       # ハイレベルサマリーを生成
+  poem: false                    # 詩的な表現は無効
+  review_simple_changes: true    # 小さな変更もレビュー対象
+  auto_incremental_review: true  # 増分レビューを有効化
+
+# パスフィルター
+path_filters:
+  - "!**/dist/**"
+  - "!**/build/**" 
+  - "!**/*.generated.*"
+  - "!**/coverage/**"
+  - "!**/.next/**"
+  - "!**/node_modules/**"
+  - "!**/vendor/**"
+  - "!**/*.min.js"
+  - "!**/*.min.css"
+  - "!db/**"
+  - "!**/*.lock"
+  - "!**/.git/**"
+  - "!**/.vscode/**"
+  - "!**/.idea/**"
+
+# 自動レビュー設定
+auto_review:
+  enabled: true
+  drafts: false                 # ドラフトPRは除外
+  base_branches:               # レビュー対象ブランチ
+    - main
+    - master
+    - develop
+
+# チャット設定
+chat:
+  auto_reply: true              # 自動返信を有効化
+  
+# 無視する変更タイプ
+ignore:
+  - "**/*.md"                   # Markdownファイルは軽微なレビューのみ
+  - "**/package-lock.json"      # ロックファイル
+  - "**/yarn.lock"
+  - "**/composer.lock"
+  - "**/Pipfile.lock"
+
+# レビュー品質設定
+quality:
+  max_files_to_review: 10       # 一度にレビューするファイル数上限
+  max_lines_to_review: 400      # 一度にレビューする行数上限
+  enable_context_aware: true    # コンテキスト認識を有効化
+  
+# 通知設定
+notifications:
+  slack: false                  # Slack通知は無効
+  email: false                  # メール通知は無効
