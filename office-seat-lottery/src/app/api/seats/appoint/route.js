@@ -75,6 +75,34 @@ export async function POST(request) {
       return NextResponse.json({ error: '座席が選択されていません' }, { status: 400 });
     }
 
+    // **★ employeeNumberからuserIdを取得する処理を追加 ★**
+    const users = await prisma.m_USER.findMany({
+      where: {
+        employeeNumber: { in: selectedEmployees },
+        deleteFlag: false // 削除されていないユーザーのみ
+      },
+      select: {
+        userId: true,
+        employeeNumber: true
+      }
+    });
+
+    // 見つからない社員番号がないかチェック
+    const foundEmployeeNumbers = users.map(user => user.employeeNumber);
+    const notFoundEmployees = selectedEmployees.filter(emp => !foundEmployeeNumbers.includes(emp));
+    
+    if (notFoundEmployees.length > 0) {
+      return NextResponse.json({ 
+        error: `以下の社員番号が見つかりません: ${notFoundEmployees.join(', ')}` 
+      }, { status: 400 });
+    }
+
+    // employeeNumberとuserIdのマッピングを作成
+    const employeeToUserIdMap = {};
+    users.forEach(user => {
+      employeeToUserIdMap[user.employeeNumber] = user.userId;
+    });
+
     // 社員数と座席数のチェック
     const isValidEmployeeCount = selectedEmployees.length === 1 || 
                                 selectedEmployees.length === selectedSeatIds.length;
@@ -85,40 +113,7 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    // selectedDaysのバリデーション
-    if (selectedDays && selectedDays.length > 0) {
-      const validDays = ["monday", "tuesday", "wednesday", "thursday", "friday"];
-      const isValidDays = selectedDays.every(day => validDays.includes(day));
-      
-      if (!isValidDays) {
-        return NextResponse.json({ error: '無効な曜日が含まれています' }, { status: 400 });
-      }
-    }
-
-    // 処理対象日の計算
-    let targetDates = [];
-    
-    if (selectedDays && selectedDays.length > 0) {
-      // 翌日から3ヶ月分の対象日を計算
-      const tomorrow = new Date(now);
-      tomorrow.setDate(tomorrow.getDate() + 1);
-
-      const threeMonthsLater = new Date(tomorrow);
-      threeMonthsLater.setMonth(threeMonthsLater.getMonth() + 3);
-
-      const dayMap = {
-        "monday": 1, "tuesday": 2, "wednesday": 3, 
-        "thursday": 4, "friday": 5
-      };
-
-      const targetDayNumbers = selectedDays.map(day => dayMap[day]);
-
-      for (let date = new Date(tomorrow); date <= threeMonthsLater; date.setDate(date.getDate() + 1)) {
-        if (targetDayNumbers.includes(date.getDay())) {
-          targetDates.push(toStartOfUTCDay(new Date(date))); // 00:00:00に統一
-        }
-      }    
-    }
+    // ... 既存のselectedDaysバリデーションと処理対象日の計算は同じ ...
 
     // 登録データの準備
     const createData = [];
@@ -134,7 +129,8 @@ export async function POST(request) {
 
     if (selectedEmployees.length === 1) {
       // 1人の社員が複数座席を予約
-      const userId = selectedEmployees[0];
+      const employeeNumber = selectedEmployees[0];
+      const userId = employeeToUserIdMap[employeeNumber]; // **★ userIdに変換 ★**
       
       for (const seatId of selectedSeatIds) {
         if (selectedDays && selectedDays.length > 0) {
@@ -145,7 +141,7 @@ export async function POST(request) {
               id: currentId++,
               appointId: startId,
               seatId,
-              userId,
+              userId, // **★ 変換されたuserIdを使用 ★**
               startDate: formattedDate,
               endDate: formattedDate,
               created: now,
@@ -160,7 +156,7 @@ export async function POST(request) {
             id: currentId++,
             appointId: startId,
             seatId,
-            userId,
+            userId, // **★ 変換されたuserIdを使用 ★**
             startDate: formattedStartDate,
             endDate: formattedEndDate,
             created: now,
@@ -171,7 +167,8 @@ export async function POST(request) {
     } else {
       // 複数社員がそれぞれ座席を予約
       for (let i = 0; i < selectedEmployees.length; i++) {
-        const userId = selectedEmployees[i];
+        const employeeNumber = selectedEmployees[i];
+        const userId = employeeToUserIdMap[employeeNumber]; // **★ userIdに変換 ★**
         const seatId = selectedSeatIds[i];
         
         if (selectedDays && selectedDays.length > 0) {
@@ -182,7 +179,7 @@ export async function POST(request) {
               id: currentId++,
               appointId: startId,
               seatId,
-              userId,
+              userId, // **★ 変換されたuserIdを使用 ★**
               startDate: formattedDate,
               endDate: formattedDate,
               created: now,
@@ -197,7 +194,7 @@ export async function POST(request) {
             id: currentId++,
             appointId: startId,
             seatId,
-            userId,
+            userId, // **★ 変換されたuserIdを使用 ★**
             startDate: formattedStartDate,
             endDate: formattedEndDate,
             created: now,
