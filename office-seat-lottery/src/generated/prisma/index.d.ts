@@ -2392,16 +2392,19 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTAvgAggregateOutputType = {
     id: number | null
+    appointId: number | null
     userId: number | null
   }
 
   export type M_SEAT_APPOINTSumAggregateOutputType = {
     id: number | null
+    appointId: number | null
     userId: number | null
   }
 
   export type M_SEAT_APPOINTMinAggregateOutputType = {
     id: number | null
+    appointId: number | null
     seatId: string | null
     userId: number | null
     startDate: Date | null
@@ -2412,6 +2415,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTMaxAggregateOutputType = {
     id: number | null
+    appointId: number | null
     seatId: string | null
     userId: number | null
     startDate: Date | null
@@ -2422,6 +2426,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTCountAggregateOutputType = {
     id: number
+    appointId: number
     seatId: number
     userId: number
     startDate: number
@@ -2434,16 +2439,19 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTAvgAggregateInputType = {
     id?: true
+    appointId?: true
     userId?: true
   }
 
   export type M_SEAT_APPOINTSumAggregateInputType = {
     id?: true
+    appointId?: true
     userId?: true
   }
 
   export type M_SEAT_APPOINTMinAggregateInputType = {
     id?: true
+    appointId?: true
     seatId?: true
     userId?: true
     startDate?: true
@@ -2454,6 +2462,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTMaxAggregateInputType = {
     id?: true
+    appointId?: true
     seatId?: true
     userId?: true
     startDate?: true
@@ -2464,6 +2473,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTCountAggregateInputType = {
     id?: true
+    appointId?: true
     seatId?: true
     userId?: true
     startDate?: true
@@ -2561,6 +2571,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTGroupByOutputType = {
     id: number
+    appointId: number
     seatId: string
     userId: number
     startDate: Date
@@ -2590,6 +2601,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    appointId?: boolean
     seatId?: boolean
     userId?: boolean
     startDate?: boolean
@@ -2602,6 +2614,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    appointId?: boolean
     seatId?: boolean
     userId?: boolean
     startDate?: boolean
@@ -2614,6 +2627,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
+    appointId?: boolean
     seatId?: boolean
     userId?: boolean
     startDate?: boolean
@@ -2626,6 +2640,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTSelectScalar = {
     id?: boolean
+    appointId?: boolean
     seatId?: boolean
     userId?: boolean
     startDate?: boolean
@@ -2634,7 +2649,7 @@ export namespace Prisma {
     updated?: boolean
   }
 
-  export type M_SEAT_APPOINTOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "seatId" | "userId" | "startDate" | "endDate" | "created" | "updated", ExtArgs["result"]["m_SEAT_APPOINT"]>
+  export type M_SEAT_APPOINTOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "appointId" | "seatId" | "userId" | "startDate" | "endDate" | "created" | "updated", ExtArgs["result"]["m_SEAT_APPOINT"]>
   export type M_SEAT_APPOINTInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     seat?: boolean | M_SEATDefaultArgs<ExtArgs>
     user?: boolean | M_USERDefaultArgs<ExtArgs>
@@ -2656,6 +2671,7 @@ export namespace Prisma {
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
+      appointId: number
       seatId: string
       userId: number
       startDate: Date
@@ -3088,6 +3104,7 @@ export namespace Prisma {
    */
   interface M_SEAT_APPOINTFieldRefs {
     readonly id: FieldRef<"M_SEAT_APPOINT", 'Int'>
+    readonly appointId: FieldRef<"M_SEAT_APPOINT", 'Int'>
     readonly seatId: FieldRef<"M_SEAT_APPOINT", 'String'>
     readonly userId: FieldRef<"M_SEAT_APPOINT", 'Int'>
     readonly startDate: FieldRef<"M_SEAT_APPOINT", 'DateTime'>
@@ -5824,6 +5841,7 @@ export namespace Prisma {
 
   export const M_SEAT_APPOINTScalarFieldEnum: {
     id: 'id',
+    appointId: 'appointId',
     seatId: 'seatId',
     userId: 'userId',
     startDate: 'startDate',
@@ -6026,6 +6044,7 @@ export namespace Prisma {
     OR?: M_SEAT_APPOINTWhereInput[]
     NOT?: M_SEAT_APPOINTWhereInput | M_SEAT_APPOINTWhereInput[]
     id?: IntFilter<"M_SEAT_APPOINT"> | number
+    appointId?: IntFilter<"M_SEAT_APPOINT"> | number
     seatId?: StringFilter<"M_SEAT_APPOINT"> | string
     userId?: IntFilter<"M_SEAT_APPOINT"> | number
     startDate?: DateTimeFilter<"M_SEAT_APPOINT"> | Date | string
@@ -6038,6 +6057,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTOrderByWithRelationInput = {
     id?: SortOrder
+    appointId?: SortOrder
     seatId?: SortOrder
     userId?: SortOrder
     startDate?: SortOrder
@@ -6053,6 +6073,7 @@ export namespace Prisma {
     AND?: M_SEAT_APPOINTWhereInput | M_SEAT_APPOINTWhereInput[]
     OR?: M_SEAT_APPOINTWhereInput[]
     NOT?: M_SEAT_APPOINTWhereInput | M_SEAT_APPOINTWhereInput[]
+    appointId?: IntFilter<"M_SEAT_APPOINT"> | number
     seatId?: StringFilter<"M_SEAT_APPOINT"> | string
     userId?: IntFilter<"M_SEAT_APPOINT"> | number
     startDate?: DateTimeFilter<"M_SEAT_APPOINT"> | Date | string
@@ -6065,6 +6086,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTOrderByWithAggregationInput = {
     id?: SortOrder
+    appointId?: SortOrder
     seatId?: SortOrder
     userId?: SortOrder
     startDate?: SortOrder
@@ -6083,6 +6105,7 @@ export namespace Prisma {
     OR?: M_SEAT_APPOINTScalarWhereWithAggregatesInput[]
     NOT?: M_SEAT_APPOINTScalarWhereWithAggregatesInput | M_SEAT_APPOINTScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"M_SEAT_APPOINT"> | number
+    appointId?: IntWithAggregatesFilter<"M_SEAT_APPOINT"> | number
     seatId?: StringWithAggregatesFilter<"M_SEAT_APPOINT"> | string
     userId?: IntWithAggregatesFilter<"M_SEAT_APPOINT"> | number
     startDate?: DateTimeWithAggregatesFilter<"M_SEAT_APPOINT"> | Date | string
@@ -6304,6 +6327,7 @@ export namespace Prisma {
   }
 
   export type M_SEAT_APPOINTCreateInput = {
+    appointId: number
     startDate: Date | string
     endDate: Date | string
     created: Date | string
@@ -6314,6 +6338,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedCreateInput = {
     id?: number
+    appointId: number
     seatId: string
     userId: number
     startDate: Date | string
@@ -6323,6 +6348,7 @@ export namespace Prisma {
   }
 
   export type M_SEAT_APPOINTUpdateInput = {
+    appointId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6333,6 +6359,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
+    appointId?: IntFieldUpdateOperationsInput | number
     seatId?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6343,6 +6370,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTCreateManyInput = {
     id?: number
+    appointId: number
     seatId: string
     userId: number
     startDate: Date | string
@@ -6352,6 +6380,7 @@ export namespace Prisma {
   }
 
   export type M_SEAT_APPOINTUpdateManyMutationInput = {
+    appointId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6360,6 +6389,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
+    appointId?: IntFieldUpdateOperationsInput | number
     seatId?: StringFieldUpdateOperationsInput | string
     userId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -6668,6 +6698,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTCountOrderByAggregateInput = {
     id?: SortOrder
+    appointId?: SortOrder
     seatId?: SortOrder
     userId?: SortOrder
     startDate?: SortOrder
@@ -6678,11 +6709,13 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTAvgOrderByAggregateInput = {
     id?: SortOrder
+    appointId?: SortOrder
     userId?: SortOrder
   }
 
   export type M_SEAT_APPOINTMaxOrderByAggregateInput = {
     id?: SortOrder
+    appointId?: SortOrder
     seatId?: SortOrder
     userId?: SortOrder
     startDate?: SortOrder
@@ -6693,6 +6726,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTMinOrderByAggregateInput = {
     id?: SortOrder
+    appointId?: SortOrder
     seatId?: SortOrder
     userId?: SortOrder
     startDate?: SortOrder
@@ -6703,6 +6737,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTSumOrderByAggregateInput = {
     id?: SortOrder
+    appointId?: SortOrder
     userId?: SortOrder
   }
 
@@ -7290,6 +7325,7 @@ export namespace Prisma {
   }
 
   export type M_SEAT_APPOINTCreateWithoutSeatInput = {
+    appointId: number
     startDate: Date | string
     endDate: Date | string
     created: Date | string
@@ -7299,6 +7335,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedCreateWithoutSeatInput = {
     id?: number
+    appointId: number
     userId: number
     startDate: Date | string
     endDate: Date | string
@@ -7362,6 +7399,7 @@ export namespace Prisma {
     OR?: M_SEAT_APPOINTScalarWhereInput[]
     NOT?: M_SEAT_APPOINTScalarWhereInput | M_SEAT_APPOINTScalarWhereInput[]
     id?: IntFilter<"M_SEAT_APPOINT"> | number
+    appointId?: IntFilter<"M_SEAT_APPOINT"> | number
     seatId?: StringFilter<"M_SEAT_APPOINT"> | string
     userId?: IntFilter<"M_SEAT_APPOINT"> | number
     startDate?: DateTimeFilter<"M_SEAT_APPOINT"> | Date | string
@@ -7635,6 +7673,7 @@ export namespace Prisma {
   }
 
   export type M_SEAT_APPOINTCreateWithoutUserInput = {
+    appointId: number
     startDate: Date | string
     endDate: Date | string
     created: Date | string
@@ -7644,6 +7683,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedCreateWithoutUserInput = {
     id?: number
+    appointId: number
     seatId: string
     startDate: Date | string
     endDate: Date | string
@@ -7720,6 +7760,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTCreateManySeatInput = {
     id?: number
+    appointId: number
     userId: number
     startDate: Date | string
     endDate: Date | string
@@ -7736,6 +7777,7 @@ export namespace Prisma {
   }
 
   export type M_SEAT_APPOINTUpdateWithoutSeatInput = {
+    appointId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7745,6 +7787,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedUpdateWithoutSeatInput = {
     id?: IntFieldUpdateOperationsInput | number
+    appointId?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7754,6 +7797,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedUpdateManyWithoutSeatInput = {
     id?: IntFieldUpdateOperationsInput | number
+    appointId?: IntFieldUpdateOperationsInput | number
     userId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7786,6 +7830,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTCreateManyUserInput = {
     id?: number
+    appointId: number
     seatId: string
     startDate: Date | string
     endDate: Date | string
@@ -7802,6 +7847,7 @@ export namespace Prisma {
   }
 
   export type M_SEAT_APPOINTUpdateWithoutUserInput = {
+    appointId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
     created?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7811,6 +7857,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedUpdateWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    appointId?: IntFieldUpdateOperationsInput | number
     seatId?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7820,6 +7867,7 @@ export namespace Prisma {
 
   export type M_SEAT_APPOINTUncheckedUpdateManyWithoutUserInput = {
     id?: IntFieldUpdateOperationsInput | number
+    appointId?: IntFieldUpdateOperationsInput | number
     seatId?: StringFieldUpdateOperationsInput | string
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
     endDate?: DateTimeFieldUpdateOperationsInput | Date | string

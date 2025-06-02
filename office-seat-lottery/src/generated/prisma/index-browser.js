@@ -131,6 +131,7 @@ exports.Prisma.M_SEATScalarFieldEnum = {
 
 exports.Prisma.M_SEAT_APPOINTScalarFieldEnum = {
   id: 'id',
+  appointId: 'appointId',
   seatId: 'seatId',
   userId: 'userId',
   startDate: 'startDate',

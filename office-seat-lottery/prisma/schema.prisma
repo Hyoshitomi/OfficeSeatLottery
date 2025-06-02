@@ -32,6 +32,7 @@ model M_SEAT {
 // 予約座席テーブル
 model M_SEAT_APPOINT {
   id        Int      @id @default(autoincrement())
+  appointId Int      
   seatId    String
   userId    Int
   startDate DateTime

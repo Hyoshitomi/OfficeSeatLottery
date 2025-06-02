@@ -55,20 +55,10 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
     }
   }
 
-  const handleWeeklyReservation = () => {
-    console.log("曜日予約:", { 
-      selectedEmployees, 
-      selectedDays,
-      selectedSeatIds 
-    })
-    // ここで曜日予約の処理を実装
-  }
+   // エラー状態を追加
+   const [reservationError, setReservationError] = useState(null)
 
-  const handleDateReservation = () => {
-    console.log("日付予約:", { selectedEmployees, dateRange, selectedSeatIds })
-    // ここで日付予約の処理を実装
-  }
-
+  // 曜日予約のバリデーション
   const isWeeklyFormValid = selectedEmployees.length > 0 && selectedDays.length > 0
   
   // 日付予約のバリデーション（単日または期間選択）
@@ -76,6 +66,78 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
     (dateRange.from && !dateRange.to) || // 単日選択
     (dateRange.from && dateRange.to)     // 期間選択
   )
+
+  // handleWeeklyReservation関数の修正
+const handleWeeklyReservation = async () => {
+    try {
+      setReservationError(null) // エラーをリセット
+      
+      const response = await fetch('/api/seats/appoint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          selectedEmployees,
+          selectedDays,
+          selectedSeatIds
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (response.ok) {
+        alert('曜日予約が正常に登録されました');
+        // 必要に応じて画面遷移やリセット処理
+      } else {
+        setReservationError(result.error) // エラーを設定
+        alert(`エラー: ${result.error}`);
+      }
+    } catch (error) {
+      setReservationError('予約登録中にエラーが発生しました')
+      alert('予約登録中にエラーが発生しました');
+    }
+  };
+
+  // handleDateReservation関数の修正
+  const handleDateReservation = async () => {
+    try {
+      setReservationError(null) // エラーをリセット
+      
+      const response = await fetch('/api/seats/appoint', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          selectedEmployees,
+          dateRange,
+          selectedSeatIds
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (response.ok) {
+        alert('日付予約が正常に登録されました');
+        // 必要に応じて画面遷移やリセット処理
+      } else {
+        setReservationError(result.error) // エラーを設定
+        alert(`エラー: ${result.error}`);
+      }
+    } catch (error) {
+      setReservationError('予約登録中にエラーが発生しました')
+      alert('予約登録中にエラーが発生しました');
+    }
+  };
+
+  // 登録済み予約確認機能
+  const handleCheckReservations = () => {
+    // 予約一覧画面への遷移またはモーダル表示
+    // 実装方法は要件に応じて調整
+    console.log("登録済み予約の確認");
+  };
+
 
   // 日付表示用のヘルパー関数
   const formatDateRange = (range) => {
@@ -159,22 +221,34 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
                 )}
 
                 <div className="pt-4 space-y-2">
-                  <Button
-                    onClick={handleWeeklyReservation}
-                    disabled={!isWeeklyFormValid}
-                    className="w-full"
-                  >
-                    曜日予約を確定
-                  </Button>
-                  <Button
-                    onClick={onBack}
-                    variant="outline"
-                    className="w-full"
-                  >
-                    座席選択に戻る
-                  </Button>
-                </div>
+                  {/* エラーがある場合のみボタンを表示 - 横幅一杯 */}
+                  {reservationError && reservationError.includes('既に予約済み') && (
+                    <Button
+                      onClick={handleCheckReservations}
+                      variant="destructive"
+                      className="w-full"
+                    >
+                      登録済み予約の確認
+                    </Button>
+                  )}
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={onBack}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      座席選択に戻る
+                    </Button>
+                    <Button
+                      onClick={handleWeeklyReservation}
+                      disabled={!isWeeklyFormValid}
+                      className="flex-1"
+                    >
+                      曜日予約を確定 
+                    </Button>
 
+                  </div>
+                </div>
 
               </div>
             </TabsContent>
@@ -207,22 +281,32 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
                 )}
 
                 <div className="pt-4 space-y-2">
-                  <Button
-                    onClick={handleDateReservation}
-                    disabled={!isDateFormValid}
-                    className="w-full"
-                  >
-                    日付予約を確定
-                  </Button>
-                  <Button
-                    onClick={onBack}
-                    variant="outline"
-                    className="w-full"
-                  >
-                    座席選択に戻る
-                  </Button>
+                  {reservationError && reservationError.includes('既に予約済み') && (
+                    <Button
+                      onClick={handleCheckReservations}
+                      variant="destructive"
+                      className="w-full"
+                    >
+                      登録済み予約の確認
+                    </Button>
+                  )}
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={onBack}
+                      variant="outline"
+                      className="flex-1"
+                    >
+                      座席選択に戻る
+                    </Button>
+                    <Button
+                      onClick={handleDateReservation} 
+                      disabled={!isDateFormValid} 
+                      className="flex-1"
+                    >
+                      日付予約を確定 
+                    </Button>
+                  </div>
                 </div>
-
               </div>
             </TabsContent>
           </Tabs>
