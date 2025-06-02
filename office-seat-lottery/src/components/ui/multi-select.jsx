@@ -58,6 +58,7 @@ export const MultiSelect = React.forwardRef(
       placeholder = "Select options",
       animation = 0,
       maxCount = 3,
+      maxSelections, // 新しいプロパティ：選択件数制限
       modalPopover = false,
       asChild = false,
       className,
@@ -81,11 +82,24 @@ export const MultiSelect = React.forwardRef(
     };
 
     const toggleOption = (option) => {
-      const newSelectedValues = selectedValues.includes(option)
-        ? selectedValues.filter((value) => value !== option)
-        : [...selectedValues, option];
-      setSelectedValues(newSelectedValues);
-      onValueChange(newSelectedValues);
+      const isCurrentlySelected = selectedValues.includes(option);
+      
+      if (isCurrentlySelected) {
+        // 選択解除の場合は制限なし
+        const newSelectedValues = selectedValues.filter((value) => value !== option);
+        setSelectedValues(newSelectedValues);
+        onValueChange(newSelectedValues);
+      } else {
+        // 新規選択の場合は制限チェック
+        if (maxSelections && selectedValues.length >= maxSelections) {
+          // 制限に達している場合は選択を拒否
+          return;
+        }
+        
+        const newSelectedValues = [...selectedValues, option];
+        setSelectedValues(newSelectedValues);
+        onValueChange(newSelectedValues);
+      }
     };
 
     const handleClear = () => {
@@ -108,10 +122,17 @@ export const MultiSelect = React.forwardRef(
         handleClear();
       } else {
         const allValues = options.map((option) => option.value);
-        setSelectedValues(allValues);
-        onValueChange(allValues);
+        // 全選択時も制限を適用
+        const limitedValues = maxSelections 
+          ? allValues.slice(0, maxSelections)
+          : allValues;
+        setSelectedValues(limitedValues);
+        onValueChange(limitedValues);
       }
     };
+
+    // 選択制限に達しているかチェック
+    const isSelectionLimitReached = maxSelections && selectedValues.length >= maxSelections;
 
     return (
       <Popover
@@ -214,7 +235,13 @@ export const MultiSelect = React.forwardRef(
                 <CommandItem
                   key="all"
                   onSelect={toggleAll}
-                  className="cursor-pointer"
+                  className={cn(
+                    "cursor-pointer",
+                    isSelectionLimitReached && selectedValues.length < options.length
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  )}
+                  disabled={isSelectionLimitReached && selectedValues.length < options.length}
                 >
                   <div
                     className={cn(
@@ -227,14 +254,25 @@ export const MultiSelect = React.forwardRef(
                     <CheckIcon className="h-4 w-4" />
                   </div>
                   <span>(Select All)</span>
+                  {maxSelections && (
+                    <span className="ml-auto text-xs text-muted-foreground">
+                      {selectedValues.length}/{maxSelections}
+                    </span>
+                  )}
                 </CommandItem>
                 {options.map((option) => {
                   const isSelected = selectedValues.includes(option.value);
+                  const isDisabled = !isSelected && isSelectionLimitReached;
+                  
                   return (
                     <CommandItem
                       key={option.value}
-                      onSelect={() => toggleOption(option.value)}
-                      className="cursor-pointer"
+                      onSelect={() => !isDisabled && toggleOption(option.value)}
+                      className={cn(
+                        "cursor-pointer",
+                        isDisabled ? "opacity-50 cursor-not-allowed" : ""
+                      )}
+                      disabled={isDisabled}
                     >
                       <div
                         className={cn(
@@ -295,5 +333,3 @@ export const MultiSelect = React.forwardRef(
     );
   }
 );
-
-MultiSelect.displayName = "MultiSelect";

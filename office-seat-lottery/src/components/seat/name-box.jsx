@@ -25,6 +25,9 @@ export default function NameBox({
   onUpdate,
   onDelete,
   onExit,
+  onSeatClick,
+  isSelected = false,
+  appoint = false,
   move = false, 
 }) {
   const nodeRef = useRef(null)
@@ -33,8 +36,25 @@ export default function NameBox({
   // moveに関係なく右クリックでPopoverを開く
   const handleContextMenu = e => {
     e.preventDefault()
-    setOpen(true)
+    if (!appoint) { // 予約画面ではPopoverを表示しない
+      setOpen(true)
+    }
   }
+
+  // クリック時の処理
+  const handleClick = (e) => {
+    e.preventDefault()
+    if (appoint && onSeatClick) {
+      onSeatClick(id) // 予約画面では座席選択処理（複数選択対応）
+    } else if (!appoint) {
+      setOpen(true) // 通常画面ではPopover表示
+    }
+  }
+
+  // 予約画面で選択中の場合は赤枠、それ以外は通常のスタイル
+  const borderStyle = appoint && isSelected 
+    ? 'border-red-500 bg-red-50 text-black border-4' // 選択時は少し背景色も変更し、枠を太く
+    : statusStyle[status]
 
   return (
     <Draggable
@@ -45,11 +65,12 @@ export default function NameBox({
     >
       <div
         ref={nodeRef}
-        className={`w-[70px] h-[40px] flex items-center justify-center rounded-[7px] border-3 cursor-pointer select-none ${statusStyle[status]}`}
+        className={`w-[70px] h-[40px] flex items-center justify-center rounded-[7px] border-3 cursor-pointer select-none ${borderStyle}`}
         onContextMenu={handleContextMenu}
+        onClick={handleClick}
         style={{ cursor: move ? 'pointer' : 'default' }} 
       >
-        <Popover open={open} onOpenChange={setOpen}>
+        <Popover open={open && !appoint} onOpenChange={setOpen}>
           <PopoverTrigger asChild>
             <div>{name}</div>
           </PopoverTrigger>
@@ -63,7 +84,8 @@ export default function NameBox({
             onUpdate={onUpdate}
             onDelete={onDelete}
             move={move}
-            onExit={onExit} // 追加
+            onExit={onExit} 
+            appoint={appoint}
           />
           </PopoverContent>
         </Popover>

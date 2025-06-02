@@ -12,7 +12,7 @@ import {
 
 
 export default function SidebarRight({
-  onSave, 
+  onSelect, 
   ...props
 }) {
   return (
@@ -21,16 +21,11 @@ export default function SidebarRight({
       className="sticky hidden lg:flex top-[var(--header-height)] h-[calc(98vh-var(--header-height))] border-l"
       {...props}
     >
-      <SidebarContent>
-        <div className="space-y-6 flex-1">
-          <AppointDataInput />
-        </div>
-      </SidebarContent>
       <SidebarFooter className="flex flex-col flex-1 justify-end">
         <SidebarMenu>
           <SidebarMenuItem>
             <div className="flex flex-col items-center gap-4 w-full">
-              <Button className="w-[90%]" onClick={onSave}>保存</Button>
+              <Button className="w-[90%]" onClick={onSelect}>予約日を選択する</Button>
             </div>
           </SidebarMenuItem>
         </SidebarMenu>

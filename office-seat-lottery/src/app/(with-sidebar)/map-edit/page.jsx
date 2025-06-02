@@ -51,7 +51,21 @@ export default function MapEditPage() {
   }
 
   const handleAddBox = () => addBox(tableName, imgSize)
-  const handleSave = () => saveSeats(boxes)
+
+  // handleSave処理でも同じisLoadingを再利用
+  const handleSave = async () => {
+    if (isLoading) return // 既に処理中の場合は実行しない
+    
+    const timer = startProgress()
+    
+    try {
+      await saveSeats(boxes)
+    } catch (error) {
+      console.error('保存に失敗しました:', error)
+    } finally {
+      completeProgress(timer)
+    }
+  }
 
   return (
     <AdminGuard user={session?.user} title="座席図編集">
@@ -80,6 +94,7 @@ export default function MapEditPage() {
           tableName={tableName}
           setTableName={setTableName}
           onSave={handleSave}
+          isLoading={isLoading} // 統一されたisLoadingを渡す
         />
       </div>
     </AdminGuard>
