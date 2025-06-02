@@ -1,5 +1,5 @@
-import NameBox from './name-box'
-import AddBoxButton from './add-box-button'
+import NameBox from '@/components/seat/name-box'
+import AddBoxButton from '@/components/seat/add-box-button'
 
 export default function SeatCanvas({
   src,
@@ -11,6 +11,9 @@ export default function SeatCanvas({
   onDelete,
   onExit,
   onAddBox,
+  onSeatClick,
+  selectedSeatIds = [],
+  appoint = false,
   move = false,
 }) {
   return (
@@ -41,6 +44,9 @@ export default function SeatCanvas({
             onUpdate={onUpdate}
             onDelete={onDelete}
             onExit={onExit}
+            onSeatClick={onSeatClick}
+            isSelected={selectedSeatIds.includes(box.id)}
+            appoint={appoint}
             move={move}
           />
         </div>

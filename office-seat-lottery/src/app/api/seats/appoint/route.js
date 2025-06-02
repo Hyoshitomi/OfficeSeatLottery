@@ -1,91 +1,235 @@
 import { NextResponse } from 'next/server'
 import { PrismaClient } from "@/generated/prisma";
+
 const prisma = new PrismaClient();
 
-export async function GET() {
-  try {
-    const seats = await prisma.m_SEAT.findMany({
-      where: { status: 1 }
-    });
-    return NextResponse.json(seats, { status: 200 });
-  } catch (e) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 });
+// APIファイルの先頭に追加
+function toStartOfUTCDay(date) {
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+}
+
+// より効率的な一括チェック関数
+async function checkDuplicateReservationsBatch(createData) {
+  // 全ての座席IDと日付範囲を取得
+  const seatIds = [...new Set(createData.map(data => data.seatId))];
+  const minDate = new Date(Math.min(...createData.map(data => data.startDate)));
+  const maxDate = new Date(Math.max(...createData.map(data => data.endDate)));
+
+  // 該当期間の既存予約を一括取得
+  const existingReservations = await prisma.m_SEAT_APPOINT.findMany({
+    where: {
+      seatId: { in: seatIds },
+      OR: [
+        {
+          startDate: { lte: maxDate },
+          endDate: { gte: minDate }
+        }
+      ]
+    },
+    select: {
+      seatId: true,
+      startDate: true,
+      endDate: true
+    }
+  });
+
+  // 新規予約データと既存予約の重複チェック
+  for (const newData of createData) {
+    const conflict = existingReservations.find(existing => 
+      existing.seatId === newData.seatId &&
+      (
+        // 新規予約の開始日が既存予約の期間内
+        (newData.startDate >= existing.startDate && newData.startDate <= existing.endDate) ||
+        // 新規予約の終了日が既存予約の期間内
+        (newData.endDate >= existing.startDate && newData.endDate <= existing.endDate) ||
+        // 新規予約が既存予約を包含
+        (newData.startDate <= existing.startDate && newData.endDate >= existing.endDate)
+      )
+    );
+
+    if (conflict) {
+      return {
+        isDuplicate: true,
+        seatId: newData.seatId,
+        date: newData.startDate
+      };
+    }
   }
+
+  return { isDuplicate: false };
 }
 
 export async function POST(request) {
+  const now = new Date();
+  
   try {
     const body = await request.json();
-    const boxes = Array.isArray(body.boxes) ? body.boxes : [];
+    const { selectedEmployees, selectedDays, dateRange, selectedSeatIds } = body;
 
-    // 1. 送信データをパース
-    const seats = boxes.map(box => {
-      const match = typeof box.name === 'string' ? box.name.match(/^([A-Z]+)(\d+)$/) : null;
-      const tableId = match ? match[1] : null;
-      const seatNumber = match ? Number(match[2]) : null;
-      let statusNum = 1;
-      if (box.status === 'movable') statusNum = 1;
-      else if (box.status === 'fixed') statusNum = 2;
-      else if (box.status === 'unused') statusNum = 3;
-      else if (box.status === 'reserved') statusNum = 4;
+    // バリデーション
+    if (!selectedEmployees || selectedEmployees.length === 0) {
+      return NextResponse.json({ error: '社員が選択されていません' }, { status: 400 });
+    }
 
-      return {
-        seatId: tableId && seatNumber ? `${tableId}${seatNumber}` : undefined,
-        tableId,
-        seatNumber,
-        status: statusNum,
-        imageX: Math.round(box.x),
-        imageY: Math.round(box.y),
-      };
-    }).filter(seat => seat.seatId);
+    if (!selectedSeatIds || selectedSeatIds.length === 0) {
+      return NextResponse.json({ error: '座席が選択されていません' }, { status: 400 });
+    }
 
-    // 2. DBから現状の座席一覧を取得
-    const dbSeats = await prisma.m_SEAT.findMany();
-    const dbSeatIds = new Set(dbSeats.map(s => s.seatId));
-    const reqSeatIds = new Set(seats.map(s => s.seatId));
-
-    // 3. 削除対象seatId（DBにあるがリクエストにないもの）
-    const deleteSeatIds = dbSeats
-      .filter(s => !reqSeatIds.has(s.seatId))
-      .map(s => s.seatId);
-
-    // 4. 更新対象seatId（両方に存在するもの）
-    const updateSeats = seats.filter(s => dbSeatIds.has(s.seatId));
-
-    // 5. 新規追加seatId（リクエストにはあるがDBにないもの）
-    const insertSeats = seats.filter(s => !dbSeatIds.has(s.seatId));
-
-    // 6. トランザクションで処理
-    await prisma.$transaction(async (tx) => {
-      // 削除（関連テーブルも削除）
-      for (const seatId of deleteSeatIds) {
-        await tx.m_SEAT_APPOINT.deleteMany({ where: { seatId } });
-        await tx.t_SEAT_POSITION.deleteMany({ where: { seatId } });
-        await tx.m_SEAT.delete({ where: { seatId } });
-      }
-
-      // 更新
-      for (const seat of updateSeats) {
-        await tx.m_SEAT.update({
-          where: { seatId: seat.seatId },
-          data: {
-            tableId: seat.tableId,
-            seatNumber: seat.seatNumber,
-            status: seat.status,
-            imageX: seat.imageX,
-            imageY: seat.imageY,
-          }
-        });
-      }
-
-      // 追加
-      if (insertSeats.length > 0) {
-        await tx.m_SEAT.createMany({ data: insertSeats });
+    // **★ employeeNumberからuserIdを取得する処理を追加 ★**
+    const users = await prisma.m_USER.findMany({
+      where: {
+        employeeNumber: { in: selectedEmployees },
+        deleteFlag: false // 削除されていないユーザーのみ
+      },
+      select: {
+        userId: true,
+        employeeNumber: true
       }
     });
 
-    return NextResponse.json({ ok: true }, { status: 200 });
-  } catch (e) {
-    return NextResponse.json({ error: e instanceof Error ? e.message : String(e) }, { status: 500 });
+    // 見つからない社員番号がないかチェック
+    const foundEmployeeNumbers = users.map(user => user.employeeNumber);
+    const notFoundEmployees = selectedEmployees.filter(emp => !foundEmployeeNumbers.includes(emp));
+    
+    if (notFoundEmployees.length > 0) {
+      return NextResponse.json({ 
+        error: `以下の社員番号が見つかりません: ${notFoundEmployees.join(', ')}` 
+      }, { status: 400 });
+    }
+
+    // employeeNumberとuserIdのマッピングを作成
+    const employeeToUserIdMap = {};
+    users.forEach(user => {
+      employeeToUserIdMap[user.employeeNumber] = user.userId;
+    });
+
+    // 社員数と座席数のチェック
+    const isValidEmployeeCount = selectedEmployees.length === 1 || 
+                                selectedEmployees.length === selectedSeatIds.length;
+    
+    if (!isValidEmployeeCount) {
+      return NextResponse.json({ 
+        error: '社員数は1人または座席数と一致している必要があります' 
+      }, { status: 400 });
+    }
+
+    // ... 既存のselectedDaysバリデーションと処理対象日の計算は同じ ...
+
+    // 登録データの準備
+    const createData = [];
+    
+    // 最初のIDを取得（appointIdとして使用）
+    const maxId = await prisma.m_SEAT_APPOINT.findFirst({
+      orderBy: { id: 'desc' },
+      select: { id: true }
+    });
+    
+    const startId = (maxId?.id || 0) + 1;
+    let currentId = startId;
+
+    if (selectedEmployees.length === 1) {
+      // 1人の社員が複数座席を予約
+      const employeeNumber = selectedEmployees[0];
+      const userId = employeeToUserIdMap[employeeNumber]; // **★ userIdに変換 ★**
+      
+      for (const seatId of selectedSeatIds) {
+        if (selectedDays && selectedDays.length > 0) {
+          // 曜日予約の場合
+          for (const targetDate of targetDates) {
+            const formattedDate = toStartOfUTCDay(targetDate);
+            createData.push({
+              id: currentId++,
+              appointId: startId,
+              seatId,
+              userId, // **★ 変換されたuserIdを使用 ★**
+              startDate: formattedDate,
+              endDate: formattedDate,
+              created: now,
+              updated: null
+            });
+          }
+        } else if (dateRange) {
+          const formattedStartDate = toStartOfUTCDay(new Date(dateRange.from));
+          const formattedEndDate = toStartOfUTCDay(new Date(dateRange.to || dateRange.from));
+          // 日付予約の場合
+          createData.push({
+            id: currentId++,
+            appointId: startId,
+            seatId,
+            userId, // **★ 変換されたuserIdを使用 ★**
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
+            created: now,
+            updated: null
+          });
+        }
+      }
+    } else {
+      // 複数社員がそれぞれ座席を予約
+      for (let i = 0; i < selectedEmployees.length; i++) {
+        const employeeNumber = selectedEmployees[i];
+        const userId = employeeToUserIdMap[employeeNumber]; // **★ userIdに変換 ★**
+        const seatId = selectedSeatIds[i];
+        
+        if (selectedDays && selectedDays.length > 0) {
+          // 曜日予約の場合
+          for (const targetDate of targetDates) {
+            const formattedDate = toStartOfUTCDay(targetDate);
+            createData.push({
+              id: currentId++,
+              appointId: startId,
+              seatId,
+              userId, // **★ 変換されたuserIdを使用 ★**
+              startDate: formattedDate,
+              endDate: formattedDate,
+              created: now,
+              updated: null
+            });
+          }
+        } else if (dateRange) {
+          const formattedStartDate = toStartOfUTCDay(new Date(dateRange.from));
+          const formattedEndDate = toStartOfUTCDay(new Date(dateRange.to || dateRange.from));
+          // 日付予約の場合
+          createData.push({
+            id: currentId++,
+            appointId: startId,
+            seatId,
+            userId, // **★ 変換されたuserIdを使用 ★**
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
+            created: now,
+            updated: null
+          });
+        }
+      }
+    }
+
+    // 重複チェックを実行
+    const duplicateCheck = await checkDuplicateReservationsBatch(createData);
+    
+    if (duplicateCheck.isDuplicate) {
+      return NextResponse.json({ 
+        error: `座席ID: ${duplicateCheck.seatId} の ${duplicateCheck.date.toLocaleDateString('ja-JP')} は既に予約済みです` 
+      }, { status: 400 });
+    }
+
+    // DB登録
+    const result = await prisma.m_SEAT_APPOINT.createMany({ 
+      data: createData,
+      skipDuplicates: true
+    });
+
+    return NextResponse.json({ 
+      success: true, 
+      result,
+      appointId: startId,
+      recordCount: createData.length
+    }, { status: 200 });
+
+  } catch (error) {
+    console.error('予約登録エラー:', error);
+    return NextResponse.json({ 
+      error: 'サーバーエラーが発生しました' 
+    }, { status: 500 });
   }
 }

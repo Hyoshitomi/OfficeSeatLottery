@@ -37,7 +37,7 @@ export async function POST(request) {
     }
 
     // --- 3. DBから必要な情報を一括取得 ---
-    const [users, seats, todayRecords] = await Promise.all([
+    const [users, seats, todayRecords, appointmentRecords] = await Promise.all([
       prisma.m_USER.findMany({
         where: { employeeNumber: { in: employeeNumbers.map(String) } },
         select: { userId: true }
@@ -51,6 +51,14 @@ export async function POST(request) {
           date: today,
         },
         select: { userId: true, seatId: true }
+      }),
+      // M_SEAT_APPOINTで今日の日付が範囲内にある座席を取得
+      prisma.m_SEAT_APPOINT.findMany({
+        where: {
+          startDate: { lte: today },
+          endDate: { gte: today }
+        },
+        select: { seatId: true }
       })
     ]);
 
@@ -66,9 +74,10 @@ export async function POST(request) {
       return errorResponse('利用可能な座席がありません', 400);
     }
 
-    // --- 6. 本日登録済みユーザー・使用済み座席のセット化 ---
+    // --- 6. 除外座席のセット化 ---
     const registeredUserIds = new Set(todayRecords.map(r => r.userId));
-    const usedSeatIds = new Set(todayRecords.map(r => r.seatId));
+    const usedSeatIds = new Set(todayRecords.map(r => r.seatId)); // T_SEAT_POSITIONで使用済み
+    const appointedSeatIds = new Set(appointmentRecords.map(r => r.seatId)); // M_SEAT_APPOINTで予約済み
 
     // --- 7. 未登録ユーザーの抽出 ---
     const targetUserIds = userIds.filter(id => !registeredUserIds.has(id));
@@ -76,8 +85,11 @@ export async function POST(request) {
       return errorResponse('全てのユーザーが既に登録済みです', 400);
     }
 
-    // --- 8. 空き座席抽出 ---
-    const availableSeatIds = allSeatIds.filter(id => !usedSeatIds.has(id));
+    // --- 8. 空き座席抽出（T_SEAT_POSITIONとM_SEAT_APPOINTの両方をチェック） ---
+    const availableSeatIds = allSeatIds.filter(id => 
+      !usedSeatIds.has(id) && !appointedSeatIds.has(id)
+    );
+    
     if (availableSeatIds.length < targetUserIds.length) {
       return errorResponse('空き座席が足りません。本日は集中コーナーを使用してください。', 400);
     }
