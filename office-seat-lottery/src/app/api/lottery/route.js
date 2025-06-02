@@ -3,200 +3,119 @@ import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
-// 定数定義
-const SEAT_STATUS = {
-  ACTIVE: 1,
-  FIXED: 2,
-  FLOWING: 1,
-  RESERVED: 4,
-  MAINTENANCE: 4
-};
-
-const DEFAULT_USER_NAME = '(名前未設定)';
-const MAX_DATE = new Date('9999-12-31');
-
-export async function GET(request) {
-  try {
-    const dateStr = extractDateFromRequest(request);
-    const targetDay = parseAndValidateDate(dateStr);
-    const allSeats = await fetchSeatsWithRelations(targetDay);
-    const seats = processSeats(allSeats, targetDay);
-
-    return NextResponse.json(seats, { status: 200 });
-  } catch (error) {
-    return handleError(error);
-  }
-}
-
-/**
- * リクエストから日付パラメータを抽出
- * @param {Request} request - HTTPリクエスト
- * @returns {string} 日付文字列
- */
-function extractDateFromRequest(request) {
-  const { searchParams } = new URL(request.url);
-  const dateStr = searchParams.get('date');
-
-  if (!dateStr) {
-    throw new Error('dateパラメータが必要です (例: ?date=2025-06-01)');
-  }
-
-  return dateStr;
-}
-
-/**
- * 日付文字列を解析・検証してUTC日付を返す
- * @param {string} dateStr - 日付文字列
- * @returns {Date} UTC日付オブジェクト
- */
-function parseAndValidateDate(dateStr) {
-  const date = new Date(dateStr);
-  
-  if (isNaN(date.getTime())) {
-    throw new Error('dateパラメータが不正です');
-  }
-
-  // 00:00:00に揃える
+function toStartOfUTCDay(date) {
   return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
 }
 
-/**
- * 座席データとリレーションを取得
- * @param {Date} targetDay - 対象日
- * @returns {Promise<Array>} 座席データ配列
- */
-async function fetchSeatsWithRelations(targetDay) {
-  return await prisma.m_SEAT.findMany({
-    where: {
-      status: { in: [SEAT_STATUS.ACTIVE, SEAT_STATUS.MAINTENANCE] }
-    },
-    include: {
-      seatAppointments: {
-        where: {
-          startDate: { lte: targetDay },
-          endDate: { gte: targetDay }
-        },
-        include: {
-          user: true
-        }
-      },
-      seatPositions: {
-        where: {
-          date: targetDay
-        },
-        include: {
-          user: true
-        }
-      }
-    }
-  });
+function getTomorrow(date) {
+  const tomorrow = new Date(date);
+  tomorrow.setUTCDate(date.getUTCDate() + 1);
+  return tomorrow;
 }
 
-/**
- * 座席データを処理してレスポンス用の配列を作成
- * @param {Array} allSeats - 全座席データ
- * @param {Date} targetDay - 対象日
- * @returns {Array} 処理済み座席データ配列
- */
-function processSeats(allSeats, targetDay) {
-  const seats = [];
+function shuffleArray(array) {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
 
-  for (const seat of allSeats) {
-    const seatData = processSingleSeat(seat);
+export async function POST(request) {
+  const now = new Date();
+  const today = toStartOfUTCDay(now);
+
+  try {
+    // --- 1. リクエストパース ---
+    const body = await request.json();
+    const { employeeNumbers } = body;
+
+    // --- 2. バリデーション ---
+    if (!Array.isArray(employeeNumbers) || employeeNumbers.length === 0) {
+      return errorResponse('社員番号リストが必要です', 400);
+    }
+
+    // --- 3. DBから必要な情報を一括取得 ---
+    const [users, seats, todayRecords, appointmentRecords] = await Promise.all([
+      prisma.m_USER.findMany({
+        where: { employeeNumber: { in: employeeNumbers.map(String) } },
+        select: { userId: true }
+      }),
+      prisma.m_SEAT.findMany({
+        where: { status: 1 },
+        select: { seatId: true }
+      }),
+      prisma.t_SEAT_POSITION.findMany({
+        where: {
+          date: today,
+        },
+        select: { userId: true, seatId: true }
+      }),
+      // M_SEAT_APPOINTで今日の日付が範囲内にある座席を取得
+      prisma.m_SEAT_APPOINT.findMany({
+        where: {
+          startDate: { lte: today },
+          endDate: { gte: today }
+        },
+        select: { seatId: true }
+      })
+    ]);
+
+    // --- 4. ユーザーチェック ---
+    const userIds = users.map(u => u.userId);
+    if (userIds.length === 0) {
+      return errorResponse('該当するユーザーが存在しません', 400);
+    }
+
+    // --- 5. 利用可能座席チェック ---
+    const allSeatIds = seats.map(s => s.seatId);
+    if (allSeatIds.length === 0) {
+      return errorResponse('利用可能な座席がありません', 400);
+    }
+
+    // --- 6. 除外座席のセット化 ---
+    const registeredUserIds = new Set(todayRecords.map(r => r.userId));
+    const usedSeatIds = new Set(todayRecords.map(r => r.seatId)); // T_SEAT_POSITIONで使用済み
+    const appointedSeatIds = new Set(appointmentRecords.map(r => r.seatId)); // M_SEAT_APPOINTで予約済み
+
+    // --- 7. 未登録ユーザーの抽出 ---
+    const targetUserIds = userIds.filter(id => !registeredUserIds.has(id));
+    if (targetUserIds.length === 0) {
+      return errorResponse('全てのユーザーが既に登録済みです', 400);
+    }
+
+    // --- 8. 空き座席抽出（T_SEAT_POSITIONとM_SEAT_APPOINTの両方をチェック） ---
+    const availableSeatIds = allSeatIds.filter(id => 
+      !usedSeatIds.has(id) && !appointedSeatIds.has(id)
+    );
     
-    if (seatData) {
-      seats.push(seatData);
+    if (availableSeatIds.length < targetUserIds.length) {
+      return errorResponse('空き座席が足りません。本日は集中コーナーを使用してください。', 400);
     }
+
+    // --- 9. シャッフル・割り当て ---
+    const shuffledSeatIds = shuffleArray(availableSeatIds).slice(0, targetUserIds.length);
+    const createData = targetUserIds.map((userId, idx) => ({
+      date: today,
+      seatId: shuffledSeatIds[idx],
+      userId,
+      created: now,
+      updated: null
+    }));
+
+    // --- 10. DB登録 ---
+    const dbResult = await prisma.t_SEAT_POSITION.createMany({ data: createData });
+
+    // --- 11. レスポンス生成 ---
+    const response = NextResponse.json({ result: createData, dbResult }, { status: 200 });
+    return response;
+
+  } catch (error) {
+    return errorResponse('サーバーエラーが発生しました', 500, error);
   }
-
-  return seats;
 }
 
-/**
- * 単一の座席データを処理
- * @param {Object} seat - 座席データ
- * @returns {Object|null} 処理済み座席データまたはnull
- */
-function processSingleSeat(seat) {
-  // 予約データがある場合
-  if (seat.seatAppointments.length > 0) {
-    return processAppointmentSeat(seat);
-  }
-
-  // 流動席の場合
-  return processFlowingSeat(seat);
-}
-
-/**
- * 予約がある座席を処理
- * @param {Object} seat - 座席データ
- * @returns {Object} 処理済み座席データ
- */
-function processAppointmentSeat(seat) {
-  const appointment = seat.seatAppointments[0];
-  const endDate = new Date(appointment.endDate);
-  
-  const status = isFixedAppointment(endDate) ? SEAT_STATUS.FIXED : SEAT_STATUS.RESERVED;
-  const userName = getUserName(appointment.user);
-
-  return {
-    seatId: seat.seatId,
-    name: userName,
-    status,
-    imageX: seat.imageX,
-    imageY: seat.imageY,
-  };
-}
-
-/**
- * 流動席を処理
- * @param {Object} seat - 座席データ
- * @returns {Object|null} 処理済み座席データまたはnull
- */
-function processFlowingSeat(seat) {
-  // 該当日のポジションデータがない場合はスキップ
-  if (seat.seatPositions.length === 0) {
-    return null;
-  }
-
-  const position = seat.seatPositions[0];
-  const userName = getUserName(position.user);
-
-  return {
-    seatId: seat.seatId,
-    name: userName,
-    status: SEAT_STATUS.FLOWING,
-    imageX: seat.imageX,
-    imageY: seat.imageY,
-  };
-}
-
-/**
- * 固定予約かどうかを判定
- * @param {Date} endDate - 終了日
- * @returns {boolean} 固定予約の場合true
- */
-function isFixedAppointment(endDate) {
-  return endDate.getTime() === MAX_DATE.getTime();
-}
-
-/**
- * ユーザー名を取得（優先順位: showName > lastName > デフォルト）
- * @param {Object} user - ユーザーデータ
- * @returns {string} ユーザー名
- */
-function getUserName(user) {
-  return user?.showName || user?.lastName || DEFAULT_USER_NAME;
-}
-
-/**
- * エラーハンドリング
- * @param {Error|unknown} error - エラーオブジェクト
- * @returns {NextResponse} エラーレスポンス
- */
-function handleError(error) {
-  const message = error instanceof Error ? error.message : String(error);
-  const status = message.includes('パラメータ') ? 400 : 500;
-  
+function errorResponse(message, status, error) {
   return NextResponse.json({ error: message }, { status });
 }

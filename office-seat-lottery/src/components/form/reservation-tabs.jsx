@@ -11,6 +11,7 @@ import { ja } from "date-fns/locale"
 import { EmployeeSelector } from "@/components/lottery/employee-selector"
 import { useEmployees } from "@/hooks/use-employees"
 import { useSession } from "next-auth/react"
+import { MultiSelect } from "@/components/ui/multi-select"
 
 export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
   const { data: session } = useSession()
@@ -103,12 +104,16 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
               <Label htmlFor="reserver">
                 予約者名 ({selectedEmployees.length}/{maxSelectableEmployees}人選択中)
               </Label>
-              <EmployeeSelector
-                employeeList={employeeList}
-                selectedEmployees={selectedEmployees}
-                onSelectionChange={handleEmployeeSelectionChange}
-                isAdmin={isAdmin}
-                maxSelection={maxSelectableEmployees}
+              <MultiSelect
+                id="employee-select"
+                options={employeeList}
+                onValueChange={handleEmployeeSelectionChange}
+                defaultValue={[]}
+                placeholder="社員名を選択してください"
+                variant="inverted"
+                maxCount={maxSelectableEmployees}
+                maxSelections={maxSelectableEmployees}
+                className="w-full"
               />
             </div>
           </div>

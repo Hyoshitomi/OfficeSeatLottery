@@ -43,8 +43,9 @@ export default function NameBoxPopOver({
   // 予約画面時にはポップオーバーを表示しない
   if (appoint)return <></>
 
-  // move=false かつ statusが'movable' かつ 9時以降のみ解放ボタン表示
-  if (!move || !appoint) {
+  // move=false 
+  if (!move) {
+    // statusが'movable' かつ 9時以降のみ解放ボタン表示　以外は表示しない
     if (status !== 'movable' || !isAfter) {
       return <></>
     }

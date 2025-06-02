@@ -19,6 +19,7 @@ export default function MapPage() {
   const [selectedSeatIds, setSelectedSeatIds] = useState([]) // 選択中の座席ID配列
   const [showReservation, setShowReservation] = useState(false) // 予約画面表示フラグ
 
+  // 座席番号を表示するため、座席図編集APIを実行
   useEffect(() => {
     const loadSeats = async () => {
       const timer = startProgress()
@@ -57,12 +58,11 @@ export default function MapPage() {
   // 予約画面から戻る処理
   const handleBackToMap = () => {
     setShowReservation(false)
-    setSelectedSeatIds([]) // 選択をリセット
   }
 
   return (
     <>
-      <SiteHeader title={showReservation ? "予約設定" : "座席図"} />
+      <SiteHeader title={showReservation ? "予約日を選択してください" : "座席を選択してください"} />
       {showReservation ? (
         // 予約設定画面
         <ReservationTabs 
@@ -86,7 +86,6 @@ export default function MapPage() {
                 onSeatClick={handleSeatClick}
                 selectedSeatIds={selectedSeatIds}
                 appoint={true}
-                move={false}
               />
             )}
           </div>
