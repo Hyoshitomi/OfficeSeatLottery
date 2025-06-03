@@ -2,9 +2,7 @@
 
 import { useState, useCallback } from "react";
 import Link from 'next/link';
-import { useRouter } from "next/navigation";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { useDebouncedCallback } from "use-debounce";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner"; // 追加
 import { cn } from "@/lib/utils";
@@ -18,7 +16,6 @@ export function LoginForm({ className, callbackUrl, ...props }) {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +52,7 @@ export function LoginForm({ className, callbackUrl, ...props }) {
         }
         window.location.replace(redirectUrl);
       }
-    } catch (err) {
+    } catch (_error) {
       toast.error("認証エラーが発生しました"); // 変更
     } finally {
       setIsLoading(false);

@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import { SiteHeader } from "@/components/sidebar/site-header";
 
-export default async function Home() {
+export default function Home() {
   const { data: session } = useSession();
   const user = session?.user;
 

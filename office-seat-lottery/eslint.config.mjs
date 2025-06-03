@@ -1,15 +1,27 @@
 import eslintPluginNext from '@next/eslint-plugin-next';
 import prettierConfig from 'eslint-config-prettier';
+import eslintPluginImport from 'eslint-plugin-import';
+import eslintPluginUnusedImports from 'eslint-plugin-unused-imports';
+import eslintPluginReact from 'eslint-plugin-react';
 
 export default [
   {
-    files: ['src/**/*.{js,jsx,ts,tsx}'],
     ignores: [
-      '**/.next/**/*',
-      '**/*.d.ts', // 型定義ファイルをlint対象外に
+      'coverage/**',
+      '**/node_modules/**',
+      '**/.next/**',
+      'src/components/ui/**',
+      'src/generated/**',
+      '**/*.d.ts',
     ],
+  },
+  {
+    files: ['src/**/*.{js,jsx,ts,tsx}'],
     plugins: {
       '@next/next': eslintPluginNext,
+      import: eslintPluginImport,
+      'unused-imports': eslintPluginUnusedImports,
+      react: eslintPluginReact,
     },
     languageOptions: {
       ecmaVersion: 2022,
@@ -23,38 +35,25 @@ export default [
       },
     },
     rules: {
-      // import関連すべて無効化
-      'import/order': 'off',
-      'import/newline-after-import': 'off',
-      'import/no-duplicates': 'off',
-      'import/no-unresolved': 'off',
-      'import/no-extraneous-dependencies': 'off',
-      'import/no-unused-modules': 'off',
-      'import/first': 'off',
-      'import/extensions': 'off',
-      'import/no-named-as-default': 'off',
-      'import/no-named-as-default-member': 'off',
-      'import/no-cycle': 'off',
-      'import/no-deprecated': 'off',
-      'import/no-mutable-exports': 'off',
-      'import/no-amd': 'off',
-      'import/no-commonjs': 'off',
-      'import/no-nodejs-modules': 'off',
-      'import/prefer-default-export': 'off',
-      'import/no-anonymous-default-export': 'off',
-      'import/group-exports': 'off',
-      'import/dynamic-import-chunkname': 'off',
-      'sort-imports': 'off',
-      'unused-imports/no-unused-imports': 'off',
-      'unused-imports/no-unused-vars': 'off',
+      // Reactコンポーネント検出
+      'react/jsx-uses-react': 'error',
+      'react/jsx-uses-vars': 'error',
+      
+      // 未使用import検出
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
+        'error',
+        {
+          varsIgnorePattern: '^_', // アンダースコア変数を無視
+          argsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_' // 追加
+        }
+      ],
+      
+      // その他の設定
+      'import/order': 'error',
       'no-unused-vars': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
-
-      // Next.js関連警告も無効化したい場合
-      '@next/next/no-html-link-for-pages': 'off',
-      '@next/next/no-img-element': 'off',
-
-      // PrettierやNext.jsのルール
+      'react/react-in-jsx-scope': 'off',
       ...eslintPluginNext.configs.recommended.rules,
       ...prettierConfig.rules,
     },

@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import NameBox from '@/components/seat/name-box'
 import AddBoxButton from '@/components/seat/add-box-button'
 
@@ -28,7 +30,7 @@ export default function SeatCanvas({
     <div className="relative inline-block">
       <img
         src={src}
-        onLoad={(e) => onImgLoad && onImgLoad({ 
+        onLoad={() => onImgLoad && onImgLoad({ 
           width: safeImgSize.width, 
           height: safeImgSize.height 
         })}

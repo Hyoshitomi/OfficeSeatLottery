@@ -22,7 +22,7 @@ jest.mock('@/hooks/use-employees', () => ({
 }))
 
 jest.mock('@/components/ui/calendar', () => ({
-  Calendar: ({ selected, onSelect, mode }) => (
+  Calendar: ({ onSelect, mode }) => (
     <div data-testid="calendar" data-mode={mode}>
       <button onClick={() => onSelect({ from: new Date('2025-06-15'), to: new Date('2025-06-20') })}>
         日付選択
@@ -84,7 +84,7 @@ jest.mock('@/components/ui/button', () => ({
 }))
 
 jest.mock('@/components/lottery/employee-selector', () => ({
-  EmployeeSelector: ({ employeeList, selectedEmployees, onSelectionChange, isAdmin }) => (
+  EmployeeSelector: ({ employeeList, selectedEmployees, onSelectionChange }) => (
     <div data-testid="employee-selector">
       <select
         multiple

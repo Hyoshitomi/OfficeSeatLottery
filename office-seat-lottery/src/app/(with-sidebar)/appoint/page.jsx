@@ -8,14 +8,12 @@ import { ProgressLoader } from '@/components/common/progress-loader'
 import { useProgress } from '@/hooks/use-progress'
 import { useSeats } from '@/hooks/use-seat'
 import { useImage } from '@/hooks/use-image'
-import { useDate } from '@/hooks/use-date'
 import ReservationTabs from '@/components/form/reservation-tabs'
 
 export default function MapPage() {
   const { isLoading, progress, startProgress, completeProgress } = useProgress()
   const { boxes, imgSize, fetchSeats, exitSeat, updateBox, handleImgLoad } = useSeats()
   const { previewImage, fileInputRef } = useImage()
-  const { getDateString } = useDate()
   const [selectedSeatIds, setSelectedSeatIds] = useState([]) // 選択中の座席ID配列
   const [showReservation, setShowReservation] = useState(false) // 予約画面表示フラグ
 

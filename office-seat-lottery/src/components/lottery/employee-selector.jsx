@@ -2,7 +2,6 @@ import { MultiSelect } from "@/components/ui/multi-select"
 
 export function EmployeeSelector({ 
   employeeList, 
-  selectedEmployees, 
   onSelectionChange,
   isAdmin 
 }) {

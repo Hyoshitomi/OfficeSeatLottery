@@ -48,32 +48,31 @@ jest.mock('@/components/sidebar/nav/nav-user', () => ({
 
 jest.mock('@/components/ui/sidebar', () => ({
   Sidebar: ({ children, ...props }) => {
-    // asChildプロパティを除外してDOM警告を回避
-    const { asChild, ...domProps } = props
+    const { asChild: _asChild, ...domProps } = props
     return <div data-testid="sidebar" {...domProps}>{children}</div>
   },
   SidebarContent: ({ children, ...props }) => {
-    const { asChild, ...domProps } = props
+    const { asChild: _asChild, ...domProps } = props
     return <div data-testid="sidebar-content" {...domProps}>{children}</div>
   },
   SidebarFooter: ({ children, ...props }) => {
-    const { asChild, ...domProps } = props
+    const { asChild: _asChild, ...domProps } = props
     return <div data-testid="sidebar-footer" {...domProps}>{children}</div>
   },
   SidebarHeader: ({ children, ...props }) => {
-    const { asChild, ...domProps } = props
+    const { asChild: _asChild, ...domProps } = props
     return <div data-testid="sidebar-header" {...domProps}>{children}</div>
   },
   SidebarMenu: ({ children, ...props }) => {
-    const { asChild, ...domProps } = props
+    const { asChild: _asChild, ...domProps } = props
     return <div data-testid="sidebar-menu" {...domProps}>{children}</div>
   },
   SidebarMenuButton: ({ children, ...props }) => {
-    const { asChild, ...domProps } = props
+    const { asChild: _asChild, ...domProps } = props
     return <button data-testid="sidebar-menu-button" {...domProps}>{children}</button>
   },
   SidebarMenuItem: ({ children, ...props }) => {
-    const { asChild, ...domProps } = props
+    const { asChild: _asChild, ...domProps } = props
     return <div data-testid="sidebar-menu-item" {...domProps}>{children}</div>
   }
 }))

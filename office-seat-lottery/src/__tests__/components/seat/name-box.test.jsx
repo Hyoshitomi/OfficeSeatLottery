@@ -4,7 +4,7 @@ import NameBox from '@/components/seat/name-box'
 
 // UIコンポーネントのモック
 jest.mock('@/components/ui/popover', () => ({
-  Popover: ({ children, open, onOpenChange }) => (
+  Popover: ({ children, open }) => (
     <div data-testid="popover" data-open={open}>
       {children}
     </div>
@@ -15,7 +15,7 @@ jest.mock('@/components/ui/popover', () => ({
 
 // 根本解決: react-draggableモックを完全に書き直し
 jest.mock('react-draggable', () => {
-  return function MockDraggable({ children, onStop, disabled, nodeRef }) {
+  return function MockDraggable({ children, onStop, disabled }) {
     return (
       <div 
         data-testid="draggable"

@@ -7,12 +7,6 @@ function toStartOfUTCDay(date) {
   return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
 }
 
-function getTomorrow(date) {
-  const tomorrow = new Date(date);
-  tomorrow.setUTCDate(date.getUTCDate() + 1);
-  return tomorrow;
-}
-
 function shuffleArray(array) {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -116,6 +110,6 @@ export async function POST(request) {
   }
 }
 
-function errorResponse(message, status, error) {
+function errorResponse(message, status) {
   return NextResponse.json({ error: message }, { status });
 }

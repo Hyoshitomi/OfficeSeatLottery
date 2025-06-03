@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button'
 import {
   Sidebar,
   SidebarFooter,
-  SidebarContent,
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"

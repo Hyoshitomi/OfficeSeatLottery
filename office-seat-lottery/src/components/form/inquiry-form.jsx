@@ -62,7 +62,7 @@ export function InquiryForm() {
   // 送信処理（useCallbackで最適化）
   const onSubmit = useCallback(
     form.handleSubmit(
-      async (data) => {
+      async () => {
         try {
           // ここでAPI送信処理など
           // await fetch(...)

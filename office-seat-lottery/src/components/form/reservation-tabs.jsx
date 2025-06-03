@@ -9,7 +9,6 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { EmployeeSelector } from "@/components/lottery/employee-selector"
 import { useEmployees } from "@/hooks/use-employees"
 import { MultiSelect } from "@/components/ui/multi-select"
 
@@ -35,7 +34,6 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
     employeeList, 
     selectedEmployees, 
     setSelectedEmployees, 
-    isAdmin 
   } = useEmployees(user)
 
   // 選択可能な社員数の制限（1人または選択座席数）

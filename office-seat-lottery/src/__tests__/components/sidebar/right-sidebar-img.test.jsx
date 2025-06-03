@@ -10,8 +10,7 @@ jest.mock('@/components/seat/image-uploader', () => {
 
 jest.mock('@/components/ui/button', () => ({
   Button: ({ children, onClick, ...props }) => {
-    // カスタムプロパティを除外してDOM警告を回避
-    const { customProp, ...domProps } = props
+    const { customProp: _customProp, ...domProps } = props
     return (
       <button onClick={onClick} data-testid="button" {...domProps}>
         {children}
@@ -28,8 +27,7 @@ jest.mock('@/components/sidebar/nav/nav-tablename', () => {
 
 jest.mock('@/components/ui/sidebar', () => ({
   Sidebar: ({ children, ...props }) => {
-    // カスタムプロパティを除外してDOM警告を回避
-    const { customProp, ...domProps } = props
+    const { customProp: _customProp, ...domProps } = props
     return <div data-testid="sidebar" {...domProps}>{children}</div>
   },
   SidebarFooter: ({ children }) => <div data-testid="sidebar-footer">{children}</div>,
@@ -96,7 +94,6 @@ describe('RightSidebarImg', () => {
     }).not.toThrow()
   })
 
-  // 修正: customPropテストを削除または安全な方法に変更
   it('追加のpropsが渡されても正常動作する', () => {
     const props = {
       ...defaultProps

@@ -1,12 +1,9 @@
 import * as React from "react"
-import ImageUploader from '@/components/seat/image-uploader'
 import { Button } from '@/components/ui/button'
-import TableNameInput from '@/components/sidebar/nav/nav-tablename'
 
 import {
   Sidebar,
   SidebarFooter,
-  SidebarContent,
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"

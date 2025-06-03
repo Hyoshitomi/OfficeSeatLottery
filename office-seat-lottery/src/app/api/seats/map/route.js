@@ -95,10 +95,9 @@ async function fetchSeatsWithRelations(targetDay) {
 /**
  * 座席データを処理してレスポンス用の配列を作成
  * @param {Array} allSeats - 全座席データ
- * @param {Date} targetDay - 対象日
  * @returns {Array} 処理済み座席データ配列
  */
-function processSeats(allSeats, targetDay) {
+function processSeats(allSeats) {
   const seats = [];
 
   for (const seat of allSeats) {

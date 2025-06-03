@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { PasswordChangeCard } from '@/components/account/password-change-card'
 
@@ -18,7 +18,7 @@ jest.mock('@/hooks/use-password-validation', () => ({
 }))
 
 jest.mock('@/components/account/password-input', () => ({
-  PasswordInput: ({ id, value, onChange, placeholder, restrictChars }) => (
+  PasswordInput: ({ id, value, onChange, placeholder }) => (
     <input
       data-testid={id}
       value={value}
@@ -30,7 +30,7 @@ jest.mock('@/components/account/password-input', () => ({
 }))
 
 jest.mock('@/components/account/password-requirements', () => ({
-  PasswordRequirements: ({ requirements, getRequirementColor, validationAttempted }) => (
+  PasswordRequirements: () => (
     <div data-testid="password-requirements">
       Password Requirements Component
     </div>
