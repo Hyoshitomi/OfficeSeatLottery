@@ -20,7 +20,7 @@ export default function NameBox({
   id,
   name,
   status,
-  position,
+  position = { x: 0, y: 0 }, // デフォルト値を設定
   onDragStop,
   onUpdate,
   onDelete,
@@ -32,6 +32,12 @@ export default function NameBox({
 }) {
   const nodeRef = useRef(null)
   const [open, setOpen] = useState(false)
+
+  // 安全な位置取得
+  const safePosition = {
+    x: position?.x || 0,
+    y: position?.y || 0
+  }
 
   // moveに関係なく右クリックでPopoverを開く
   const handleContextMenu = e => {
@@ -60,7 +66,7 @@ export default function NameBox({
     <Draggable
       nodeRef={nodeRef}
       position={{ x: 0, y: 0 }}
-      onStop={(_, data) => onDragStop(id, position.x + data.x, position.y + data.y)}
+      onStop={(_, data) => onDragStop && onDragStop(id, safePosition.x + data.x, safePosition.y + data.y)}
       disabled={!move} 
     >
       <div
@@ -79,8 +85,8 @@ export default function NameBox({
             id={id}
             name={name}
             status={status}
-            x={position.x}
-            y={position.y}
+            x={safePosition.x}
+            y={safePosition.y}
             onUpdate={onUpdate}
             onDelete={onDelete}
             move={move}

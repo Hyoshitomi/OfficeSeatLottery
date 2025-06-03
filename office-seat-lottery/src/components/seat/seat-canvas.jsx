@@ -3,8 +3,8 @@ import AddBoxButton from '@/components/seat/add-box-button'
 
 export default function SeatCanvas({
   src,
-  imgSize,
-  boxes,
+  imgSize = { width: 800, height: 600 }, // デフォルト値を設定
+  boxes = [], // デフォルト値を設定
   onImgLoad,
   onDragStop,
   onUpdate,
@@ -16,21 +16,32 @@ export default function SeatCanvas({
   appoint = false,
   move = false,
 }) {
+  // 安全な値の取得
+  const safeImgSize = {
+    width: imgSize?.width || 800,
+    height: imgSize?.height || 600
+  }
+
+  const safeSelectedSeatIds = selectedSeatIds || []
+
   return (
-    <div className="relative">
+    <div className="relative inline-block">
       <img
         src={src}
-        onLoad={onImgLoad}
-        style={{ width: imgSize.width, height: imgSize.height }}
-        alt="座席表"
+        onLoad={(e) => onImgLoad && onImgLoad({ 
+          width: safeImgSize.width, 
+          height: safeImgSize.height 
+        })}
+        style={{ width: safeImgSize.width, height: safeImgSize.height }}
+        alt="オフィスレイアウト"
       />
-      {boxes.map(box => (
+      {boxes && boxes.map(box => (
         <div
           key={box.id}
           style={{
             position: 'absolute',
-            left: box.x,
-            top: box.y,
+            left: box.x || 0,
+            top: box.y || 0,
             width: 70,
             height: 40,
           }}
@@ -39,13 +50,13 @@ export default function SeatCanvas({
             id={box.id}
             name={box.name}
             status={box.status}
-            position={{ x: box.x, y: box.y }}
+            position={{ x: box.x || 0, y: box.y || 0 }}
             onDragStop={onDragStop}
             onUpdate={onUpdate}
             onDelete={onDelete}
             onExit={onExit}
             onSeatClick={onSeatClick}
-            isSelected={selectedSeatIds.includes(box.id)}
+            isSelected={safeSelectedSeatIds.includes(box.id)}
             appoint={appoint}
             move={move}
           />

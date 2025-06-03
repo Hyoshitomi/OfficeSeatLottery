@@ -113,8 +113,6 @@ export async function POST(request) {
       }, { status: 400 });
     }
 
-    // ... 既存のselectedDaysバリデーションと処理対象日の計算は同じ ...
-
     // 登録データの準備
     const createData = [];
     

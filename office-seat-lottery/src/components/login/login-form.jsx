@@ -24,15 +24,15 @@ export function LoginForm({ className, callbackUrl, ...props }) {
     e.preventDefault();
     setIsLoading(true);
 
-    // バリデーション
-    if (!employeeNumber.match(/^[a-zA-Z0-9]+$/)) {
-      toast.error("社員番号は半角英数字のみ入力可能です"); // 変更
+    // バリデーション（修正版）
+    if (!employeeNumber || !employeeNumber.match(/^[a-zA-Z0-9]+$/)) {
+      toast.error("社員番号は半角英数字のみ入力可能です");
       setIsLoading(false);
       return;
     }
 
-    if (!password.match(/^[a-zA-Z0-9!?_$#]+$/)) {
-      toast.error("使用可能な文字: 半角英数字と!?_$#"); // 変更
+    if (!password || !password.match(/^[a-zA-Z0-9!?_$#]+$/)) {
+      toast.error("使用可能な文字: 半角英数字と!?_$#");
       setIsLoading(false);
       return;
     }
