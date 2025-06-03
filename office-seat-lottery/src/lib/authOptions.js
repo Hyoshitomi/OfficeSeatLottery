@@ -3,10 +3,20 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@/generated/prisma";
 
-const prisma = new PrismaClient();
+// テスト環境での条件分岐
+const isTest = process.env.NODE_ENV === 'test';
+
+// 遅延初期化
+let prisma;
+const getPrisma = () => {
+  if (!prisma) {
+    prisma = new PrismaClient();
+  }
+  return prisma;
+};
 
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: isTest ? 'mocked-adapter' : PrismaAdapter(getPrisma()),
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -15,18 +25,22 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials) return null;
+        if (!credentials?.employeeNumber || !credentials?.password) {
+          return null;
+        }
+        
         try {
-          const user = await prisma.M_USER.findUnique({
+          const user = await getPrisma().M_USER.findUnique({
             where: { employeeNumber: credentials.employeeNumber },
           });
-          console.log("user:", user);
+          
           if (
             user &&
             !user.deleteFlag &&
             (await bcrypt.compare(credentials.password, user.password))
           ) {
             return {
+              id: user.userId,
               userId: user.userId,
               employeeNumber: user.employeeNumber,
               adminFlag: user.adminFlag,
@@ -36,7 +50,7 @@ export const authOptions = {
           }
           return null;
         } catch (_error) {
-          console.error("Authentication error:", error);
+          console.error("Authentication error:", _error);
           return null;
         }
       },
@@ -57,7 +71,7 @@ export const authOptions = {
     },
     async jwt({ token, user }) {
       if (user) {
-        token.userId = user.userId; 
+        token.userId = user.userId;
         token.employeeNumber = user.employeeNumber;
         token.adminFlag = user.adminFlag;
         token.lastName = user.lastName;

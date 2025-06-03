@@ -26,7 +26,7 @@ export function useSeats() {
         return []
       }
     } catch (_error) {
-      console.error('席データの取得に失敗:', error)
+      console.error('席データの取得に失敗:', _error)
       setBoxes([])
       return []
     }

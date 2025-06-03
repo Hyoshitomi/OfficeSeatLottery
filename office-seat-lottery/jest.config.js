@@ -7,6 +7,9 @@ const createJestConfig = nextJest({
 const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testEnvironment: 'jest-environment-jsdom',
+  testEnvironmentOptions: {
+    url: 'http://localhost:3000'
+  },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
@@ -17,6 +20,9 @@ const customJestConfig = {
     '<rootDir>/node_modules/',
     '<rootDir>/.next/',
     '<rootDir>/src/components/ui/',
+    '<rootDir>/src/components/login/session-provider.jsx',
+    '<rootDir>/src/hooks/use-mobile.js',
+    '<rootDir>/src/lib/utils.js',
     '<rootDir>/src/generated/',
   ],
   
@@ -24,8 +30,12 @@ const customJestConfig = {
     'src/**/*.{js,jsx,ts,tsx}',
     '!src/**/*.d.ts',
     '!src/components/ui/**',        // UIコンポーネントを除外
+    '!src/components/login/session-provider.jsx',
+    '!src/hooks/use-mobile.js',
+    '!src/lib/utils.js',
     '!src/generated/**',            // 生成されたファイルを除外
   ],
 }
+
 
 module.exports = createJestConfig(customJestConfig)

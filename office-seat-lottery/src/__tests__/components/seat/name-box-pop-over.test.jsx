@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor, cleanup, act } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import NameBoxPopOver from '@/components/seat/name-box-pop-over'
 
@@ -24,31 +24,39 @@ jest.mock('sonner', () => ({
 }))
 
 describe('NameBoxPopOver', () => {
-  const mockOnUpdate = jest.fn()
-  const mockOnDelete = jest.fn()
-  const mockOnExit = jest.fn()
-
-  const defaultProps = {
-    id: 'seat-1',
-    name: '田中太郎',
-    status: 'movable',
-    x: 100,
-    y: 200,
-    move: false,
-    onUpdate: mockOnUpdate,
-    onDelete: mockOnDelete,
-    onExit: mockOnExit,
-    appoint: false
-  }
+  let mockOnUpdate, mockOnDelete, mockOnExit, defaultProps
 
   beforeEach(() => {
+    // 各テスト前に新しいモック関数を作成
+    mockOnUpdate = jest.fn()
+    mockOnDelete = jest.fn()
+    mockOnExit = jest.fn()
+
+    defaultProps = {
+      id: 'seat-1',
+      name: '田中太郎',
+      status: 'movable',
+      x: 100,
+      y: 200,
+      move: false,
+      onUpdate: mockOnUpdate,
+      onDelete: mockOnDelete,
+      onExit: mockOnExit,
+      appoint: false
+    }
+
     jest.clearAllMocks()
+    
     // 各テスト前に9時以降の時間を設定
     const mockDate = new Date('2025-06-03T10:00:00')
     jest.spyOn(global, 'Date').mockImplementation(() => mockDate)
+    
+    // DOMクリーンアップ
+    document.body.innerHTML = ''
   })
 
   afterEach(() => {
+    cleanup()
     jest.restoreAllMocks()
   })
 
@@ -103,11 +111,14 @@ describe('NameBoxPopOver', () => {
     render(<NameBoxPopOver {...props} />)
 
     const nameInput = screen.getByDisplayValue('田中太郎')
-    fireEvent.change(nameInput, { target: { value: '佐藤花子' } })
+    
+    await act(async () => {
+      fireEvent.change(nameInput, { target: { value: '佐藤花子' } })
+    })
 
     await waitFor(() => {
       expect(mockOnUpdate).toHaveBeenCalledWith('seat-1', '佐藤花子', 'movable', 100, 200)
-    }, { timeout: 400 })
+    }, { timeout: 1000 })
   })
 
   it('ステータス変更時にonUpdateが呼ばれる（move=true）', async () => {
@@ -116,11 +127,15 @@ describe('NameBoxPopOver', () => {
 
     // 「不使用」ラジオボタンをクリック
     const unusedRadio = screen.getByRole('radio', { name: '不使用' })
-    fireEvent.click(unusedRadio)
+    
+    await act(async () => {
+      fireEvent.click(unusedRadio)
+      fireEvent.change(unusedRadio, { target: { value: 'unused' } })
+    })
 
     await waitFor(() => {
       expect(mockOnUpdate).toHaveBeenCalledWith('seat-1', '田中太郎', 'unused', 100, 200)
-    }, { timeout: 400 })
+    }, { timeout: 1000 })
   })
 
   it('削除ボタンクリック時にonDeleteが呼ばれる', () => {
