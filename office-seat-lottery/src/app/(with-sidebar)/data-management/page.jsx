@@ -1,7 +1,7 @@
 'use client'
 
-import { SiteHeader } from "@/components/sidebar/site-header";
 import { useSession } from "next-auth/react";
+import { SiteHeader } from "@/components/sidebar/site-header";
 
 export default async function Home() {
   const { data: session } = useSession();

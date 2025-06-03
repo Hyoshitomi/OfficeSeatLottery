@@ -2,10 +2,10 @@ import React, { useCallback, useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { toast } from "sonner"
 import { Form } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { FormInput } from "@/components/form/form-input"
-import { toast } from "sonner"
 import { FormRadioGroup } from "@/components/form/form-radio"
 
 const InquirySchema = z.object({
@@ -69,7 +69,7 @@ export function InquiryForm() {
 
           toast.success("送信が完了しました。")
           form.reset()
-        } catch (error) {
+        } catch (_error) {
           toast.error("送信に失敗しました。もう一度お試しください。")
         }
       },

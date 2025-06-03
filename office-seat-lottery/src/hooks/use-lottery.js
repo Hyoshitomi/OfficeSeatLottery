@@ -35,7 +35,7 @@ export function useLottery() {
         toast.error(data.error || '抽選処理中にエラーが発生しました')
         return false
       }
-    } catch (error) {
+    } catch (_error) {
       console.error('抽選処理エラー:', error)
       toast.error('抽選処理中にエラーが発生しました')
       return false

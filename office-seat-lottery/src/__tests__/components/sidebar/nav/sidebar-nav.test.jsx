@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import '@testing-library/jest-dom'
-import { SidebarNav } from '@/components/sidebar/nav/sidebar-nav'
 import { usePathname } from 'next/navigation'
+import { SidebarNav } from '@/components/sidebar/nav/sidebar-nav'
 
 // usePathnameをモック
 jest.mock('next/navigation', () => ({

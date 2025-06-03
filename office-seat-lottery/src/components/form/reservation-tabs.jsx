@@ -1,16 +1,16 @@
 "use client"
 
 import { useState } from "react"
+import { ja } from "date-fns/locale"
+import { useSession } from "next-auth/react"
 import { Calendar } from "@/components/ui/calendar"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { ja } from "date-fns/locale"
 import { EmployeeSelector } from "@/components/lottery/employee-selector"
 import { useEmployees } from "@/hooks/use-employees"
-import { useSession } from "next-auth/react"
 import { MultiSelect } from "@/components/ui/multi-select"
 
 export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
@@ -93,7 +93,7 @@ const handleWeeklyReservation = async () => {
         setReservationError(result.error) // エラーを設定
         alert(`エラー: ${result.error}`);
       }
-    } catch (error) {
+    } catch (_error) {
       setReservationError('予約登録中にエラーが発生しました')
       alert('予約登録中にエラーが発生しました');
     }
@@ -125,7 +125,7 @@ const handleWeeklyReservation = async () => {
         setReservationError(result.error) // エラーを設定
         alert(`エラー: ${result.error}`);
       }
-    } catch (error) {
+    } catch (_error) {
       setReservationError('予約登録中にエラーが発生しました')
       alert('予約登録中にエラーが発生しました');
     }

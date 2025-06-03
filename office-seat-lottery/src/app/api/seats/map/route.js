@@ -23,7 +23,7 @@ export async function GET(request) {
     const seats = processSeats(allSeats, targetDay);
 
     return NextResponse.json(seats, { status: 200 });
-  } catch (error) {
+  } catch (_error) {
     return handleError(error);
   }
 }

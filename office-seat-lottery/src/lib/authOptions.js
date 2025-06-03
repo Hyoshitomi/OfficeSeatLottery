@@ -1,7 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { PrismaClient } from "@/generated/prisma";
 import bcrypt from "bcryptjs";
+import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
@@ -35,7 +35,7 @@ export const authOptions = {
             };
           }
           return null;
-        } catch (error) {
+        } catch (_error) {
           console.error("Authentication error:", error);
           return null;
         }

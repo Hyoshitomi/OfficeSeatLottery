@@ -111,7 +111,7 @@ export async function POST(request) {
     const response = NextResponse.json({ result: createData, dbResult }, { status: 200 });
     return response;
 
-  } catch (error) {
+  } catch (_error) {
     return errorResponse('サーバーエラーが発生しました', 500, error);
   }
 }

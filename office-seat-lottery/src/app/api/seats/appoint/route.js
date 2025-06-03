@@ -224,7 +224,7 @@ export async function POST(request) {
       recordCount: createData.length
     }, { status: 200 });
 
-  } catch (error) {
+  } catch (_error) {
     console.error('予約登録エラー:', error);
     return NextResponse.json({ 
       error: 'サーバーエラーが発生しました' 

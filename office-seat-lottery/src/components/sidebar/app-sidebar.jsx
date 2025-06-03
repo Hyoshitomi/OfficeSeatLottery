@@ -11,6 +11,7 @@ import {
   IconMail,
   IconUsers,
 } from "@tabler/icons-react"
+import { useSession } from "next-auth/react";
 import { SidebarNav } from "@/components/sidebar/nav/sidebar-nav";
 import { NavUser } from "@/components/sidebar/nav/nav-user"
 import {
@@ -22,7 +23,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useSession } from "next-auth/react";
 
 export function AppSidebar({
   ...props

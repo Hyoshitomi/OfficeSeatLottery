@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 import { ProfileCard } from "@/components/account/profile-card"
 import { PasswordChangeCard } from "@/components/account/password-change-card"
 import { ProgressBar } from "@/components/account/progressbar"
@@ -88,7 +88,7 @@ export default function Home() {
       } else {
         toast.error(data.error || "パスワード変更に失敗しました")
       }
-    } catch (error) {
+    } catch (_error) {
       resetProgress()
       toast.error("通信エラーが発生しました")
     }
