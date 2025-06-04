@@ -112,6 +112,6 @@ export async function PATCH(request) {
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (_error) {
     // エラー内容はレスポンスには詳細を出さない
-    return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
+    return NextResponse.json({ _error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }

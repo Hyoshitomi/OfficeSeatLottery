@@ -24,7 +24,7 @@ export async function GET(request) {
 
     return NextResponse.json(seats, { status: 200 });
   } catch (_error) {
-    return handleError(error);
+    return handleError(_error);
   }
 }
 

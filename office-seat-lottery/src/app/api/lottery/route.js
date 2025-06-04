@@ -106,7 +106,7 @@ export async function POST(request) {
     return response;
 
   } catch (_error) {
-    return errorResponse('サーバーエラーが発生しました', 500, error);
+    return errorResponse('サーバーエラーが発生しました', 500, _error);
   }
 }
 

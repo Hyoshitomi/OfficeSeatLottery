@@ -225,7 +225,7 @@ export async function POST(request) {
     }, { status: 200 });
 
   } catch (_error) {
-    console.error('予約登録エラー:', error);
+    console.error('予約登録エラー:', _error);
     return NextResponse.json({ 
       error: 'サーバーエラーが発生しました' 
     }, { status: 500 });
