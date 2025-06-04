@@ -16,7 +16,7 @@ export default function Home() {
   
   const [validationAttempted, setValidationAttempted] = useState(false)
   const [formData, setFormData] = useState({
-    name: `${user?.lastName} ${user?.firstName}` ?? "取得失敗",
+    name: user ? `${user.lastName} ${user.firstName}` : "取得失敗",
     employeeId: user?.employeeNumber ?? "取得失敗",
     currentPassword: "",
     newPassword: "",

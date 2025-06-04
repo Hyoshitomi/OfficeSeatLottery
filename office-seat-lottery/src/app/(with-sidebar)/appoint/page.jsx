@@ -48,7 +48,6 @@ export default function MapPage() {
   const handleSelect = () => {
     // 「予約日を選択する」ボタンクリック時の処理
     if (selectedSeatIds.length > 0) {
-      console.log('選択された座席IDs:', selectedSeatIds)
       setShowReservation(true) // 予約画面を表示
     }
   }

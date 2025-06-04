@@ -112,7 +112,6 @@ describe('ReservationTabs', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    console.log = jest.fn() // console.logをモック
   })
 
   it('コンポーネントが正しくレンダリングされる', () => {
