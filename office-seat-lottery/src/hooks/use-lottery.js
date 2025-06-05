@@ -31,12 +31,11 @@ export function useLottery() {
         )
         toast.success('抽選が完了しました！')
         return true
-      } else {
+      } 
         toast.error(data.error || '抽選処理中にエラーが発生しました')
         return false
-      }
+      
     } catch (_error) {
-      console.error('抽選処理エラー:', _error)
       toast.error('抽選処理中にエラーが発生しました')
       return false
     }

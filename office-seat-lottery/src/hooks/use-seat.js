@@ -21,12 +21,11 @@ export function useSeats() {
         }))
         setBoxes(mappedSeats)
         return mappedSeats
-      } else {
+      } 
         setBoxes([])
         return []
-      }
+      
     } catch (_error) {
-      console.error('席データの取得に失敗:', _error)
       setBoxes([])
       return []
     }
@@ -43,10 +42,10 @@ export function useSeats() {
       if (res.ok) {
         toast.success('保存しました！')
         return true
-      } else {
+      } 
         toast.error('保存に失敗しました')
         return false
-      }
+      
     } catch (_error) {
       toast.error('保存に失敗しました')
       return false
@@ -65,10 +64,10 @@ export function useSeats() {
         setBoxes(prev => prev.filter(b => b.id !== seatId))
         toast.success('席を解放しました')
         return true
-      } else {
+      } 
         toast.error('解放に失敗しました')
         return false
-      }
+      
     } catch (_error) {
       toast.error('解放に失敗しました')
       return false

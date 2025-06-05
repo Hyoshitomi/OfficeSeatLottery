@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { getServerSession } from "next-auth";
 
 import { PrismaClient } from "@/generated/prisma";
-import { authOptions } from "@/lib/authOptions";
+import { authOptions } from "@/lib/auth-options";
 
 const prisma = new PrismaClient();
 

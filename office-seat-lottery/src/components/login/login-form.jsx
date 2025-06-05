@@ -40,7 +40,7 @@ export function LoginForm({ className, callbackUrl, ...props }) {
         redirect: false,
         employeeNumber,
         password,
-        callbackUrl: callbackUrl,
+        callbackUrl,
       });
 
       if (res?.error) {

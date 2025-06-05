@@ -51,7 +51,6 @@ export const authOptions = {
           }
           return null;
         } catch (_error) {
-          console.error("Authentication error:", _error);
           return null;
         }
       },

@@ -144,10 +144,10 @@ const handleWeeklyReservation = async () => {
     if (!range.to || range.from.getTime() === range.to.getTime()) {
       // 単日選択
       return range.from.toLocaleDateString("ja-JP")
-    } else {
+    } 
       // 期間選択
       return `${range.from.toLocaleDateString("ja-JP")} 〜 ${range.to.toLocaleDateString("ja-JP")}`
-    }
+    
   }
 
   return (

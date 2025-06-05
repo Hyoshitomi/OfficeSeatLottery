@@ -39,16 +39,17 @@ export default function NameBoxPopOver({
       }, 300)
       return () => clearTimeout(t)
     }
+    return undefined
   }, [id, editName, editStatus, x, y, onUpdate, move])
-
+  
   // 予約画面時にはポップオーバーを表示しない
-  if (appoint)return <></>
+  if (appoint)return null
 
   // move=false 
   if (!move) {
     // statusが'movable' かつ 9時以降のみ解放ボタン表示　以外は表示しない
     if (status !== 'movable' || !isAfter) {
-      return <></>
+      return null
     }
     return (
       <div className="absolute top-0 ml-2 z-50 flex flex-col gap-2 min-w-[240px] bg-white shadow-lg border rounded p-3">

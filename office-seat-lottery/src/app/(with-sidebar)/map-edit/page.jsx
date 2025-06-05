@@ -62,7 +62,7 @@ export default function MapEditPage() {
     try {
       await saveSeats(boxes)
     } catch (_error) {
-      console.error('保存に失敗しました:', error)
+      null
     } finally {
       completeProgress(timer)
     }

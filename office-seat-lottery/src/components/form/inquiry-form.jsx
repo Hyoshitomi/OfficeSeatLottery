@@ -76,7 +76,7 @@ export function InquiryForm() {
       },
       (errors) => {
         // バリデーションエラー時
-        const firstError = Object.values(errors)[0]
+        const [firstError] = Object.values(errors)
         if (firstError && firstError.message) {
           toast.error(firstError.message)
         } else {

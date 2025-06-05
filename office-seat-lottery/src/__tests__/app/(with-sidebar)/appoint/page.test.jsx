@@ -234,9 +234,9 @@ describe('MapPage', () => {
       const mockCalls = SeatCanvasComponent.mock.calls;
       
       if (mockCalls.length > 0) {
-        const props = mockCalls[0][0];
+        const [[props]] = mockCalls;
         expect(props.onDragStop).toBeDefined();
-        
+      
         // onDragStopコールバックを実行
         props.onDragStop('seat-1', 100, 200);
         expect(mockSeatsHook.updateBox).toHaveBeenCalledWith('seat-1', { x: 100, y: 200 });

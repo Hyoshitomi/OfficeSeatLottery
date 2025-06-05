@@ -128,7 +128,7 @@ export async function POST(request) {
 
     if (selectedEmployees.length === 1) {
       // 1人の社員が複数座席を予約
-      const employeeNumber = selectedEmployees[0];
+      const [employeeNumber] = selectedEmployees;
       const userId = employeeToUserIdMap[employeeNumber]; // **★ userIdに変換 ★**
       
       for (const seatId of selectedSeatIds) {
@@ -163,7 +163,7 @@ export async function POST(request) {
           });
         }
       }
-    } else {
+     } else {
       // 複数社員がそれぞれ座席を予約
       for (let i = 0; i < selectedEmployees.length; i++) {
         const employeeNumber = selectedEmployees[i];
@@ -226,7 +226,6 @@ export async function POST(request) {
     }, { status: 200 });
 
   } catch (_error) {
-    console.error('予約登録エラー:', _error);
     return NextResponse.json({ 
       error: 'サーバーエラーが発生しました' 
     }, { status: 500 });

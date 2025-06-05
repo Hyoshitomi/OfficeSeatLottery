@@ -277,10 +277,11 @@ describe('MapEditPage', () => {
       render(<MapEditPage />);
       
       const SidebarComponent = require('@/components/sidebar/right-sidebar-edit');
-      const mockProps = SidebarComponent.mock.calls[0][0];
+      const [firstCall] = SidebarComponent.mock.calls;
+      const [props] = firstCall || [];
       
-      expect(mockProps.onSave).toBeDefined();
-      expect(typeof mockProps.onSave).toBe('function');
+      expect(props.onSave).toBeDefined();
+      expect(typeof props.onSave).toBe('function');
     });
 
     it('保存中は重複実行を防ぐ', async () => {
@@ -318,10 +319,11 @@ describe('MapEditPage', () => {
       render(<MapEditPage />);
       
       const SidebarComponent = require('@/components/sidebar/right-sidebar-edit');
-      const mockProps = SidebarComponent.mock.calls[0][0];
+      const [firstCall] = SidebarComponent.mock.calls;
+      const [props] = firstCall || [];
       
-      expect(mockProps.onFileChange).toBeDefined();
-      expect(typeof mockProps.onFileChange).toBe('function');
+      expect(props.onFileChange).toBeDefined();
+      expect(typeof props.onFileChange).toBe('function');
     });
   });
 

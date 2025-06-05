@@ -30,8 +30,8 @@ jest.mock('@tabler/icons-react', () => ({
 jest.mock('@/components/sidebar/nav/sidebar-nav', () => ({
   SidebarNav: ({ items, label }) => (
     <div data-testid="sidebar-nav" data-label={label}>
-      {items.map((item, index) => (
-        <div key={index} data-testid={`nav-item-${item.name}`}>
+      {items.map((item) => (
+        <div key={item.name} data-testid={`nav-item-${item.name}`}>
           {item.name}
         </div>
       ))}

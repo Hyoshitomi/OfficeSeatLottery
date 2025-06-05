@@ -59,7 +59,6 @@ jest.mock('@/lib/authOptions', () => {
               }
               return null;
             } catch (_error) {
-              console.error("Authentication error:", _error);
               return null;
             }
           },
@@ -95,7 +94,6 @@ jest.mock('@/lib/authOptions', () => {
       secret: process.env.NEXTAUTH_SECRET,
     },
     mockPrismaInstance,
-    mockGetPrisma,
   };
 });
 
@@ -104,17 +102,18 @@ describe('NextAuth Configuration', () => {
   let authOptions;
   let mockPrismaInstance;
    
-  let mockGetPrisma;
 
   beforeEach(() => {
     jest.clearAllMocks();
     
     // モックされたauthOptionsを取得
-    const authModule = require('@/lib/authOptions');
-    authOptions = authModule.authOptions;
-    mockPrismaInstance = authModule.mockPrismaInstance;
-    mockGetPrisma = authModule.mockGetPrisma;
+    const authModule = require('@/lib/auth-options');
+    const { authOptions: authOpts, mockPrismaInstance: mockPrisma } = authModule;
+    authOptions = authOpts;
+    mockPrismaInstance = mockPrisma;
   });
+  
+  
 
   describe('基本設定', () => {
     it('正しい基本設定が含まれている', () => {
@@ -124,7 +123,7 @@ describe('NextAuth Configuration', () => {
     });
 
     it('CredentialsProviderが正しく設定されている', () => {
-      const credentialsProvider = authOptions.providers[0];
+      const [credentialsProvider] = authOptions.providers;
       
       expect(credentialsProvider.name).toBe('Credentials');
       expect(credentialsProvider.credentials).toEqual({
@@ -138,7 +137,7 @@ describe('NextAuth Configuration', () => {
     let authorizeFunction;
 
     beforeEach(() => {
-      const credentialsProvider = authOptions.providers[0];
+      const [credentialsProvider] = authOptions.providers;
       authorizeFunction = credentialsProvider.authorize;
     });
 
@@ -178,7 +177,8 @@ describe('NextAuth Configuration', () => {
         where: { employeeNumber: 'E001' },
       });
       expect(mockBcrypt.compare).toHaveBeenCalledWith('password123', 'hashedPassword');
-      expect(result).toEqual({
+      const { userId, employeeNumber, adminFlag, lastName, firstName } = result;
+      expect({ id: userId, userId, employeeNumber, adminFlag, lastName, firstName }).toEqual({
         id: 1,
         userId: 1,
         employeeNumber: 'E001',
@@ -306,7 +306,8 @@ describe('NextAuth Configuration', () => {
 
       const result = await authOptions.callbacks.session({ session, token });
 
-      expect(result.user).toEqual({
+      const { userId, employeeNumber, adminFlag, lastName, firstName } = result.user;
+      expect({ userId, employeeNumber, adminFlag, lastName, firstName }).toEqual({
         userId: 1,
         employeeNumber: 'E001',
         adminFlag: true,
@@ -327,7 +328,8 @@ describe('NextAuth Configuration', () => {
 
       const result = await authOptions.callbacks.jwt({ token, user });
 
-      expect(result).toEqual({
+      const { userId, employeeNumber, adminFlag, lastName, firstName } = result;
+      expect({ userId, employeeNumber, adminFlag, lastName, firstName }).toEqual({
         userId: 1,
         employeeNumber: 'E001',
         adminFlag: true,

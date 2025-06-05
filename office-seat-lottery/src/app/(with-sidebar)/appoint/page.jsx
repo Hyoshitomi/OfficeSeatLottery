@@ -39,10 +39,10 @@ export default function MapPage() {
       if (prev.includes(seatId)) {
         // 既に選択されている場合は選択解除
         return prev.filter(id => id !== seatId)
-      } else {
+      } 
         // 新しい座席を選択に追加
         return [...prev, seatId]
-      }
+      
     })
   }
 

@@ -133,7 +133,7 @@ function processSingleSeat(seat) {
  * @returns {Object} 処理済み座席データ
  */
 function processAppointmentSeat(seat) {
-  const appointment = seat.seatAppointments[0];
+  const [appointment] = seat.seatAppointments;
   const endDate = new Date(appointment.endDate);
   
   const status = isFixedAppointment(endDate) ? SEAT_STATUS.FIXED : SEAT_STATUS.RESERVED;
@@ -159,7 +159,7 @@ function processFlowingSeat(seat) {
     return null;
   }
 
-  const position = seat.seatPositions[0];
+  const [position] = seat.seatPositions;
   const userName = getUserName(position.user);
 
   return {

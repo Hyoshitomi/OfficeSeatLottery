@@ -8,6 +8,9 @@ import eslintPluginImport from 'eslint-plugin-import';
 import eslintPluginUnusedImports from 'eslint-plugin-unused-imports';
 // React特有のルールを提供するプラグイン
 import eslintPluginReact from 'eslint-plugin-react';
+// TypeScript ESLintプラグインとパーサーのインポート
+import typescriptEslint from '@typescript-eslint/eslint-plugin';
+import typescriptParser from '@typescript-eslint/parser';
 
 // ESLint設定をエクスポート（配列形式の新しいFlat Config）
 export default [
@@ -49,70 +52,28 @@ export default [
     
     // 具体的なリンティングルールの設定
     rules: {
-      // // === React関連のルール ===
-      // 'react/jsx-uses-react': 'error',     // JSX使用時のReact変数検出
-      // 'react/jsx-uses-vars': 'error',      // JSX内で使用される変数の検出
-      // 'react/react-in-jsx-scope': 'off',   // React 17+ではReactインポート不要
-      // 'react/jsx-pascal-case': 'error',    // コンポーネント名はPascalCaseを強制
-      // 'react/jsx-no-useless-fragment': 'error', // 不要なReact.Fragmentの禁止
-      // 'react/jsx-no-duplicate-props': 'error',  // JSXプロパティの重複禁止
-      // 'react/jsx-no-undef': 'error',       // 未定義コンポーネントの使用禁止
-      // 'react/no-danger': 'warn',           // dangerouslySetInnerHTMLの使用警告
-      // 'react/no-array-index-key': 'warn',  // 配列インデックスをkeyとする使用の警告
+      // === React関連のルール ===
+      'react/jsx-uses-react': 'error',     // JSX使用時のReact変数検出
+      'react/jsx-uses-vars': 'error',      // JSX内で使用される変数の検出
+      'react/react-in-jsx-scope': 'off',   // React 17+ではReactインポート不要
+      'react/jsx-pascal-case': 'error',    // コンポーネント名はPascalCaseを強制
+      'react/jsx-no-useless-fragment': 'error', // 不要なReact.Fragmentの禁止
+      'react/jsx-no-duplicate-props': 'error',  // JSXプロパティの重複禁止
+      'react/jsx-no-undef': 'error',       // 未定義コンポーネントの使用禁止
+      'react/no-danger': 'warn',           // dangerouslySetInnerHTMLの使用警告
+      'react/no-array-index-key': 'warn',  // 配列インデックスをkeyとする使用の警告
       
-      // // === 未使用変数・import関連のルール ===
-      // 'unused-imports/no-unused-imports': 'error', // 未使用importの検出・エラー化
-      // 'unused-imports/no-unused-vars': [   // 未使用変数の検出設定
-      //   'error',
-      //   {
-      //     varsIgnorePattern: '^_',         // アンダースコア始まりの変数は無視
-      //     argsIgnorePattern: '^_',         // アンダースコア始まりの引数は無視
-      //     caughtErrorsIgnorePattern: '^_'  // アンダースコア始まりのcatchエラーは無視
-      //   }
-      // ],
-      // 'no-unused-vars': 'off',             // 標準の未使用変数チェックを無効化
-      
-      // // === コード複雑度制御ルール ===
-      // 'complexity': ['error', { max: 10 }], // 循環的複雑度を10以下に制限
-      // 'max-depth': ['error', 4],           // ネストレベルを4以下に制限
-      // 'max-params': ['error', 4],          // 関数パラメータ数を4以下に制限
-      // 'max-lines-per-function': ['error', { // 関数の行数制限
-      //   max: 50,                           // 最大50行
-      //   skipBlankLines: true,              // 空行はカウントしない
-      //   skipComments: true                 // コメント行はカウントしない
-      // }],
-      
-      // // === コード品質向上ルール ===
-      // 'consistent-return': 'error',        // 一貫したreturn文の使用を強制
-      // 'default-case': 'error',             // switch文でdefaultケースを強制
-      // 'eqeqeq': ['error', 'always'],       // 厳密等価演算子（===）の使用を強制
-      // 'no-else-return': 'error',           // 不要なelse文の禁止
-      // 'no-empty': 'error',                 // 空のブロック文の禁止
-      // 'no-dupe-keys': 'error',             // オブジェクトキーの重複禁止
-      // 'no-unreachable': 'error',           // 到達不可能なコードの禁止
-      // 'no-undef': 'error',                 // 未定義変数の使用禁止
-      // 'no-redeclare': 'error',             // 変数の再宣言禁止
-      // 'no-useless-constructor': 'error',   // 不要なコンストラクタの禁止（修正済み）
-      
-      // // === モダンJavaScript推奨ルール ===
-      // 'prefer-const': 'error',             // 再代入されない変数にはconstを使用
-      // 'prefer-arrow-callback': 'error',    // アロー関数の使用を推奨
-      // 'prefer-template': 'error',          // テンプレートリテラルの使用を推奨
-      // 'object-shorthand': 'error',         // オブジェクトの短縮記法を推奨
-      // 'prefer-destructuring': ['error', {  // 分割代入の使用を推奨
-      //   array: true,                       // 配列の分割代入
-      //   object: true                       // オブジェクトの分割代入
-      // }, {
-      //   enforceForRenamedProperties: false // リネーム時は強制しない
-      // }],
-      
-      // // === 命名規則ルール ===
-      // 'camelcase': ['error', { properties: 'never' }], // キャメルケースを強制（プロパティ除く）
-      
-      // // === デバッグ・本番環境対応ルール ===
-      // 'no-console': 'warn',                // console文の使用を警告
-      // 'no-debugger': 'error',              // debugger文の使用を禁止
-      // 'no-alert': 'error',                 // alert文の使用を禁止
+      // === 未使用変数・import関連のルール ===
+      'unused-imports/no-unused-imports': 'error', // 未使用importの検出・エラー化
+      'unused-imports/no-unused-vars': [   // 未使用変数の検出設定
+        'error',
+        {
+          varsIgnorePattern: '^_',         // アンダースコア始まりの変数は無視
+          argsIgnorePattern: '^_',         // アンダースコア始まりの引数は無視
+          caughtErrorsIgnorePattern: '^_'  // アンダースコア始まりのcatchエラーは無視
+        }
+      ],
+      'no-unused-vars': 'off',             // 標準の未使用変数チェックを無効化
       
       // === import/export関連の詳細ルール ===
       'import/order': [                    // import文の順序を制御
@@ -133,14 +94,137 @@ export default [
           }
         }
       ],
-      // 'import/no-duplicates': 'error',     // 重複importの禁止
-      // 'import/no-unresolved': 'error',     // 存在しないモジュールのimport禁止
-      // 'import/no-cycle': 'error',          // 循環依存の禁止
-      // 'import/no-self-import': 'error',    // 自己importの禁止
+      'import/no-duplicates': 'error',     // 重複importの禁止
+      'import/no-cycle': 'error',          // 循環依存の禁止
+      'import/no-self-import': 'error',    // 自己importの禁止
+      
+      // === コード品質向上ルール ===
+      'consistent-return': 'error',        // 一貫したreturn文の使用を強制
+      'default-case': 'error',             // switch文でdefaultケースを強制
+      'eqeqeq': ['error', 'always'],       // 厳密等価演算子（===）の使用を強制
+      'no-else-return': 'error',           // 不要なelse文の禁止
+      'no-empty': 'error',                 // 空のブロック文の禁止
+      'no-dupe-keys': 'error',             // オブジェクトキーの重複禁止
+      'no-unreachable': 'error',           // 到達不可能なコードの禁止
+      'no-redeclare': 'error',             // 変数の再宣言禁止
+      'no-useless-constructor': 'error',   // 不要なコンストラクタの禁止（修正済み）
+      
+      // === モダンJavaScript推奨ルール ===
+      'prefer-const': 'error',             // 再代入されない変数にはconstを使用
+      'prefer-arrow-callback': 'error',    // アロー関数の使用を推奨
+      'prefer-template': 'error',          // テンプレートリテラルの使用を推奨
+      'object-shorthand': 'error',         // オブジェクトの短縮記法を推奨
+      'prefer-destructuring': ['error', {  // 分割代入の使用を推奨
+        array: true,                       // 配列の分割代入
+        object: true                       // オブジェクトの分割代入
+      }, {
+        enforceForRenamedProperties: false // リネーム時は強制しない
+      }],
+      
+      // === 命名規則ルール ===
+      'camelcase': ['error', { properties: 'never' }], // キャメルケースを強制（プロパティ除く）
+
+      // React特有の命名規則
+      'react/jsx-pascal-case': 'error', // コンポーネント名はPascalCase
+      'react/hook-use-state': 'error',  // useState命名規則
+      
+      // === デバッグ・本番環境対応ルール ===
+      'no-console': 'warn',                // console文の使用を警告
+      'no-debugger': 'error',              // debugger文の使用を禁止
+      'no-alert': 'error',                 // alert文の使用を禁止
+
+      // // === コード複雑度制御ルール ===
+      // 'complexity': ['error', { max: 10 }], // 循環的複雑度を10以下に制限
+      // 'max-depth': ['error', 4],           // ネストレベルを4以下に制限
+      // 'max-params': ['error', 4],          // 関数パラメータ数を4以下に制限
+      // 'max-lines-per-function': ['error', { // 関数の行数制限
+      //   max: 200,                           // 関数ごとの最大行数
+      //   skipBlankLines: true,              // 空行はカウントしない
+      //   skipComments: true                 // コメント行はカウントしない
+      // }],
       
       // === 外部プラグインルールの適用 ===
       ...eslintPluginNext.configs.recommended.rules, // Next.js推奨ルールを適用
       ...prettierConfig.rules,             // Prettierとの競合回避ルールを適用
+    },
+  },
+  // TypeScriptファイル用の設定（@typescript-eslint/naming-convention対応）
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: 'module',
+        project: './tsconfig.json', // parserServicesに必要
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+    },
+    plugins: {
+      '@typescript-eslint': typescriptEslint,
+      '@next/next': eslintPluginNext,
+      import: eslintPluginImport,
+      'unused-imports': eslintPluginUnusedImports,
+      react: eslintPluginReact,
+    },
+    rules: {
+      // 既存のJavaScriptルールを継承
+      ...eslintPluginNext.configs.recommended.rules,
+      ...prettierConfig.rules,
+      
+      // TypeScript特有の命名規則
+      '@typescript-eslint/naming-convention': [
+        'error',
+        // デフォルト: camelCase
+        {
+          selector: 'default',
+          format: ['camelCase'],
+          leadingUnderscore: 'allow',
+        },
+        // 変数: camelCase、UPPER_CASE、PascalCase（React コンポーネント用）
+        {
+          selector: 'variable',
+          format: ['camelCase', 'UPPER_CASE', 'PascalCase'],
+          leadingUnderscore: 'allow',
+        },
+        // 関数: camelCase、PascalCase（React コンポーネント用）
+        {
+          selector: 'function',
+          format: ['camelCase', 'PascalCase'],
+        },
+        // 型・インターフェース・クラス: PascalCase
+        {
+          selector: 'typeLike',
+          format: ['PascalCase'],
+        },
+        // 定数: UPPER_CASE
+        {
+          selector: 'variable',
+          modifiers: ['const'],
+          format: ['UPPER_CASE', 'camelCase', 'PascalCase'],
+        },
+        // プロパティ: 柔軟に（APIレスポンス対応）
+        {
+          selector: 'property',
+          format: ['camelCase', 'snake_case', 'UPPER_CASE'],
+          leadingUnderscore: 'allow',
+        },
+        // インポート: 制限なし（外部ライブラリ対応）
+        {
+          selector: 'import',
+          format: null,
+        },
+      ],
+      
+      // TypeScript用の他のルール
+      '@typescript-eslint/no-unused-vars': ['error', {
+        varsIgnorePattern: '^_',
+        argsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_'
+      }],
+      'no-unused-vars': 'off', // TypeScript版を使用するため無効化
     },
   },
 ]

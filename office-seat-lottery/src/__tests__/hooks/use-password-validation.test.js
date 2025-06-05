@@ -139,7 +139,7 @@ describe('usePasswordValidation', () => {
   })
 
   it('非常に長いパスワードでも正常動作する', () => {
-    const longPassword = 'A'.repeat(1000) + 'a1?'
+    const longPassword = `${'A'.repeat(1000)  }a1?`
     const { result } = renderHook(() => usePasswordValidation(longPassword, longPassword))
     
     expect(result.current.requirements.length).toBe(true)

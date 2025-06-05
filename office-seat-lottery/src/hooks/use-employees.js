@@ -28,7 +28,6 @@ export function useEmployees(user) {
         throw new Error('Failed to fetch employees')
       }
     } catch (_error) {
-      console.error('社員リスト取得エラー:', _error)
       toast.error('社員リストの取得に失敗しました')
       setEmployeeList([])
     }

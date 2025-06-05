@@ -52,7 +52,7 @@ export default function MapImgPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           bg: bgURL,
-          boxes: boxes,
+          boxes,
           width: imgSize.width,
           height: imgSize.height  
         })
@@ -60,7 +60,7 @@ export default function MapImgPage() {
       
       if (!res.ok) {
         const errorText = await res.text()
-        toast.error('画像生成に失敗しました: ' + errorText)
+        toast.error(`画像生成に失敗しました: ${  errorText}`)
         return
       }
       
@@ -75,7 +75,7 @@ export default function MapImgPage() {
       window.URL.revokeObjectURL(urlObj)
       toast.success('PNG画像をダウンロードしました')
     } catch (e) {
-      toast.error('画像生成に失敗しました: ' + e.message)
+      toast.error(`画像生成に失敗しました: ${  e.message}`)
     } finally {
       completeProgress(timer)
     }
