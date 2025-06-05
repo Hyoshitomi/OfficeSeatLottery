@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+
 import { ImageResponse } from '@vercel/og'
 
 export const runtime = 'edge'
@@ -65,8 +67,8 @@ export async function POST(req) {
                 position: 'absolute',
                 left: 0,
                 top: 0,
-                width: width,
-                height: height,
+                width,
+                height,
                 objectFit: 'cover',
                 zIndex: 0,
                 display: 'block',

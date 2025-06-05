@@ -8,7 +8,7 @@ export function FormRadioGroup({ control, name, label, options }) {
       name={name}
       render={({
         field: { onChange, value },
-        fieldState: { error },
+        fieldState: {},
       }) => (
         <div className="grid grid-cols-1 gap-2">
           <label className="text-sm font-medium">{label}</label>

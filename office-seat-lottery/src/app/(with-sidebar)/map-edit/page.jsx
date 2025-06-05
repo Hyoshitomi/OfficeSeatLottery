@@ -1,15 +1,16 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useSession } from "next-auth/react"
-import { SiteHeader } from '@/components/sidebar/site-header'
+import { useEffect, useState } from 'react'
+
+import { AdminGuard } from '@/components/common/admin-guard'
+import { ProgressLoader } from '@/components/common/progress-loader'
 import SeatCanvas from '@/components/seat/seat-canvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-edit'
-import { ProgressLoader } from '@/components/common/progress-loader'
-import { AdminGuard } from '@/components/common/admin-guard'
+import { SiteHeader } from '@/components/sidebar/site-header'
+import { useImage } from '@/hooks/use-image'
 import { useProgress } from '@/hooks/use-progress'
 import { useSeats } from '@/hooks/use-seat'
-import { useImage } from '@/hooks/use-image'
 
 export default function MapEditPage() {
   const { data: session } = useSession()
@@ -41,7 +42,8 @@ export default function MapEditPage() {
 
   const handleStop = (id, x, y) => updateBox(id, { x, y })
 
-  const handleUpdate = (id, newName, newStatus, newX, newY) => {
+  const handleUpdate = (id, updateData) => {
+    const { name: newName, status: newStatus, x: newX, y: newY } = updateData
     updateBox(id, {
       name: newName,
       status: newStatus,
@@ -60,8 +62,8 @@ export default function MapEditPage() {
     
     try {
       await saveSeats(boxes)
-    } catch (error) {
-      console.error('保存に失敗しました:', error)
+    } catch (_error) {
+      null
     } finally {
       completeProgress(timer)
     }

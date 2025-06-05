@@ -1,8 +1,9 @@
-import { NextResponse } from 'next/server'
-import { PrismaClient } from "@/generated/prisma";
 import bcrypt from 'bcryptjs';
+import { NextResponse } from 'next/server'
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
+
+import { PrismaClient } from "@/generated/prisma";
+import { authOptions } from "@/lib/auth-options";
 
 const prisma = new PrismaClient();
 
@@ -110,8 +111,8 @@ export async function PATCH(request) {
     });
 
     return NextResponse.json({ ok: true }, { status: 200 });
-  } catch (e) {
+  } catch (_error) {
     // エラー内容はレスポンスには詳細を出さない
-    return NextResponse.json({ error: 'サーバーエラーが発生しました' }, { status: 500 });
+    return NextResponse.json({ _error: 'サーバーエラーが発生しました' }, { status: 500 });
   }
 }

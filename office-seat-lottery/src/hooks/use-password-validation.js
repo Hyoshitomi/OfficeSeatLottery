@@ -2,11 +2,11 @@ import { useMemo } from "react"
 
 export function usePasswordValidation(password, confirmPassword, validationAttempted) {
   const requirements = useMemo(() => ({
-    length: password.length >= 8,
-    uppercase: /[A-Z]/.test(password),
-    lowercase: /[a-z]/.test(password),
-    number: /[0-9]/.test(password),
-    special: /[!?_$#]/.test(password),
+    length: (password || '').length >= 8,
+    uppercase: /[A-Z]/.test(password || ''),
+    lowercase: /[a-z]/.test(password || ''),
+    number: /[0-9]/.test(password || ''),
+    special: /[!?_$#]/.test(password || ''),
   }), [password])
 
   const allValid = useMemo(() => 
@@ -15,12 +15,12 @@ export function usePasswordValidation(password, confirmPassword, validationAttem
   )
 
   const match = useMemo(() => 
-    password === confirmPassword, 
+    (password || '') === (confirmPassword || ''), 
     [password, confirmPassword]
   )
 
   const getRequirementColor = (isValid) => {
-    if (!validationAttempted && !password) {
+    if (!validationAttempted && !(password || '')) {
       return "text-gray-500"
     }
     if (validationAttempted && !isValid) {

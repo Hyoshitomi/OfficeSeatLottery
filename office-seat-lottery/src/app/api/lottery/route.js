@@ -1,16 +1,11 @@
 import { NextResponse } from 'next/server'
+
 import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
 
 function toStartOfUTCDay(date) {
   return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
-}
-
-function getTomorrow(date) {
-  const tomorrow = new Date(date);
-  tomorrow.setUTCDate(date.getUTCDate() + 1);
-  return tomorrow;
 }
 
 function shuffleArray(array) {
@@ -111,11 +106,11 @@ export async function POST(request) {
     const response = NextResponse.json({ result: createData, dbResult }, { status: 200 });
     return response;
 
-  } catch (error) {
-    return errorResponse('サーバーエラーが発生しました', 500, error);
+  } catch (_error) {
+    return errorResponse('サーバーエラーが発生しました', 500, _error);
   }
 }
 
-function errorResponse(message, status, error) {
+function errorResponse(message, status) {
   return NextResponse.json({ error: message }, { status });
 }

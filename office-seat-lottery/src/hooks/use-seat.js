@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 
 export function useSeats() {
   const [boxes, setBoxes] = useState([])
-  const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
+  const [imgSize, setImgSize] = useState({ width: 832, height: 757 })
 
   const fetchSeats = useCallback(async (endpoint, dateStr = null) => {
     try {
@@ -21,12 +21,11 @@ export function useSeats() {
         }))
         setBoxes(mappedSeats)
         return mappedSeats
-      } else {
+      } 
         setBoxes([])
         return []
-      }
-    } catch (error) {
-      console.error('席データの取得に失敗:', error)
+      
+    } catch (_error) {
       setBoxes([])
       return []
     }
@@ -43,11 +42,11 @@ export function useSeats() {
       if (res.ok) {
         toast.success('保存しました！')
         return true
-      } else {
+      } 
         toast.error('保存に失敗しました')
         return false
-      }
-    } catch (error) {
+      
+    } catch (_error) {
       toast.error('保存に失敗しました')
       return false
     }
@@ -65,11 +64,11 @@ export function useSeats() {
         setBoxes(prev => prev.filter(b => b.id !== seatId))
         toast.success('席を解放しました')
         return true
-      } else {
+      } 
         toast.error('解放に失敗しました')
         return false
-      }
-    } catch (error) {
+      
+    } catch (_error) {
       toast.error('解放に失敗しました')
       return false
     }

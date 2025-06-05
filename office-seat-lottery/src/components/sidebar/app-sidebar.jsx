@@ -1,6 +1,5 @@
 "use client"
 
-import * as React from "react"
 import {
   IconArmchair,
   IconArmchair2,
@@ -11,8 +10,12 @@ import {
   IconMail,
   IconUsers,
 } from "@tabler/icons-react"
-import { SidebarNav } from "@/components/sidebar/nav/sidebar-nav";
+import Link from 'next/link';
+import { useSession } from "next-auth/react";
+import * as React from "react"
+
 import { NavUser } from "@/components/sidebar/nav/nav-user"
+import { SidebarNav } from "@/components/sidebar/nav/sidebar-nav";
 import {
   Sidebar,
   SidebarContent,
@@ -22,7 +25,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useSession } from "next-auth/react";
 
 export function AppSidebar({
   ...props
@@ -87,10 +89,10 @@ export function AppSidebar({
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
-              <a href="/">
+              <Link href="/">
                 <IconArmchair2 className="!size-5" />
                 <span className="text-base font-semibold">座席管理システム</span>
-              </a>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

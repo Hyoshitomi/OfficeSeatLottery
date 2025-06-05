@@ -1,19 +1,20 @@
 'use client'
 
-import { useState } from 'react'
-import { useSession } from "next-auth/react"
 import { format } from "date-fns"
+import { useSession } from "next-auth/react"
+import { useState } from 'react'
 import { toast } from "sonner"
-import { SiteHeader } from '@/components/sidebar/site-header'
-import SeatCanvas from '@/components/seat/seat-canvas'
-import SidebarRight from '@/components/sidebar/right-sidebar-img'
-import { ProgressLoader } from '@/components/common/progress-loader'
+
 import { AdminGuard } from '@/components/common/admin-guard'
 import { DateSelector } from '@/components/common/date-selector'
+import { ProgressLoader } from '@/components/common/progress-loader'
+import SeatCanvas from '@/components/seat/seat-canvas'
+import SidebarRight from '@/components/sidebar/right-sidebar-img'
+import { SiteHeader } from '@/components/sidebar/site-header'
+import { useDate } from '@/hooks/use-date'
+import { useImage } from '@/hooks/use-image'
 import { useProgress } from '@/hooks/use-progress'
 import { useSeats } from '@/hooks/use-seat'
-import { useImage } from '@/hooks/use-image'
-import { useDate } from '@/hooks/use-date'
 
 export default function MapImgPage() {
   const { data: session } = useSession()
@@ -51,7 +52,7 @@ export default function MapImgPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           bg: bgURL,
-          boxes: boxes,
+          boxes,
           width: imgSize.width,
           height: imgSize.height  
         })
@@ -59,7 +60,7 @@ export default function MapImgPage() {
       
       if (!res.ok) {
         const errorText = await res.text()
-        toast.error('画像生成に失敗しました: ' + errorText)
+        toast.error(`画像生成に失敗しました: ${  errorText}`)
         return
       }
       
@@ -74,7 +75,7 @@ export default function MapImgPage() {
       window.URL.revokeObjectURL(urlObj)
       toast.success('PNG画像をダウンロードしました')
     } catch (e) {
-      toast.error('画像生成に失敗しました: ' + e.message)
+      toast.error(`画像生成に失敗しました: ${  e.message}`)
     } finally {
       completeProgress(timer)
     }

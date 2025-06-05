@@ -5,7 +5,7 @@ export function useLottery() {
   const [result, setResult] = useState(null)
 
   const executeLottery = useCallback(async (selectedEmployees) => {
-    if (selectedEmployees.length === 0) {
+    if (!selectedEmployees || selectedEmployees.length === 0) {
       toast.error('社員を選択してください')
       return false
     }
@@ -31,12 +31,11 @@ export function useLottery() {
         )
         toast.success('抽選が完了しました！')
         return true
-      } else {
+      } 
         toast.error(data.error || '抽選処理中にエラーが発生しました')
         return false
-      }
-    } catch (error) {
-      console.error('抽選処理エラー:', error)
+      
+    } catch (_error) {
       toast.error('抽選処理中にエラーが発生しました')
       return false
     }
