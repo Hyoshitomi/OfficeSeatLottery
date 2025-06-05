@@ -1,7 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @next/next/no-html-link-for-pages */
+
 import { render, screen } from '@testing-library/react';
+import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import LoginPage from '@/app/login/page';
-import { Suspense } from 'react';
 
 // Next.jsのコンポーネントをモック
 jest.mock('next/image', () => {

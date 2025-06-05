@@ -1,4 +1,4 @@
-import { renderHook, act } from '@testing-library/react'
+import { renderHook } from '@testing-library/react'
 import { usePasswordValidation } from '@/hooks/use-password-validation'
 
 describe('usePasswordValidation', () => {

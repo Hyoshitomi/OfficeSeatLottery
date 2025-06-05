@@ -1,6 +1,4 @@
 import bcrypt from 'bcryptjs';
-import { PrismaClient } from '@/generated/prisma';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 // モック設定
 jest.mock('bcryptjs', () => ({
@@ -105,6 +103,7 @@ describe('NextAuth Configuration', () => {
   const mockBcrypt = bcrypt;
   let authOptions;
   let mockPrismaInstance;
+  // eslint-disable-next-line unused-imports/no-unused-vars
   let mockGetPrisma;
 
   beforeEach(() => {

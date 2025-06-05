@@ -2,9 +2,8 @@
  * @jest-environment jsdom
  */
 
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
-import { toast } from 'sonner';
 import MapImgPage from '@/app/(with-sidebar)/map-img/page';
 
 // 必要なモックのみ設定

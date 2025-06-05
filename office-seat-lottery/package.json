@@ -9,6 +9,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint . --ext .js,.jsx",
+    "lintf": "eslint . --ext .js,.jsx --fix",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage"

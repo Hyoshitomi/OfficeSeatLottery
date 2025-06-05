@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import MapEditPage from '@/app/(with-sidebar)/map-edit/page';
@@ -11,7 +11,7 @@ jest.mock('@/components/sidebar/site-header', () => ({
 }));
 
 jest.mock('@/components/seat/seat-canvas', () => {
-  return jest.fn(({ boxes, imgSize, onDragStop, onImgLoad, previewImage }) => (
+  return jest.fn(({ boxes, imgSize, onDragStop, onImgLoad }) => (
     <div data-testid="seat-canvas">
       <div data-testid="canvas-props" 
            data-boxes={JSON.stringify(boxes)}

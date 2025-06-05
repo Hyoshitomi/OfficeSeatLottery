@@ -27,7 +27,7 @@ jest.mock('@/components/common/progress-loader', () => ({
 }));
 
 jest.mock('@/components/lottery/employee-selector', () => ({
-  EmployeeSelector: jest.fn(({ employeeList, selectedEmployees, onSelectionChange }) => (
+  EmployeeSelector: jest.fn(({ onSelectionChange }) => (
     <div 
       data-testid="employee-selector"
       onClick={() => onSelectionChange && onSelectionChange(['emp1', 'emp2'])}
@@ -38,7 +38,7 @@ jest.mock('@/components/lottery/employee-selector', () => ({
 }));
 
 jest.mock('@/components/lottery/lottery-button', () => ({
-  LotteryButton: jest.fn(({ onLottery, disabled, isLoading }) => (
+  LotteryButton: jest.fn(({ onLottery, disabled }) => (
     <button 
       data-testid="lottery-button"
       onClick={onLottery}
