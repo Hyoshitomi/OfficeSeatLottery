@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+
 import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
@@ -96,7 +97,6 @@ function parseSeatName(name) {
  */
 function parseStatus(status) {
   if (!ALLOWED_STATUSES.includes(status)) {
-    console.warn(`Invalid status: ${status}. Only 'movable' and 'unused' are allowed.`);
     return null;
   }
 

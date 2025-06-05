@@ -1,7 +1,8 @@
 'use client'
 import React from "react"
-import { SiteHeader } from "@/components/sidebar/site-header"
+
 import { InquiryForm } from "@/components/form/inquiry-form"
+import { SiteHeader } from "@/components/sidebar/site-header"
 
 export default function Home() {
   return (

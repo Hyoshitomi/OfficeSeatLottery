@@ -1,6 +1,8 @@
 "use client";
 
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -9,7 +11,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import Link from 'next/link';
 
 export function SidebarNav({
   items,

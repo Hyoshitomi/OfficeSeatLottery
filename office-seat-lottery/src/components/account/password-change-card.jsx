@@ -1,8 +1,8 @@
+import { PasswordInput } from "@/components/account/password-input"
+import { PasswordMatchIndicator } from "@/components/account/password-match-indicator"
+import { PasswordRequirements } from "@/components/account/password-requirements"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { PasswordInput } from "@/components/account/password-input"
-import { PasswordRequirements } from "@/components/account/password-requirements"
-import { PasswordMatchIndicator } from "@/components/account/password-match-indicator"
 import { usePasswordValidation } from "@/hooks/use-password-validation"
 
 export function PasswordChangeCard({

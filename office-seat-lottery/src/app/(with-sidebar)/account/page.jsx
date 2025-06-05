@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { useSession } from "next-auth/react"
+import { useState } from "react"
 import { toast } from "sonner"
-import { ProfileCard } from "@/components/account/profile-card"
+
 import { PasswordChangeCard } from "@/components/account/password-change-card"
+import { ProfileCard } from "@/components/account/profile-card"
 import { ProgressBar } from "@/components/account/progressbar"
+import { Button } from "@/components/ui/button"
 import { usePasswordValidation } from "@/hooks/use-password-validation"
 import { useProgress } from "@/hooks/use-progress"
 
@@ -16,14 +17,14 @@ export default function Home() {
   
   const [validationAttempted, setValidationAttempted] = useState(false)
   const [formData, setFormData] = useState({
-    name: `${user?.lastName} ${user?.firstName}` ?? "取得失敗",
+    name: user ? `${user.lastName} ${user.firstName}` : "取得失敗",
     employeeId: user?.employeeNumber ?? "取得失敗",
     currentPassword: "",
     newPassword: "",
     confirmPassword: "",
   })
   
-  const [profileImage] = useState(`/avatars/${user?.employeeNumber}.png`)
+  const profileImage = `/avatars/${user?.employeeNumber}.png`
   const { isLoading, progress, startProgress, completeProgress, resetProgress } = useProgress()
   const { allValid, match } = usePasswordValidation(
     formData.newPassword, 
@@ -88,7 +89,7 @@ export default function Home() {
       } else {
         toast.error(data.error || "パスワード変更に失敗しました")
       }
-    } catch (error) {
+    } catch (_error) {
       resetProgress()
       toast.error("通信エラーが発生しました")
     }

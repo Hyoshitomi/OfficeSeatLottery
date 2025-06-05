@@ -1,8 +1,10 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Geist, Geist_Mono } from 'next/font/google'
+
+import './globals.css'
+
 import NextAuthSessionProvider from "@/components/login/session-provider";
-import { SpeedInsights } from '@vercel/speed-insights/next';
-import { Analytics } from '@vercel/analytics/next';
 import { Toaster } from "@/components/ui/sonner"
 
 const geistSans = Geist({

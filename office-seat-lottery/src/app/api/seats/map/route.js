@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+
 import { PrismaClient } from "@/generated/prisma";
 
 const prisma = new PrismaClient();
@@ -23,8 +24,8 @@ export async function GET(request) {
     const seats = processSeats(allSeats, targetDay);
 
     return NextResponse.json(seats, { status: 200 });
-  } catch (error) {
-    return handleError(error);
+  } catch (_error) {
+    return handleError(_error);
   }
 }
 
@@ -95,10 +96,9 @@ async function fetchSeatsWithRelations(targetDay) {
 /**
  * 座席データを処理してレスポンス用の配列を作成
  * @param {Array} allSeats - 全座席データ
- * @param {Date} targetDay - 対象日
  * @returns {Array} 処理済み座席データ配列
  */
-function processSeats(allSeats, targetDay) {
+function processSeats(allSeats) {
   const seats = [];
 
   for (const seat of allSeats) {
@@ -133,7 +133,7 @@ function processSingleSeat(seat) {
  * @returns {Object} 処理済み座席データ
  */
 function processAppointmentSeat(seat) {
-  const appointment = seat.seatAppointments[0];
+  const [appointment] = seat.seatAppointments;
   const endDate = new Date(appointment.endDate);
   
   const status = isFixedAppointment(endDate) ? SEAT_STATUS.FIXED : SEAT_STATUS.RESERVED;
@@ -159,7 +159,7 @@ function processFlowingSeat(seat) {
     return null;
   }
 
-  const position = seat.seatPositions[0];
+  const [position] = seat.seatPositions;
   const userName = getUserName(position.user);
 
   return {

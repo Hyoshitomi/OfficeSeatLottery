@@ -1,21 +1,20 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { SiteHeader } from '@/components/sidebar/site-header'
+
+import { ProgressLoader } from '@/components/common/progress-loader'
+import ReservationTabs from '@/components/seat/reservation-tabs'
 import SeatCanvas from '@/components/seat/seat-canvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-appoint'
-import { ProgressLoader } from '@/components/common/progress-loader'
+import { SiteHeader } from '@/components/sidebar/site-header'
+import { useImage } from '@/hooks/use-image'
 import { useProgress } from '@/hooks/use-progress'
 import { useSeats } from '@/hooks/use-seat'
-import { useImage } from '@/hooks/use-image'
-import { useDate } from '@/hooks/use-date'
-import ReservationTabs from '@/components/form/reservation-tabs'
 
 export default function MapPage() {
   const { isLoading, progress, startProgress, completeProgress } = useProgress()
   const { boxes, imgSize, fetchSeats, exitSeat, updateBox, handleImgLoad } = useSeats()
   const { previewImage, fileInputRef } = useImage()
-  const { getDateString } = useDate()
   const [selectedSeatIds, setSelectedSeatIds] = useState([]) // 選択中の座席ID配列
   const [showReservation, setShowReservation] = useState(false) // 予約画面表示フラグ
 
@@ -40,17 +39,16 @@ export default function MapPage() {
       if (prev.includes(seatId)) {
         // 既に選択されている場合は選択解除
         return prev.filter(id => id !== seatId)
-      } else {
+      } 
         // 新しい座席を選択に追加
         return [...prev, seatId]
-      }
+      
     })
   }
 
   const handleSelect = () => {
     // 「予約日を選択する」ボタンクリック時の処理
     if (selectedSeatIds.length > 0) {
-      console.log('選択された座席IDs:', selectedSeatIds)
       setShowReservation(true) // 予約画面を表示
     }
   }
