@@ -50,8 +50,31 @@ export default [
       },
     },
     
+    // React設定
+    settings: {
+      react: {
+        version: 'detect',  // Reactバージョンの自動検出
+      },
+    },
+    
     // 具体的なリンティングルールの設定
     rules: {
+      // === 改行・空白・タブ統一ルール ===
+      'no-trailing-spaces': 'error',              // 行末の余分な空白を禁止
+      'no-irregular-whitespace': 'error',         // 不正な空白文字の使用を禁止
+      'no-whitespace-before-property': 'error',   // プロパティアクセス前の空白を禁止
+      'linebreak-style': ['error', 'unix'],       // Unix形式の改行（LF）を強制
+      'indent': ['error', 2],                     // 2スペースインデントを強制
+      'eol-last': 'error',                        // ファイル末尾に改行を強制
+      'no-multiple-empty-lines': ['error', {      // 連続する空行を制限
+        max: 2,                                   // 最大2行まで
+        maxEOF: 1,                               // ファイル末尾は1行まで
+        maxBOF: 0                                // ファイル先頭は0行
+      }],
+      'comma-dangle': ['error', 'always-multiline'], // 複数行での末尾カンマを強制
+      'semi': ['error', 'always'],                // セミコロンを強制
+      'quotes': ['error', 'single'],              // シングルクォートを強制
+      
       // === React関連のルール ===
       'react/jsx-uses-react': 'error',     // JSX使用時のReact変数検出
       'react/jsx-uses-vars': 'error',      // JSX内で使用される変数の検出
@@ -107,7 +130,7 @@ export default [
       'no-dupe-keys': 'error',             // オブジェクトキーの重複禁止
       'no-unreachable': 'error',           // 到達不可能なコードの禁止
       'no-redeclare': 'error',             // 変数の再宣言禁止
-      'no-useless-constructor': 'error',   // 不要なコンストラクタの禁止（修正済み）
+      'no-useless-constructor': 'error',   // 不要なコンストラクタの禁止
       
       // === モダンJavaScript推奨ルール ===
       'prefer-const': 'error',             // 再代入されない変数にはconstを使用
@@ -123,32 +146,28 @@ export default [
       
       // === 命名規則ルール ===
       'camelcase': ['error', { properties: 'never' }], // キャメルケースを強制（プロパティ除く）
-
-      // React特有の命名規則
-      'react/jsx-pascal-case': 'error', // コンポーネント名はPascalCase
-      'react/hook-use-state': 'error',  // useState命名規則
+      
+      // === コード複雑度制御ルール ===
+      'complexity': ['error', { max: 10 }], // 循環的複雑度を10以下に制限
+      'max-depth': ['error', 4],           // ネストレベルを4以下に制限
+      'max-params': ['error', 4],          // 関数パラメータ数を4以下に制限
+      'max-lines-per-function': ['error', { // 関数の行数制限
+        max: 200,                           // 関数ごとの最大行数
+        skipBlankLines: true,              // 空行はカウントしない
+        skipComments: true                 // コメント行はカウントしない
+      }],
       
       // === デバッグ・本番環境対応ルール ===
       'no-console': 'warn',                // console文の使用を警告
       'no-debugger': 'error',              // debugger文の使用を禁止
       'no-alert': 'error',                 // alert文の使用を禁止
-
-      // // === コード複雑度制御ルール ===
-      // 'complexity': ['error', { max: 10 }], // 循環的複雑度を10以下に制限
-      // 'max-depth': ['error', 4],           // ネストレベルを4以下に制限
-      // 'max-params': ['error', 4],          // 関数パラメータ数を4以下に制限
-      // 'max-lines-per-function': ['error', { // 関数の行数制限
-      //   max: 200,                           // 関数ごとの最大行数
-      //   skipBlankLines: true,              // 空行はカウントしない
-      //   skipComments: true                 // コメント行はカウントしない
-      // }],
       
       // === 外部プラグインルールの適用 ===
       ...eslintPluginNext.configs.recommended.rules, // Next.js推奨ルールを適用
       ...prettierConfig.rules,             // Prettierとの競合回避ルールを適用
     },
   },
-  // TypeScriptファイル用の設定（@typescript-eslint/naming-convention対応）
+  // TypeScriptファイル用の設定
   {
     files: ['src/**/*.{ts,tsx}'],
     languageOptions: {
@@ -169,10 +188,46 @@ export default [
       'unused-imports': eslintPluginUnusedImports,
       react: eslintPluginReact,
     },
+    settings: {
+      react: {
+        version: 'detect',  // Reactバージョンの自動検出
+      },
+    },
     rules: {
       // 既存のJavaScriptルールを継承
       ...eslintPluginNext.configs.recommended.rules,
       ...prettierConfig.rules,
+      
+      // === TypeScript用改行・空白・タブ統一ルール ===
+      'no-trailing-spaces': 'error',
+      'no-irregular-whitespace': 'error',
+      'no-whitespace-before-property': 'error',
+      'linebreak-style': ['error', 'unix'],
+      '@typescript-eslint/indent': ['error', 2], // TypeScript用インデント
+      'indent': 'off', // TypeScript版を使用するため無効化
+      'eol-last': 'error',
+      'no-multiple-empty-lines': ['error', {
+        max: 2,
+        maxEOF: 1,
+        maxBOF: 0
+      }],
+      'comma-dangle': ['error', 'always-multiline'],
+      '@typescript-eslint/semi': ['error', 'always'], // TypeScript用セミコロン
+      'semi': 'off', // TypeScript版を使用するため無効化
+      'quotes': ['error', 'single'],
+      
+      // TypeScript特有の空白ルール
+      '@typescript-eslint/type-annotation-spacing': 'error', // 型注釈の空白
+      '@typescript-eslint/member-delimiter-style': ['error', {
+        multiline: {
+          delimiter: 'semi',
+          requireLast: true,
+        },
+        singleline: {
+          delimiter: 'semi',
+          requireLast: false,
+        },
+      }],
       
       // TypeScript特有の命名規則
       '@typescript-eslint/naming-convention': [
@@ -227,4 +282,4 @@ export default [
       'no-unused-vars': 'off', // TypeScript版を使用するため無効化
     },
   },
-]
+];

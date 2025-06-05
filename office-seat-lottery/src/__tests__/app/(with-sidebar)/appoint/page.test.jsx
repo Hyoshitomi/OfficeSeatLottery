@@ -65,7 +65,7 @@ jest.mock('@/components/common/progress-loader', () => ({
   )),
 }));
 
-jest.mock('@/components/form/reservation-tabs', () => {
+jest.mock('@/components/seat/reservation-tabs', () => {
   return jest.fn(({ selectedSeatIds, onBack }) => (
     <div data-testid="reservation-tabs">
       <div data-testid="reservation-selected-seats" data-selected={JSON.stringify(selectedSeatIds)} />

@@ -1,5 +1,4 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-
 import '@testing-library/jest-dom'
 import ReservationTabs from '@/components/seat/reservation-tabs'
 
@@ -84,24 +83,37 @@ jest.mock('@/components/ui/button', () => ({
   )
 }))
 
-jest.mock('@/components/lottery/employee-selector', () => ({
-  EmployeeSelector: ({ employeeList, selectedEmployees, onSelectionChange }) => (
-    <div data-testid="employee-selector">
+// MultiSelectコンポーネントのモック（実装に合わせて修正）
+jest.mock('@/components/ui/multi-select', () => ({
+  MultiSelect: ({ options, onValueChange, placeholder, id }) => (
+    <div data-testid="multi-select" id={id}>
       <select
         multiple
-        value={selectedEmployees}
         onChange={(e) => {
           const values = Array.from(e.target.selectedOptions, option => option.value)
-          onSelectionChange(values)
+          onValueChange(values)
         }}
+        data-testid="employee-select"
       >
-        {employeeList.map(emp => (
+        {options.map(emp => (
           <option key={emp.value} value={emp.value}>{emp.label}</option>
         ))}
       </select>
+      <span>{placeholder}</span>
     </div>
   )
 }))
+
+// sonnerのtoastをモック
+jest.mock('sonner', () => ({
+  toast: {
+    success: jest.fn(),
+    error: jest.fn()
+  }
+}))
+
+// fetchをモック
+global.fetch = jest.fn()
 
 describe('ReservationTabs', () => {
   const mockOnBack = jest.fn()
@@ -113,6 +125,7 @@ describe('ReservationTabs', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+    fetch.mockClear()
   })
 
   it('コンポーネントが正しくレンダリングされる', () => {
@@ -121,7 +134,15 @@ describe('ReservationTabs', () => {
     expect(screen.getByTestId('tabs')).toBeInTheDocument()
     expect(screen.getByTestId('tabs-trigger-weekly')).toBeInTheDocument()
     expect(screen.getByTestId('tabs-trigger-date')).toBeInTheDocument()
-    expect(screen.getByTestId('employee-selector')).toBeInTheDocument()
+    expect(screen.getByTestId('multi-select')).toBeInTheDocument()
+  })
+
+  it('MultiSelectコンポーネントが正しく表示される', () => {
+    render(<ReservationTabs {...defaultProps} />)
+
+    const multiSelect = screen.getByTestId('multi-select')
+    expect(multiSelect).toBeInTheDocument()
+    expect(screen.getByText('社員名を選択してください')).toBeInTheDocument()
   })
 
   it('曜日チェックボックスが正しく表示される', () => {
@@ -147,6 +168,7 @@ describe('ReservationTabs', () => {
     render(<ReservationTabs {...defaultProps} />)
 
     expect(screen.getByTestId('calendar')).toBeInTheDocument()
+    expect(screen.getByTestId('calendar')).toHaveAttribute('data-mode', 'range')
   })
 
   it('日付選択時に状態が更新される', () => {
@@ -155,14 +177,14 @@ describe('ReservationTabs', () => {
     const calendarButton = screen.getByText('日付選択')
     fireEvent.click(calendarButton)
 
-    // 日付が選択されたことを確認（実際のテストでは状態の変更を確認）
     expect(screen.getByTestId('calendar')).toBeInTheDocument()
   })
 
   it('選択座席数が正しく表示される', () => {
     render(<ReservationTabs {...defaultProps} />)
 
-    expect(screen.getByText(/選択座席数:\s*2\s*席/)).toBeInTheDocument()
+    expect(screen.getByText(/選択座席数: 2席/)).toBeInTheDocument()
+    expect(screen.getByText(/選択可能社員数: 最大2人/)).toBeInTheDocument()
   })
 
   it('戻るボタンクリック時にonBackが呼ばれる', () => {
@@ -174,20 +196,14 @@ describe('ReservationTabs', () => {
     expect(mockOnBack).toHaveBeenCalledTimes(1)
   })
 
-  it('曜日予約ボタンが無効状態で表示される（初期状態）', () => {
+  it('予約ボタンが初期状態では無効になっている', () => {
     render(<ReservationTabs {...defaultProps} />)
 
     const weeklyButton = screen.getByText('曜日予約を確定')
     const dateButton = screen.getByText('日付予約を確定')
+    
     expect(weeklyButton).toBeDisabled()
     expect(dateButton).toBeDisabled()
-  })
-
-  it('日付予約ボタンが無効状態で表示される（初期状態）', () => {
-    render(<ReservationTabs {...defaultProps} />)
-
-    const reserveButtons = screen.getAllByText(/予約を確定/)
-    expect(reserveButtons[1]).toBeDisabled()
   })
 
   it('選択座席数が0の場合、最大選択可能社員数が1になる', () => {
@@ -195,16 +211,32 @@ describe('ReservationTabs', () => {
     render(<ReservationTabs {...props} />)
 
     expect(screen.getByText(/選択座席数: 0席/)).toBeInTheDocument()
+    expect(screen.getByText(/選択可能社員数: 最大1人/)).toBeInTheDocument()
   })
 
-  it('EmployeeSelectorに正しいpropsが渡される', () => {
+  it('MultiSelectに正しい社員リストが表示される', () => {
     render(<ReservationTabs {...defaultProps} />)
 
-    const employeeSelector = screen.getByTestId('employee-selector')
-    expect(employeeSelector).toBeInTheDocument()
-    
-    // 社員リストのオプションが表示されることを確認
     expect(screen.getByText('田中太郎')).toBeInTheDocument()
     expect(screen.getByText('佐藤花子')).toBeInTheDocument()
+  })
+
+  it('予約者名のラベルが正しく表示される', () => {
+    render(<ReservationTabs {...defaultProps} />)
+
+    expect(screen.getByText(/予約者名 \(0\/2人選択中\)/)).toBeInTheDocument()
+  })
+
+  it('タブの初期値がweeklyに設定されている', () => {
+    render(<ReservationTabs {...defaultProps} />)
+
+    const tabs = screen.getByTestId('tabs')
+    expect(tabs).toHaveAttribute('data-default-value', 'weekly')
+  })
+
+  it('予約システムのタイトルが表示される', () => {
+    render(<ReservationTabs {...defaultProps} />)
+
+    expect(screen.getByText('予約システム')).toBeInTheDocument()
   })
 })

@@ -118,7 +118,12 @@ describe('NameBoxPopOver', () => {
     })
 
     await waitFor(() => {
-      expect(mockOnUpdate).toHaveBeenCalledWith('seat-1', '佐藤花子', 'movable', 100, 200)
+      expect(mockOnUpdate).toHaveBeenCalledWith('seat-1', {
+        name: '佐藤花子',
+        status: 'movable',
+        x: 100,
+        y: 200
+      })
     }, { timeout: 1000 })
   })
 
@@ -135,7 +140,12 @@ describe('NameBoxPopOver', () => {
     })
 
     await waitFor(() => {
-      expect(mockOnUpdate).toHaveBeenCalledWith('seat-1', '田中太郎', 'unused', 100, 200)
+      expect(mockOnUpdate).toHaveBeenCalledWith('seat-1', {
+        name: '田中太郎',
+        status: 'unused',
+        x: 100,
+        y: 200
+      })
     }, { timeout: 1000 })
   })
 

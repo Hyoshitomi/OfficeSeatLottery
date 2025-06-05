@@ -4,13 +4,57 @@ import { EyeIcon, EyeOffIcon } from "lucide-react";
 import Link from 'next/link';
 import { signIn } from "next-auth/react";
 import { useState, useCallback } from "react";
-import { toast } from "sonner"; // 追加
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+
+// バリデーション関数を分離
+function validateEmployeeNumber(employeeNumber) {
+  if (!employeeNumber || !employeeNumber.match(/^[a-zA-Z0-9]+$/)) {
+    toast.error("社員番号は半角英数字のみ入力可能です");
+    return false;
+  }
+  return true;
+}
+
+function validatePassword(password) {
+  if (!password || !password.match(/^[a-zA-Z0-9!?_$#]+$/)) {
+    toast.error("使用可能な文字: 半角英数字と!?_$#");
+    return false;
+  }
+  return true;
+}
+
+// 認証処理を分離
+async function performAuthentication(employeeNumber, password, callbackUrl) {
+  const res = await signIn('credentials', {
+    redirect: false,
+    employeeNumber,
+    password,
+    callbackUrl,
+  });
+  return res;
+}
+
+// レスポンス処理を分離
+function handleAuthResponse(res) {
+  if (res?.error) {
+    toast.error("社員番号またはパスワードが正しくありません");
+    return;
+  }
+  
+  if (res?.ok) {
+    let redirectUrl = res.url || '/';
+    if (redirectUrl.startsWith('/login')) {
+      redirectUrl = '/';
+    }
+    window.location.replace(redirectUrl);
+  }
+}
 
 export function LoginForm({ className, callbackUrl, ...props }) {
   const [employeeNumber, setEmployeeNumber] = useState("");
@@ -22,45 +66,25 @@ export function LoginForm({ className, callbackUrl, ...props }) {
     e.preventDefault();
     setIsLoading(true);
 
-    // バリデーション（修正版）
-    if (!employeeNumber || !employeeNumber.match(/^[a-zA-Z0-9]+$/)) {
-      toast.error("社員番号は半角英数字のみ入力可能です");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!password || !password.match(/^[a-zA-Z0-9!?_$#]+$/)) {
-      toast.error("使用可能な文字: 半角英数字と!?_$#");
+    // バリデーション
+    const isEmployeeNumberValid = validateEmployeeNumber(employeeNumber);
+    const isPasswordValid = validatePassword(password);
+    
+    if (!isEmployeeNumberValid || !isPasswordValid) {
       setIsLoading(false);
       return;
     }
 
     try {
-      const res = await signIn('credentials', {
-        redirect: false,
-        employeeNumber,
-        password,
-        callbackUrl,
-      });
-
-      if (res?.error) {
-        toast.error("社員番号またはパスワードが正しくありません");
-      } else if (res?.ok) {
-        let redirectUrl = res.url || '/';
-        // ログイン画面ならトップページへ
-        if (redirectUrl.startsWith('/login')) {
-          redirectUrl = '/';
-        }
-        window.location.replace(redirectUrl);
-      }
+      const res = await performAuthentication(employeeNumber, password, callbackUrl);
+      handleAuthResponse(res);
     } catch (_error) {
-      toast.error("認証エラーが発生しました"); // 変更
+      toast.error("認証エラーが発生しました");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // パスワード表示トグル
   const togglePasswordVisibility = useCallback(() => {
     setShowPassword((prev) => !prev);
   }, []);

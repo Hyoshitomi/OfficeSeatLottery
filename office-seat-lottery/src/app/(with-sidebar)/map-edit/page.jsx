@@ -42,7 +42,8 @@ export default function MapEditPage() {
 
   const handleStop = (id, x, y) => updateBox(id, { x, y })
 
-  const handleUpdate = (id, newName, newStatus, newX, newY) => {
+  const handleUpdate = (id, updateData) => {
+    const { name: newName, status: newStatus, x: newX, y: newY } = updateData
     updateBox(id, {
       name: newName,
       status: newStatus,

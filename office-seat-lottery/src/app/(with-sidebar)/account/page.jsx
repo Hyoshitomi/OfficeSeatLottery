@@ -24,7 +24,7 @@ export default function Home() {
     confirmPassword: "",
   })
   
-  const [profileImage, setProfileImage] = useState(`/avatars/${user?.employeeNumber}.png`)
+  const profileImage = `/avatars/${user?.employeeNumber}.png`
   const { isLoading, progress, startProgress, completeProgress, resetProgress } = useProgress()
   const { allValid, match } = usePasswordValidation(
     formData.newPassword, 

@@ -3,10 +3,29 @@
 import AddBoxButton from '@/components/seat/add-box-button'
 import NameBox from '@/components/seat/name-box'
 
+// デフォルト値を定数として定義
+const DEFAULT_IMG_SIZE = { width: 800, height: 600 }
+const DEFAULT_BOXES = []
+const DEFAULT_SELECTED_SEAT_IDS = []
+
+// 安全な値を取得するヘルパー関数
+const getSafeImgSize = (imgSize) => ({
+  width: imgSize?.width || DEFAULT_IMG_SIZE.width,
+  height: imgSize?.height || DEFAULT_IMG_SIZE.height
+})
+
+const handleImgLoad = (onImgLoad, safeImgSize) => {
+  if (!onImgLoad) return
+  onImgLoad({ 
+    width: safeImgSize.width, 
+    height: safeImgSize.height 
+  })
+}
+
 export default function SeatCanvas({
   src,
-  imgSize = { width: 800, height: 600 }, // デフォルト値を設定
-  boxes = [], // デフォルト値を設定
+  imgSize = DEFAULT_IMG_SIZE,
+  boxes = DEFAULT_BOXES,
   onImgLoad,
   onDragStop,
   onUpdate,
@@ -14,30 +33,22 @@ export default function SeatCanvas({
   onExit,
   onAddBox,
   onSeatClick,
-  selectedSeatIds = [],
+  selectedSeatIds = DEFAULT_SELECTED_SEAT_IDS,
   appoint = false,
   move = false,
 }) {
-  // 安全な値の取得
-  const safeImgSize = {
-    width: imgSize?.width || 800,
-    height: imgSize?.height || 600
-  }
-
-  const safeSelectedSeatIds = selectedSeatIds || []
+  const safeImgSize = getSafeImgSize(imgSize)
+  const safeSelectedSeatIds = selectedSeatIds || DEFAULT_SELECTED_SEAT_IDS
 
   return (
     <div className="relative inline-block">
       <img
         src={src}
-        onLoad={() => onImgLoad && onImgLoad({ 
-          width: safeImgSize.width, 
-          height: safeImgSize.height 
-        })}
+        onLoad={() => handleImgLoad(onImgLoad, safeImgSize)}
         style={{ width: safeImgSize.width, height: safeImgSize.height }}
         alt="オフィスレイアウト"
       />
-      {boxes && boxes.map(box => (
+      {(boxes || []).map(box => (
         <div
           key={box.id}
           style={{

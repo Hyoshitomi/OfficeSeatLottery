@@ -2,6 +2,7 @@ import { render, screen, fireEvent, waitFor, act } from '@testing-library/react'
 
 import MapPage from '@/app/(with-sidebar)/map/page';
 
+// モック設定
 jest.mock('@/components/sidebar/site-header', () => ({
   SiteHeader: jest.fn(({ title }) => <div data-testid="site-header">{title}</div>),
 }));
@@ -66,46 +67,55 @@ jest.mock('@/hooks/use-date', () => ({
   useDate: jest.fn(),
 }));
 
-describe('MapPage', () => {
+// ヘルパー関数：モックデータの作成
+function createMockData() {
+  return {
+    mockProgressHook: {
+      isLoading: false,
+      progress: 0,
+      startProgress: jest.fn(() => 'timer-id'),
+      completeProgress: jest.fn(),
+    },
+    mockSeatsHook: {
+      boxes: [
+        { id: 'seat-1', x: 50, y: 50, name: 'Seat 1' },
+        { id: 'seat-2', x: 100, y: 100, name: 'Seat 2' }
+      ],
+      imgSize: { width: 800, height: 600 },
+      fetchSeats: jest.fn().mockResolvedValue(),
+      exitSeat: jest.fn(),
+      updateBox: jest.fn(),
+      handleImgLoad: jest.fn(),
+    },
+    mockImageHook: {
+      previewImage: '/mock-image.png',
+    },
+    mockDateHook: {
+      getDateString: jest.fn(() => '2025-06-04'),
+    }
+  };
+}
+
+// ヘルパー関数：フックの設定
+function setupHooks(mockData) {
   const { useProgress } = require('@/hooks/use-progress');
   const { useSeats } = require('@/hooks/use-seat');
   const { useImage } = require('@/hooks/use-image');
   const { useDate } = require('@/hooks/use-date');
 
-  const mockProgressHook = {
-    isLoading: false,
-    progress: 0,
-    startProgress: jest.fn(() => 'timer-id'),
-    completeProgress: jest.fn(),
-  };
+  useProgress.mockReturnValue(mockData.mockProgressHook);
+  useSeats.mockReturnValue(mockData.mockSeatsHook);
+  useImage.mockReturnValue(mockData.mockImageHook);
+  useDate.mockReturnValue(mockData.mockDateHook);
+}
 
-  const mockSeatsHook = {
-    boxes: [
-      { id: 'seat-1', x: 50, y: 50, name: 'Seat 1' },
-      { id: 'seat-2', x: 100, y: 100, name: 'Seat 2' }
-    ],
-    imgSize: { width: 800, height: 600 },
-    fetchSeats: jest.fn().mockResolvedValue(),
-    exitSeat: jest.fn(),
-    updateBox: jest.fn(),
-    handleImgLoad: jest.fn(),
-  };
-
-  const mockImageHook = {
-    previewImage: '/mock-image.png',
-  };
-
-  const mockDateHook = {
-    getDateString: jest.fn(() => '2025-06-04'),
-  };
+describe('MapPage', () => {
+  let mockData;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
-    useProgress.mockReturnValue(mockProgressHook);
-    useSeats.mockReturnValue(mockSeatsHook);
-    useImage.mockReturnValue(mockImageHook);
-    useDate.mockReturnValue(mockDateHook);
+    mockData = createMockData();
+    setupHooks(mockData);
   });
 
   describe('基本レンダリング', () => {
@@ -118,11 +128,9 @@ describe('MapPage', () => {
     });
 
     it('ローディング中にProgressLoaderが表示される', () => {
-      useProgress.mockReturnValue({
-        ...mockProgressHook,
-        isLoading: true,
-        progress: 50,
-      });
+      mockData.mockProgressHook.isLoading = true;
+      mockData.mockProgressHook.progress = 50;
+      setupHooks(mockData);
 
       render(<MapPage />);
       
@@ -145,16 +153,10 @@ describe('MapPage', () => {
       const mockCompleteProgress = jest.fn();
       const mockFetchSeats = jest.fn().mockResolvedValue();
       
-      useProgress.mockReturnValue({
-        ...mockProgressHook,
-        startProgress: mockStartProgress,
-        completeProgress: mockCompleteProgress,
-      });
-      
-      useSeats.mockReturnValue({
-        ...mockSeatsHook,
-        fetchSeats: mockFetchSeats,
-      });
+      mockData.mockProgressHook.startProgress = mockStartProgress;
+      mockData.mockProgressHook.completeProgress = mockCompleteProgress;
+      mockData.mockSeatsHook.fetchSeats = mockFetchSeats;
+      setupHooks(mockData);
 
       await act(async () => {
         render(<MapPage />);
@@ -162,13 +164,7 @@ describe('MapPage', () => {
       
       await waitFor(() => {
         expect(mockStartProgress).toHaveBeenCalled();
-      });
-      
-      await waitFor(() => {
         expect(mockFetchSeats).toHaveBeenCalledWith('/api/seats/map', '2025-06-04');
-      });
-      
-      await waitFor(() => {
         expect(mockCompleteProgress).toHaveBeenCalledWith('test-timer-id');
       });
     });
@@ -179,7 +175,7 @@ describe('MapPage', () => {
       });
       
       await waitFor(() => {
-        expect(mockDateHook.getDateString).toHaveBeenCalled();
+        expect(mockData.mockDateHook.getDateString).toHaveBeenCalled();
       });
     });
   });
@@ -191,7 +187,17 @@ describe('MapPage', () => {
       const draggableSeat = screen.getByTestId('draggable-seat');
       fireEvent.mouseUp(draggableSeat);
       
-      expect(mockSeatsHook.updateBox).toHaveBeenCalledWith('seat-1', { x: 100, y: 200 });
+      expect(mockData.mockSeatsHook.updateBox).toHaveBeenCalledWith('seat-1', { x: 100, y: 200 });
+    });
+
+    it('handleStopが正しいパラメータでupdateBoxを呼び出す', () => {
+      render(<MapPage />);
+      
+      const draggableSeat = screen.getByTestId('draggable-seat');
+      fireEvent.mouseUp(draggableSeat);
+      
+      expect(mockData.mockSeatsHook.updateBox).toHaveBeenCalledWith('seat-1', { x: 100, y: 200 });
+      expect(mockData.mockSeatsHook.updateBox).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -200,8 +206,8 @@ describe('MapPage', () => {
       render(<MapPage />);
       
       const canvasProps = screen.getByTestId('canvas-props');
-      expect(canvasProps).toHaveAttribute('data-boxes', JSON.stringify(mockSeatsHook.boxes));
-      expect(canvasProps).toHaveAttribute('data-img-size', JSON.stringify(mockSeatsHook.imgSize));
+      expect(canvasProps).toHaveAttribute('data-boxes', JSON.stringify(mockData.mockSeatsHook.boxes));
+      expect(canvasProps).toHaveAttribute('data-img-size', JSON.stringify(mockData.mockSeatsHook.imgSize));
       expect(canvasProps).toHaveAttribute('data-preview-image', '/mock-image.png');
       expect(canvasProps).toHaveAttribute('data-move', 'false');
     });
@@ -214,7 +220,7 @@ describe('MapPage', () => {
       const imgLoadTrigger = screen.getByTestId('img-load-trigger');
       fireEvent.click(imgLoadTrigger);
       
-      expect(mockSeatsHook.handleImgLoad).toHaveBeenCalled();
+      expect(mockData.mockSeatsHook.handleImgLoad).toHaveBeenCalled();
     });
   });
 
@@ -225,12 +231,17 @@ describe('MapPage', () => {
       const exitTrigger = screen.getByTestId('exit-trigger');
       fireEvent.click(exitTrigger);
       
-      expect(mockSeatsHook.exitSeat).toHaveBeenCalled();
+      expect(mockData.mockSeatsHook.exitSeat).toHaveBeenCalled();
     });
   });
 
   describe('フックの呼び出し', () => {
     it('すべてのカスタムフックが正しく呼び出される', () => {
+      const { useProgress } = require('@/hooks/use-progress');
+      const { useSeats } = require('@/hooks/use-seat');
+      const { useImage } = require('@/hooks/use-image');
+      const { useDate } = require('@/hooks/use-date');
+
       render(<MapPage />);
       
       expect(useProgress).toHaveBeenCalled();
@@ -246,16 +257,10 @@ describe('MapPage', () => {
       const mockStartProgress = jest.fn(() => 'async-timer-id');
       const mockCompleteProgress = jest.fn();
       
-      useSeats.mockReturnValue({
-        ...mockSeatsHook,
-        fetchSeats: mockFetchSeats,
-      });
-      
-      useProgress.mockReturnValue({
-        ...mockProgressHook,
-        startProgress: mockStartProgress,
-        completeProgress: mockCompleteProgress,
-      });
+      mockData.mockSeatsHook.fetchSeats = mockFetchSeats;
+      mockData.mockProgressHook.startProgress = mockStartProgress;
+      mockData.mockProgressHook.completeProgress = mockCompleteProgress;
+      setupHooks(mockData);
 
       await act(async () => {
         render(<MapPage />);
@@ -263,27 +268,9 @@ describe('MapPage', () => {
       
       await waitFor(() => {
         expect(mockStartProgress).toHaveBeenCalled();
-      });
-      
-      await waitFor(() => {
         expect(mockFetchSeats).toHaveBeenCalledWith('/api/seats/map', '2025-06-04');
-      });
-      
-      await waitFor(() => {
         expect(mockCompleteProgress).toHaveBeenCalledWith('async-timer-id');
       });
-    });
-  });
-
-  describe('handleStop関数のテスト', () => {
-    it('handleStopが正しいパラメータでupdateBoxを呼び出す', () => {
-      render(<MapPage />);
-      
-      const draggableSeat = screen.getByTestId('draggable-seat');
-      fireEvent.mouseUp(draggableSeat);
-      
-      expect(mockSeatsHook.updateBox).toHaveBeenCalledWith('seat-1', { x: 100, y: 200 });
-      expect(mockSeatsHook.updateBox).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -293,11 +280,9 @@ describe('MapPage', () => {
       const mockStartProgress = jest.fn(() => customTimerId);
       const mockCompleteProgress = jest.fn();
       
-      useProgress.mockReturnValue({
-        ...mockProgressHook,
-        startProgress: mockStartProgress,
-        completeProgress: mockCompleteProgress,
-      });
+      mockData.mockProgressHook.startProgress = mockStartProgress;
+      mockData.mockProgressHook.completeProgress = mockCompleteProgress;
+      setupHooks(mockData);
       
       await act(async () => {
         render(<MapPage />);
@@ -305,19 +290,14 @@ describe('MapPage', () => {
       
       await waitFor(() => {
         expect(mockStartProgress).toHaveBeenCalled();
-      });
-      
-      await waitFor(() => {
         expect(mockCompleteProgress).toHaveBeenCalledWith(customTimerId);
       });
     });
 
     it('異なるプログレス値が正しく表示される', () => {
-      useProgress.mockReturnValue({
-        ...mockProgressHook,
-        isLoading: true,
-        progress: 75,
-      });
+      mockData.mockProgressHook.isLoading = true;
+      mockData.mockProgressHook.progress = 75;
+      setupHooks(mockData);
 
       render(<MapPage />);
       

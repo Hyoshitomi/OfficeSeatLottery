@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { ProgressLoader } from '@/components/common/progress-loader'
-import ReservationTabs from '@/components/form/reservation-tabs'
+import ReservationTabs from '@/components/seat/reservation-tabs'
 import SeatCanvas from '@/components/seat/seat-canvas'
 import SidebarRight from '@/components/sidebar/right-sidebar-appoint'
 import { SiteHeader } from '@/components/sidebar/site-header'

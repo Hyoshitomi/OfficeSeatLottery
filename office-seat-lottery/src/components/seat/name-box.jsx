@@ -17,11 +17,58 @@ const statusStyle = {
   reserved: 'border-green-500 bg-green-100 text-green-600',
 }
 
+// スタイル判定を関数化
+function getBorderStyle({ appoint, isSelected, status }) {
+  if (appoint && isSelected) {
+    return 'border-red-500 bg-red-50 text-black border-4'
+  }
+  return statusStyle[status]
+}
+
+// 右クリックハンドラ
+function createContextMenuHandler(appoint, setOpen) {
+  return (e) => {
+    e.preventDefault()
+    if (!appoint) {
+      setOpen(true)
+    }
+  }
+}
+
+// クリックハンドラ
+function createClickHandler(appoint, onSeatClick, id, setOpen) {
+  return (e) => {
+    e.preventDefault()
+    if (appoint && onSeatClick) {
+      onSeatClick(id)
+    } else if (!appoint) {
+      setOpen(true)
+    }
+  }
+}
+
+// ドラッグ停止ハンドラ
+function createDragStopHandler(onDragStop, id, safePosition) {
+  return (_, data) => {
+    if (onDragStop) {
+      onDragStop(id, safePosition.x + data.x, safePosition.y + data.y)
+    }
+  }
+}
+
+// 安全な位置を取得
+function getSafePosition(position) {
+  return {
+    x: position?.x || 0,
+    y: position?.y || 0
+  }
+}
+
 export default function NameBox({
   id,
   name,
   status,
-  position = { x: 0, y: 0 }, // デフォルト値を設定
+  position = { x: 0, y: 0 },
   onDragStop,
   onUpdate,
   onDelete,
@@ -34,40 +81,17 @@ export default function NameBox({
   const nodeRef = useRef(null)
   const [open, setOpen] = useState(false)
 
-  // 安全な位置取得
-  const safePosition = {
-    x: position?.x || 0,
-    y: position?.y || 0
-  }
-
-  // moveに関係なく右クリックでPopoverを開く
-  const handleContextMenu = e => {
-    e.preventDefault()
-    if (!appoint) { // 予約画面ではPopoverを表示しない
-      setOpen(true)
-    }
-  }
-
-  // クリック時の処理
-  const handleClick = (e) => {
-    e.preventDefault()
-    if (appoint && onSeatClick) {
-      onSeatClick(id) // 予約画面では座席選択処理（複数選択対応）
-    } else if (!appoint) {
-      setOpen(true) // 通常画面ではPopover表示
-    }
-  }
-
-  // 予約画面で選択中の場合は赤枠、それ以外は通常のスタイル
-  const borderStyle = appoint && isSelected 
-    ? 'border-red-500 bg-red-50 text-black border-4' // 選択時は少し背景色も変更し、枠を太く
-    : statusStyle[status]
+  const safePosition = getSafePosition(position)
+  const borderStyle = getBorderStyle({ appoint, isSelected, status })
+  const handleContextMenu = createContextMenuHandler(appoint, setOpen)
+  const handleClick = createClickHandler(appoint, onSeatClick, id, setOpen)
+  const handleDragStop = createDragStopHandler(onDragStop, id, safePosition)
 
   return (
     <Draggable
       nodeRef={nodeRef}
       position={{ x: 0, y: 0 }}
-      onStop={(_, data) => onDragStop && onDragStop(id, safePosition.x + data.x, safePosition.y + data.y)}
+      onStop={handleDragStop}
       disabled={!move} 
     >
       <div

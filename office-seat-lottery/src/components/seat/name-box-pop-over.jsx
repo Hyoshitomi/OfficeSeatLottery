@@ -35,7 +35,12 @@ export default function NameBoxPopOver({
   useEffect(() => {
     if (move) {
       const t = setTimeout(() => {
-        onUpdate?.(id, editName, editStatus, x, y)
+        onUpdate?.(id, {
+          name: editName,
+          status: editStatus,
+          x,
+          y
+        })
       }, 300)
       return () => clearTimeout(t)
     }
@@ -43,11 +48,11 @@ export default function NameBoxPopOver({
   }, [id, editName, editStatus, x, y, onUpdate, move])
   
   // 予約画面時にはポップオーバーを表示しない
-  if (appoint)return null
+  if (appoint) return null
 
   // move=false 
   if (!move) {
-    // statusが'movable' かつ 9時以降のみ解放ボタン表示　以外は表示しない
+    // statusが'movable' かつ 9時以降のみ解放ボタン表示し、それ以外は表示しない
     if (status !== 'movable' || !isAfter) {
       return null
     }
