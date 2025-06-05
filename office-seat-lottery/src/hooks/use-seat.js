@@ -3,7 +3,7 @@ import { toast } from 'sonner'
 
 export function useSeats() {
   const [boxes, setBoxes] = useState([])
-  const [imgSize, setImgSize] = useState({ width: 0, height: 0 })
+  const [imgSize, setImgSize] = useState({ width: 832, height: 757 })
 
   const fetchSeats = useCallback(async (endpoint, dateStr = null) => {
     try {

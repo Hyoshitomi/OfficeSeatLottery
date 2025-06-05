@@ -4,7 +4,7 @@ import AddBoxButton from '@/components/seat/add-box-button'
 import NameBox from '@/components/seat/name-box'
 
 // デフォルト値を定数として定義
-const DEFAULT_IMG_SIZE = { width: 800, height: 600 }
+const DEFAULT_IMG_SIZE = { width: 832, height: 757 }
 const DEFAULT_BOXES = []
 const DEFAULT_SELECTED_SEAT_IDS = []
 
