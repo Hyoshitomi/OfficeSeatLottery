@@ -1,7 +1,5 @@
 "use client"
 
-import * as React from "react"
-import Link from 'next/link';
 import {
   IconArmchair,
   IconArmchair2,
@@ -12,9 +10,12 @@ import {
   IconMail,
   IconUsers,
 } from "@tabler/icons-react"
+import Link from 'next/link';
 import { useSession } from "next-auth/react";
-import { SidebarNav } from "@/components/sidebar/nav/sidebar-nav";
+import * as React from "react"
+
 import { NavUser } from "@/components/sidebar/nav/nav-user"
+import { SidebarNav } from "@/components/sidebar/nav/sidebar-nav";
 import {
   Sidebar,
   SidebarContent,

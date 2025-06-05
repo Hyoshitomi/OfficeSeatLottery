@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, act } from '@testing-library/react'
+
 import '@testing-library/jest-dom'
 import NameBox from '@/components/seat/name-box'
 

@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react';
+
 import AppLayout from '@/app/(with-sidebar)/layout';
 
 // サイドバー関連コンポーネントをモック

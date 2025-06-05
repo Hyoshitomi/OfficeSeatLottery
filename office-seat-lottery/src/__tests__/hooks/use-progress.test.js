@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
+
 import { useProgress } from '@/hooks/use-progress'
 
 describe('useProgress', () => {

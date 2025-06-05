@@ -1,4 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
+
 import { useSeats } from '@/hooks/use-seat'
 
 // sonnerのモック

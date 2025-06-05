@@ -1,6 +1,7 @@
 'use client'
 
 import { useSession } from "next-auth/react";
+
 import { SiteHeader } from "@/components/sidebar/site-header";
 
 export default function Home() {

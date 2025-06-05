@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react"
 import { useSession } from "next-auth/react"
+import { useState } from "react"
 import { toast } from "sonner"
-import { Button } from "@/components/ui/button"
-import { ProfileCard } from "@/components/account/profile-card"
+
 import { PasswordChangeCard } from "@/components/account/password-change-card"
+import { ProfileCard } from "@/components/account/profile-card"
 import { ProgressBar } from "@/components/account/progressbar"
+import { Button } from "@/components/ui/button"
 import { usePasswordValidation } from "@/hooks/use-password-validation"
 import { useProgress } from "@/hooks/use-progress"
 

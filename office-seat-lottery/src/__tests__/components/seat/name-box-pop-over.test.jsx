@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor, cleanup, act } from '@testing-library/react'
+
 import '@testing-library/jest-dom'
 import NameBoxPopOver from '@/components/seat/name-box-pop-over'
 

@@ -1,19 +1,20 @@
 'use client'
 
-import { useState } from 'react'
-import { useSession } from "next-auth/react"
 import { format } from "date-fns"
+import { useSession } from "next-auth/react"
+import { useState } from 'react'
 import { toast } from "sonner"
-import { SiteHeader } from '@/components/sidebar/site-header'
-import SeatCanvas from '@/components/seat/seat-canvas'
-import SidebarRight from '@/components/sidebar/right-sidebar-img'
-import { ProgressLoader } from '@/components/common/progress-loader'
+
 import { AdminGuard } from '@/components/common/admin-guard'
 import { DateSelector } from '@/components/common/date-selector'
+import { ProgressLoader } from '@/components/common/progress-loader'
+import SeatCanvas from '@/components/seat/seat-canvas'
+import SidebarRight from '@/components/sidebar/right-sidebar-img'
+import { SiteHeader } from '@/components/sidebar/site-header'
+import { useDate } from '@/hooks/use-date'
+import { useImage } from '@/hooks/use-image'
 import { useProgress } from '@/hooks/use-progress'
 import { useSeats } from '@/hooks/use-seat'
-import { useImage } from '@/hooks/use-image'
-import { useDate } from '@/hooks/use-date'
 
 export default function MapImgPage() {
   const { data: session } = useSession()

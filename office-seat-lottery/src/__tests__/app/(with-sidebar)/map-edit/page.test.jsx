@@ -1,6 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+
 import MapEditPage from '@/app/(with-sidebar)/map-edit/page';
 
 // jest.setup.jsで既にモックされているため、個別モックは最小限に

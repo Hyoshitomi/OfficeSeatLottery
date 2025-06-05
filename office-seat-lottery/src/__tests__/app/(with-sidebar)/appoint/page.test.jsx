@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+
 import MapPage from '@/app/(with-sidebar)/appoint/page';
 
 // jest.setup.jsで既にモックされているため、個別モックは最小限に

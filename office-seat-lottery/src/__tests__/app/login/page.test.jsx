@@ -2,8 +2,9 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 
 import { render, screen } from '@testing-library/react';
-import { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
+
 import LoginPage from '@/app/login/page';
 
 // Next.jsのコンポーネントをモック

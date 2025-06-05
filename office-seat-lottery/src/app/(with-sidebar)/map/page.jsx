@@ -1,13 +1,14 @@
 'use client'
 
 import { useEffect } from 'react'
-import { SiteHeader } from '@/components/sidebar/site-header'
-import SeatCanvas from '@/components/seat/seat-canvas'
+
 import { ProgressLoader } from '@/components/common/progress-loader'
+import SeatCanvas from '@/components/seat/seat-canvas'
+import { SiteHeader } from '@/components/sidebar/site-header'
+import { useDate } from '@/hooks/use-date'
+import { useImage } from '@/hooks/use-image'
 import { useProgress } from '@/hooks/use-progress'
 import { useSeats } from '@/hooks/use-seat'
-import { useImage } from '@/hooks/use-image'
-import { useDate } from '@/hooks/use-date'
 
 export default function MapPage() {
   const { isLoading, progress, startProgress, completeProgress } = useProgress()

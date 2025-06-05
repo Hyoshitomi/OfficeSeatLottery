@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 import { render, screen, fireEvent } from '@testing-library/react'
+
 import '@testing-library/jest-dom'
 import { NavUser } from '@/components/sidebar/nav/nav-user'
 

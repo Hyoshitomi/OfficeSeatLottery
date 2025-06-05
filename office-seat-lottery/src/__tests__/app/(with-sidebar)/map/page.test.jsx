@@ -1,4 +1,5 @@
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+
 import MapPage from '@/app/(with-sidebar)/map/page';
 
 jest.mock('@/components/sidebar/site-header', () => ({

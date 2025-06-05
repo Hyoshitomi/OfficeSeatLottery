@@ -1,6 +1,7 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
 import { toast } from 'sonner';
+
 import AccountPage from '@/app/(with-sidebar)/account/page';
 
 // モック設定

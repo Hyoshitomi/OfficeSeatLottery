@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
-import NameBox from '@/components/seat/name-box'
 import AddBoxButton from '@/components/seat/add-box-button'
+import NameBox from '@/components/seat/name-box'
 
 export default function SeatCanvas({
   src,

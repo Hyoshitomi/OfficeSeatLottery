@@ -103,7 +103,7 @@ describe('NextAuth Configuration', () => {
   const mockBcrypt = bcrypt;
   let authOptions;
   let mockPrismaInstance;
-  // eslint-disable-next-line unused-imports/no-unused-vars
+   
   let mockGetPrisma;
 
   beforeEach(() => {

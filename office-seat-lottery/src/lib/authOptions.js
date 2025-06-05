@@ -1,6 +1,7 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
+import CredentialsProvider from "next-auth/providers/credentials";
+
 import { PrismaClient } from "@/generated/prisma";
 
 // テスト環境での条件分岐

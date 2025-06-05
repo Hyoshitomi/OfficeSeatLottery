@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Suspense } from 'react';
+
 import { LoginForm } from "@/components/login/login-form";
 
 // useSearchParamsを使う部分を分離

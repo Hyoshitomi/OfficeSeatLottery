@@ -1,12 +1,13 @@
+import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useCallback, useMemo } from "react"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
 import { toast } from "sonner"
-import { Form } from "@/components/ui/form"
-import { Button } from "@/components/ui/button"
+import { z } from "zod"
+
 import { FormInput } from "@/components/form/form-input"
 import { FormRadioGroup } from "@/components/form/form-radio"
+import { Button } from "@/components/ui/button"
+import { Form } from "@/components/ui/form"
 
 const InquirySchema = z.object({
   email: z.string().email({ message: "メールアドレスの形式が正しくありません" }),

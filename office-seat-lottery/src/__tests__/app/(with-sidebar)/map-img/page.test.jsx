@@ -4,6 +4,7 @@
 
 import { render, screen, fireEvent } from '@testing-library/react';
 import { useSession } from 'next-auth/react';
+
 import MapImgPage from '@/app/(with-sidebar)/map-img/page';
 
 // 必要なモックのみ設定
