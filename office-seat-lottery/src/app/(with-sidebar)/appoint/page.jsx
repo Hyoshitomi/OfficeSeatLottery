@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useSession } from "next-auth/react"
 
 import { AdminGuard } from '@/components/common/admin-guard'
 import { ProgressLoader } from '@/components/common/progress-loader'
@@ -18,6 +19,7 @@ export default function MapPage() {
   const { previewImage, fileInputRef } = useImage()
   const [selectedSeatIds, setSelectedSeatIds] = useState([]) // 選択中の座席ID配列
   const [showReservation, setShowReservation] = useState(false) // 予約画面表示フラグ
+  const { data: session } = useSession()
 
   // 座席番号を表示するため、座席図編集APIを実行
   useEffect(() => {
