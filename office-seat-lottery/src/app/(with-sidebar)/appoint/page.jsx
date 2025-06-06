@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
+import { AdminGuard } from '@/components/common/admin-guard'
 import { ProgressLoader } from '@/components/common/progress-loader'
 import ReservationTabs from '@/components/seat/reservation-tabs'
 import SeatCanvas from '@/components/seat/seat-canvas'
@@ -59,7 +60,7 @@ export default function MapPage() {
   }
 
   return (
-    <>
+    <AdminGuard user={session?.user} title="予約">
       <SiteHeader title={showReservation ? "予約日を選択してください" : "座席を選択してください"} />
       {showReservation ? (
         // 予約設定画面
@@ -94,6 +95,6 @@ export default function MapPage() {
           />
         </div>
       )}
-    </>
+    </AdminGuard>
   )
 }

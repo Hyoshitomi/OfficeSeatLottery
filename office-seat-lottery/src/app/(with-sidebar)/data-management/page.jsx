@@ -1,34 +1,19 @@
-'use client'
+import { DataTable } from "@/components/data-table/data-table"
+import { SiteHeader } from '@/components/sidebar/site-header'
 
-import { useSession } from "next-auth/react";
+import data from "./data.json"
 
-import { SiteHeader } from "@/components/sidebar/site-header";
-
-export default function Home() {
-  const { data: session } = useSession();
-  const user = session?.user;
-
-  if (!user?.adminFlag) {
-    return (
-      <>
-        <SiteHeader title="データ管理"/>
-        <main className="flex-1 overflow-auto p-4">
-          <div>
-            <p>ここは管理者のみ閲覧可能なページです。</p>
-          </div>
-        </main>
-      </>
-    )
-  }
+export default function Page() {
   return (
-    <>
-      <SiteHeader title="データ管理"/>
-      <main className="flex-1 overflow-auto p-4">
-        <div>
-          <h1>データ管理ページ</h1>
-          <p>ここはデータ管理ページです。</p>
+    <AdminGuard user={session?.user} title="予約編集">
+      <SiteHeader title={"予約編集"} />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <DataTable data={data} />
+            </div>
+          </div>
         </div>
-      </main>
-    </>
+    </AdminGuard>
   );
 }

@@ -196,21 +196,8 @@ const ReservationActions = ({
   reservationError, 
   buttonText 
 }) => {
-  const handleCheckReservations = () => {
-    console.log("登録済み予約の確認")
-  }
-
   return (
     <div className="pt-4 space-y-2">
-      {reservationError && reservationError.includes('既に予約済み') && (
-        <Button
-          onClick={handleCheckReservations}
-          variant="destructive"
-          className="w-full"
-        >
-          登録済み予約の確認
-        </Button>
-      )}
       <div className="flex gap-2">
         <Button
           onClick={onBack}
