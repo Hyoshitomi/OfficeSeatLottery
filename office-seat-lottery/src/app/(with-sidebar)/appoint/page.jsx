@@ -1,7 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useSession } from "next-auth/react"
 
+import { AdminGuard } from '@/components/common/admin-guard'
 import { ProgressLoader } from '@/components/common/progress-loader'
 import ReservationTabs from '@/components/seat/reservation-tabs'
 import SeatCanvas from '@/components/seat/seat-canvas'
@@ -17,6 +19,7 @@ export default function MapPage() {
   const { previewImage, fileInputRef } = useImage()
   const [selectedSeatIds, setSelectedSeatIds] = useState([]) // 選択中の座席ID配列
   const [showReservation, setShowReservation] = useState(false) // 予約画面表示フラグ
+  const { data: session } = useSession()
 
   // 座席番号を表示するため、座席図編集APIを実行
   useEffect(() => {
@@ -59,7 +62,7 @@ export default function MapPage() {
   }
 
   return (
-    <>
+    <AdminGuard user={session?.user} title="予約">
       <SiteHeader title={showReservation ? "予約日を選択してください" : "座席を選択してください"} />
       {showReservation ? (
         // 予約設定画面
@@ -94,6 +97,6 @@ export default function MapPage() {
           />
         </div>
       )}
-    </>
+    </AdminGuard>
   )
 }
