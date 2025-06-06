@@ -65,12 +65,8 @@ export const schema = z.object({
 })
 
 // Create a separate component for the drag handle
-function DragHandle({
-  id
-}) {
-  const { attributes, listeners } = useSortable({
-    id,
-  })
+function DragHandle({ id }) {
+  const { attributes, listeners } = useSortable({ id })
 
   return (
     <Button
@@ -86,12 +82,7 @@ function DragHandle({
 }
 
 // Editable cell component
-function EditableCell({
-  value,
-  onChange,
-  type = "text",
-  options = []
-}) {
+function EditableCell({ value, onChange, type = "text", options = [] }) {
   if (type === "select") {
     return (
       <Select value={value} onValueChange={onChange}>
@@ -118,10 +109,10 @@ function EditableCell({
   );
 }
 
-export function DataTable({
-  data: initialData
-}) {
+export function DataTable({ data: initialData }) {
   const [data, setData] = React.useState(() => initialData)
+  const [edited, setEdited] = React.useState({}) 
+  const [deletedIds, setDeletedIds] = React.useState([]) 
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] = React.useState({})
   const [columnFilters, setColumnFilters] = React.useState([])
@@ -143,37 +134,49 @@ export function DataTable({
 
   // Update data function
   const updateData = (id, field, value) => {
-    setData(
-      (prev) => prev.map((item) => (item.id === id ? { ...item, [field]: value } : item))
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, [field]: value } : item
+      )
     )
+    setEdited((prev) => {
+      const base = prev[id] || data.find((r) => r.id === id)
+      return { ...prev, [id]: { ...base, [field]: value } }
+    })
     setHasChanges(true)
   }
-
-  // Delete selected rows
+  
   const deleteSelectedRows = () => {
-    const selectedIds = Object.keys(rowSelection).map(Number)
-
-    // 選択された行からAppointIdのセットを作成
-    const selectedAppointIds = new Set(
-      data.filter((item) => selectedIds.includes(item.id)).map((item) => item.appointId)
-    )
-
-    // 同じAppointIdを持つすべての行を削除
-    setData((prev) => prev.filter((item) => !selectedAppointIds.has(item.appointId)))
+    const ids = Object.keys(rowSelection).map(Number)
+    setDeletedIds((prev) => Array.from(new Set([...prev, ...ids])))
+    setData((prev) => prev.filter((r) => !ids.includes(r.id)))
     setRowSelection({})
     setHasChanges(true)
-    toast.success(`Deleted ${selectedAppointIds.size} appointment(s)`)
+    toast.success(`${ids.length} 件 削除しました`)
   }
 
   // Save changes
   const saveChanges = async () => {
+    if (!hasChanges) return
+    const updates = Object.values(edited)
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const res = await fetch("/api/master/m_seat_appoint", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ updates, deletes: deletedIds }),
+      })
+      if (!res.ok) throw new Error((await res.json()).error || "菫晏ｭ伜､ｱ謨�")
+      const json = await res.json()
+      toast.success('保存しました。')
+      const fresh = await fetch("/api/master/m_seat_appoint").then((r) =>
+        r.json()
+      )
+      setData(fresh)
+      setEdited({})
+      setDeletedIds([])
       setHasChanges(false)
-      toast.success("Changes saved successfully")
     } catch (error) {
-      toast.error("Failed to save changes")
+      toast.error(error.message)
     }
   }
 
@@ -208,10 +211,8 @@ export function DataTable({
       accessorKey: "appointId",
       header: "Appoint ID",
       cell: ({ row }) => (
-        <div className="w-24">
-          <EditableCell
-            value={row.original.appointId.toString()}
-            onChange={(value) => updateData(row.original.id, "appointId", Number.parseInt(value) || 0)} />
+        <div className="w-10">
+          <span className="text-sm text-muted-foreground">{row.original.appointId.toString()}</span>
         </div>
       ),
       enableHiding: false,
@@ -220,7 +221,7 @@ export function DataTable({
       accessorKey: "seatId",
       header: "Seat ID",
       cell: ({ row }) => (
-        <div className="w-24">
+        <div className="w-15">
           <EditableCell
             value={row.original.seatId}
             onChange={(value) => updateData(row.original.id, "seatId", value)} />
@@ -231,7 +232,7 @@ export function DataTable({
       accessorKey: "userId",
       header: "User ID",
       cell: ({ row }) => (
-        <div className="w-24">
+        <div className="w-15">
           <EditableCell
             value={row.original.userId.toString()}
             onChange={(value) => updateData(row.original.id, "userId", Number.parseInt(value) || 0)} />
@@ -244,8 +245,12 @@ export function DataTable({
       cell: ({ row }) => (
         <div className="w-40">
           <EditableCell
-            value={new Date(row.original.startDate).toLocaleString()}
-            onChange={(value) => updateData(row.original.id, "startDate", value)} />
+            value={
+              new Date(row.original.startDate)
+                .toLocaleString('ja-JP', { timeZone: 'UTC' })
+            }
+            onChange={(value) => updateData(row.original.id, "startDate", value)}
+          />
         </div>
       ),
     },
@@ -255,7 +260,10 @@ export function DataTable({
       cell: ({ row }) => (
         <div className="w-40">
           <EditableCell
-            value={new Date(row.original.endDate).toLocaleString()}
+            value={
+              new Date(row.original.endDate)
+                .toLocaleString('ja-JP', { timeZone: 'UTC' })
+            }
             onChange={(value) => updateData(row.original.id, "endDate", value)} />
         </div>
       ),
@@ -264,8 +272,9 @@ export function DataTable({
       accessorKey: "created",
       header: "Created",
       cell: ({ row }) => (
-        <div className="w-40">
-          <span className="text-sm text-muted-foreground">{new Date(row.original.created).toLocaleString()}</span>
+        <div className="w-20">
+          <span className="text-sm text-muted-foreground">{new Date(row.original.created)
+            .toLocaleString('ja-JP', { timeZone: 'UTC' })}</span>
         </div>
       ),
     },
@@ -273,9 +282,10 @@ export function DataTable({
       accessorKey: "updated",
       header: "Updated",
       cell: ({ row }) => (
-        <div className="w-40">
+        <div className="w-20">
           <span className="text-sm text-muted-foreground">
-            {row.original.updated ? new Date(row.original.updated).toLocaleString() : "—"}
+            {row.original.updated ? new Date(row.original.updated)
+              .toLocaleString('ja-JP', { timeZone: 'UTC' }) : "—"}
           </span>
         </div>
       ),
@@ -294,11 +304,7 @@ export function DataTable({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-32">
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Make a copy</DropdownMenuItem>
-            <DropdownMenuItem>Favorite</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem>削除</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       ),
@@ -318,36 +324,24 @@ export function DataTable({
     getRowId: (row) => row.id.toString(),
     enableRowSelection: true,
     onRowSelectionChange: (updater) => {
-      // 現在の選択状態を取得
       let newSelection = {}
-
       if (typeof updater === "function") {
         newSelection = updater(rowSelection)
       } else {
         newSelection = updater
       }
-
-      // 変更されたキーを見つける
-      const changedKeys = Object.keys(newSelection).filter((key) => !rowSelection[key] === newSelection[key])
-
+      const changedKeys = Object.keys(newSelection).filter(
+        (key) => !rowSelection[key] === newSelection[key]
+      )
       if (changedKeys.length > 0) {
-        // 変更された行のIDを取得
         const changedRowId = Number(changedKeys[0])
-        // 変更された行のデータを取得
         const changedRow = data.find((row) => row.id === changedRowId)
-
         if (changedRow) {
-          // 同じAppointIdを持つすべての行を取得
           const relatedRows = data.filter((row) => row.appointId === changedRow.appointId)
-
-          // 新しい選択状態を作成
           const updatedSelection = { ...newSelection }
-
-          // 関連するすべての行に同じ選択状態を適用
           relatedRows.forEach((row) => {
             updatedSelection[row.id.toString()] = newSelection[changedRowId.toString()]
           })
-
           setRowSelection(updatedSelection)
         } else {
           setRowSelection(newSelection)
@@ -380,9 +374,7 @@ export function DataTable({
     }
   }
 
-  function DraggableRow({
-    row
-  }) {
+  function DraggableRow({ row }) {
     const { transform, transition, setNodeRef, isDragging } = useSortable({
       id: row.original.id,
     })
@@ -410,7 +402,7 @@ export function DataTable({
           <ContextMenuContent>
             <ContextMenuItem onClick={deleteSelectedRows} className="text-destructive">
               <TrashIcon className="mr-2 h-4 w-4" />
-              Delete {selectedRowCount} selected row{selectedRowCount > 1 ? "s" : ""}
+              {selectedRowCount} 陦悟炎髯､縺吶ｋ
             </ContextMenuItem>
           </ContextMenuContent>
         )}
@@ -420,15 +412,6 @@ export function DataTable({
 
   return (
     <div className="flex w-full flex-col justify-start gap-6">
-      <div className="flex items-center justify-between px-4 lg:px-6">
-        <h2 className="text-lg font-semibold">Seat Appointments</h2>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm">
-            <PlusIcon />
-            <span className="hidden lg:inline">Add Appointment</span>
-          </Button>
-        </div>
-      </div>
       <div className="relative flex flex-col gap-4 overflow-auto px-4 lg:px-6">
         <div className="overflow-hidden rounded-lg border">
           <DndContext
@@ -441,15 +424,13 @@ export function DataTable({
               <TableHeader className="sticky top-0 z-10 bg-muted">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
-                    {headerGroup.headers.map((header) => {
-                      return (
-                        <TableHead key={header.id} colSpan={header.colSpan}>
-                          {header.isPlaceholder
-                            ? null
-                            : flexRender(header.column.columnDef.header, header.getContext())}
-                        </TableHead>
-                      );
-                    })}
+                    {headerGroup.headers.map((header) => (
+                      <TableHead key={header.id} colSpan={header.colSpan}>
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(header.column.columnDef.header, header.getContext())}
+                      </TableHead>
+                    ))}
                   </TableRow>
                 ))}
               </TableHeader>
@@ -473,13 +454,12 @@ export function DataTable({
         </div>
         <div className="flex items-center justify-between px-4">
           <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
-            {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
-            selected.
+            驕ｸ謚樊焚/繝��繧ｿ謨ｰ�嘴table.getFilteredSelectedRowModel().rows.length}/{table.getFilteredRowModel().rows.length} 
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                Rows per page
+                陦ｨ遉ｺ陦梧焚
               </Label>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
@@ -499,7 +479,7 @@ export function DataTable({
               </Select>
             </div>
             <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+              Page {table.getState().pagination.pageIndex + 1} / {table.getPageCount()}
             </div>
             <div className="ml-auto flex items-center gap-2 lg:ml-0">
               <Button
@@ -507,7 +487,7 @@ export function DataTable({
                 className="hidden h-8 w-8 p-0 lg:flex"
                 onClick={() => table.setPageIndex(0)}
                 disabled={!table.getCanPreviousPage()}>
-                <span className="sr-only">Go to first page</span>
+                <span className="sr-only">first</span>
                 <ChevronsLeftIcon />
               </Button>
               <Button
@@ -516,7 +496,7 @@ export function DataTable({
                 size="icon"
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}>
-                <span className="sr-only">Go to previous page</span>
+                <span className="sr-only">back</span>
                 <ChevronLeftIcon />
               </Button>
               <Button
@@ -525,7 +505,7 @@ export function DataTable({
                 size="icon"
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}>
-                <span className="sr-only">Go to next page</span>
+                <span className="sr-only">next</span>
                 <ChevronRightIcon />
               </Button>
               <Button
@@ -534,7 +514,7 @@ export function DataTable({
                 size="icon"
                 onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                 disabled={!table.getCanNextPage()}>
-                <span className="sr-only">Go to last page</span>
+                <span className="sr-only">last</span>
                 <ChevronsRightIcon />
               </Button>
             </div>
@@ -544,7 +524,7 @@ export function DataTable({
         <div className="flex justify-end px-4 pb-4">
           <Button onClick={saveChanges} disabled={!hasChanges} className="gap-2">
             <SaveIcon className="h-4 w-4" />
-            Save Changes
+            菫晏ｭ�
             {hasChanges && (
               <Badge variant="secondary" className="ml-1 h-5 w-5 rounded-full p-0">
                 !
