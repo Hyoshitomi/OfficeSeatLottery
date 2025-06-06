@@ -46,13 +46,13 @@ export function AppSidebar({
         url: "/map",
         icon: IconArmchair,
       },
+    ],
+    dataList: [
       {
         name: "チーム予約",
         url: "/appoint",
         icon: IconUsers,
       },
-    ],
-    dataList: [
       {
         name: "座席図 編集",
         url: "/map-edit",
