@@ -111,8 +111,9 @@ function EditableCell({ value, onChange, type = "text", options = [] }) {
 
 export function DataTable({ data: initialData }) {
   const [data, setData] = React.useState(() => initialData)
-  const [edited, setEdited] = React.useState({}) 
-  const [deletedIds, setDeletedIds] = React.useState([]) 
+  // 変更のあった行データを保持する state
+  const [edited, setEdited] = React.useState({})       // 編集履歴
+  const [deletedIds, setDeletedIds] = React.useState([]) // 削除対象ID
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] = React.useState({})
   const [columnFilters, setColumnFilters] = React.useState([])
@@ -132,7 +133,7 @@ export function DataTable({ data: initialData }) {
 
   const dataIds = React.useMemo(() => data?.map(({ id }) => id) || [], [data])
 
-  // Update data function
+  //  更新
   const updateData = (id, field, value) => {
     setData((prev) =>
       prev.map((item) =>
@@ -152,10 +153,10 @@ export function DataTable({ data: initialData }) {
     setData((prev) => prev.filter((r) => !ids.includes(r.id)))
     setRowSelection({})
     setHasChanges(true)
-    toast.success(`${ids.length} 件 削除しました`)
+    toast.success(`${ids.length} 行を削除しました。保存してください。`)
   }
 
-  // Save changes
+ // 保存
   const saveChanges = async () => {
     if (!hasChanges) return
     const updates = Object.values(edited)
@@ -165,9 +166,11 @@ export function DataTable({ data: initialData }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ updates, deletes: deletedIds }),
       })
-      if (!res.ok) throw new Error((await res.json()).error || "菫晏ｭ伜､ｱ謨�")
+      if (!res.ok) throw new Error((await res.json()).error || "保存失敗しました。")
       const json = await res.json()
-      toast.success('保存しました。')
+      toast.success(
+        `更新: ${json.updatedCount} 件、削除: ${json.deletedCount} 件 保存しました。`
+      )
       const fresh = await fetch("/api/master/m_seat_appoint").then((r) =>
         r.json()
       )
@@ -285,7 +288,7 @@ export function DataTable({ data: initialData }) {
         <div className="w-20">
           <span className="text-sm text-muted-foreground">
             {row.original.updated ? new Date(row.original.updated)
-              .toLocaleString('ja-JP', { timeZone: 'UTC' }) : "—"}
+              .toLocaleString('ja-JP', { timeZone: 'UTC' }) : "-"}
           </span>
         </div>
       ),
@@ -402,7 +405,7 @@ export function DataTable({ data: initialData }) {
           <ContextMenuContent>
             <ContextMenuItem onClick={deleteSelectedRows} className="text-destructive">
               <TrashIcon className="mr-2 h-4 w-4" />
-              {selectedRowCount} 陦悟炎髯､縺吶ｋ
+              {selectedRowCount} 行削除する
             </ContextMenuItem>
           </ContextMenuContent>
         )}
@@ -454,12 +457,12 @@ export function DataTable({ data: initialData }) {
         </div>
         <div className="flex items-center justify-between px-4">
           <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
-            驕ｸ謚樊焚/繝��繧ｿ謨ｰ�嘴table.getFilteredSelectedRowModel().rows.length}/{table.getFilteredRowModel().rows.length} 
+            選択数/データ件数：{table.getFilteredSelectedRowModel().rows.length}/{table.getFilteredRowModel().rows.length} 
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">
               <Label htmlFor="rows-per-page" className="text-sm font-medium">
-                陦ｨ遉ｺ陦梧焚
+                表示行数
               </Label>
               <Select
                 value={`${table.getState().pagination.pageSize}`}
@@ -524,7 +527,7 @@ export function DataTable({ data: initialData }) {
         <div className="flex justify-end px-4 pb-4">
           <Button onClick={saveChanges} disabled={!hasChanges} className="gap-2">
             <SaveIcon className="h-4 w-4" />
-            菫晏ｭ�
+            保存
             {hasChanges && (
               <Badge variant="secondary" className="ml-1 h-5 w-5 rounded-full p-0">
                 !
