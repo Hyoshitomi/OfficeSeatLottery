@@ -81,25 +81,3 @@ model M_USER {
 
   @@index([employeeNumber])
 }
-
-
-// // 会議テーブル
-// model Table {
-//   Tableid Int    @id @default(autoincrement())
-//   name    String
-// }
-// // 隣接テーブル情報
-// model AdjacentTable {
-//   AdjacentTableId Int @id @default(autoincrement())
-//   tableId         Int
-//   adjacentTableId Int
-// }
-// // 過去の座席抽選結果
-// model T_PAST_POSITION {
-//   id            Int      @id @default(autoincrement())
-//   Date          DateTime
-//   seatId        Int
-//   userId        Int
-//   created       DateTime
-//   updated       DateTime
-// }
