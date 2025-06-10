@@ -4671,6 +4671,7 @@ export namespace Prisma {
     password: string | null
     adminFlag: boolean | null
     deleteFlag: boolean | null
+    insideFlag: boolean | null
   }
 
   export type M_USERMaxAggregateOutputType = {
@@ -4682,6 +4683,7 @@ export namespace Prisma {
     password: string | null
     adminFlag: boolean | null
     deleteFlag: boolean | null
+    insideFlag: boolean | null
   }
 
   export type M_USERCountAggregateOutputType = {
@@ -4693,6 +4695,7 @@ export namespace Prisma {
     password: number
     adminFlag: number
     deleteFlag: number
+    insideFlag: number
     _all: number
   }
 
@@ -4714,6 +4717,7 @@ export namespace Prisma {
     password?: true
     adminFlag?: true
     deleteFlag?: true
+    insideFlag?: true
   }
 
   export type M_USERMaxAggregateInputType = {
@@ -4725,6 +4729,7 @@ export namespace Prisma {
     password?: true
     adminFlag?: true
     deleteFlag?: true
+    insideFlag?: true
   }
 
   export type M_USERCountAggregateInputType = {
@@ -4736,6 +4741,7 @@ export namespace Prisma {
     password?: true
     adminFlag?: true
     deleteFlag?: true
+    insideFlag?: true
     _all?: true
   }
 
@@ -4834,6 +4840,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
     _count: M_USERCountAggregateOutputType | null
     _avg: M_USERAvgAggregateOutputType | null
     _sum: M_USERSumAggregateOutputType | null
@@ -4864,6 +4871,7 @@ export namespace Prisma {
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
+    insideFlag?: boolean
     seatAppointments?: boolean | M_USER$seatAppointmentsArgs<ExtArgs>
     seatPositions?: boolean | M_USER$seatPositionsArgs<ExtArgs>
     _count?: boolean | M_USERCountOutputTypeDefaultArgs<ExtArgs>
@@ -4878,6 +4886,7 @@ export namespace Prisma {
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
+    insideFlag?: boolean
   }, ExtArgs["result"]["m_USER"]>
 
   export type M_USERSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -4889,6 +4898,7 @@ export namespace Prisma {
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
+    insideFlag?: boolean
   }, ExtArgs["result"]["m_USER"]>
 
   export type M_USERSelectScalar = {
@@ -4900,9 +4910,10 @@ export namespace Prisma {
     password?: boolean
     adminFlag?: boolean
     deleteFlag?: boolean
+    insideFlag?: boolean
   }
 
-  export type M_USEROmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "employeeNumber" | "lastName" | "firstName" | "showName" | "password" | "adminFlag" | "deleteFlag", ExtArgs["result"]["m_USER"]>
+  export type M_USEROmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "employeeNumber" | "lastName" | "firstName" | "showName" | "password" | "adminFlag" | "deleteFlag" | "insideFlag", ExtArgs["result"]["m_USER"]>
   export type M_USERInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     seatAppointments?: boolean | M_USER$seatAppointmentsArgs<ExtArgs>
     seatPositions?: boolean | M_USER$seatPositionsArgs<ExtArgs>
@@ -4926,6 +4937,7 @@ export namespace Prisma {
       password: string
       adminFlag: boolean
       deleteFlag: boolean
+      insideFlag: boolean
     }, ExtArgs["result"]["m_USER"]>
     composites: {}
   }
@@ -5359,6 +5371,7 @@ export namespace Prisma {
     readonly password: FieldRef<"M_USER", 'String'>
     readonly adminFlag: FieldRef<"M_USER", 'Boolean'>
     readonly deleteFlag: FieldRef<"M_USER", 'Boolean'>
+    readonly insideFlag: FieldRef<"M_USER", 'Boolean'>
   }
     
 
@@ -5873,7 +5886,8 @@ export namespace Prisma {
     showName: 'showName',
     password: 'password',
     adminFlag: 'adminFlag',
-    deleteFlag: 'deleteFlag'
+    deleteFlag: 'deleteFlag',
+    insideFlag: 'insideFlag'
   };
 
   export type M_USERScalarFieldEnum = (typeof M_USERScalarFieldEnum)[keyof typeof M_USERScalarFieldEnum]
@@ -6192,6 +6206,7 @@ export namespace Prisma {
     password?: StringFilter<"M_USER"> | string
     adminFlag?: BoolFilter<"M_USER"> | boolean
     deleteFlag?: BoolFilter<"M_USER"> | boolean
+    insideFlag?: BoolFilter<"M_USER"> | boolean
     seatAppointments?: M_SEAT_APPOINTListRelationFilter
     seatPositions?: T_SEAT_POSITIONListRelationFilter
   }
@@ -6205,6 +6220,7 @@ export namespace Prisma {
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
+    insideFlag?: SortOrder
     seatAppointments?: M_SEAT_APPOINTOrderByRelationAggregateInput
     seatPositions?: T_SEAT_POSITIONOrderByRelationAggregateInput
   }
@@ -6221,6 +6237,7 @@ export namespace Prisma {
     password?: StringFilter<"M_USER"> | string
     adminFlag?: BoolFilter<"M_USER"> | boolean
     deleteFlag?: BoolFilter<"M_USER"> | boolean
+    insideFlag?: BoolFilter<"M_USER"> | boolean
     seatAppointments?: M_SEAT_APPOINTListRelationFilter
     seatPositions?: T_SEAT_POSITIONListRelationFilter
   }, "userId" | "employeeNumber">
@@ -6234,6 +6251,7 @@ export namespace Prisma {
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
+    insideFlag?: SortOrder
     _count?: M_USERCountOrderByAggregateInput
     _avg?: M_USERAvgOrderByAggregateInput
     _max?: M_USERMaxOrderByAggregateInput
@@ -6253,6 +6271,7 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"M_USER"> | string
     adminFlag?: BoolWithAggregatesFilter<"M_USER"> | boolean
     deleteFlag?: BoolWithAggregatesFilter<"M_USER"> | boolean
+    insideFlag?: BoolWithAggregatesFilter<"M_USER"> | boolean
   }
 
   export type M_SEATCreateInput = {
@@ -6464,6 +6483,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTCreateNestedManyWithoutUserInput
     seatPositions?: T_SEAT_POSITIONCreateNestedManyWithoutUserInput
   }
@@ -6477,6 +6497,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedCreateNestedManyWithoutUserInput
     seatPositions?: T_SEAT_POSITIONUncheckedCreateNestedManyWithoutUserInput
   }
@@ -6489,6 +6510,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUpdateManyWithoutUserNestedInput
     seatPositions?: T_SEAT_POSITIONUpdateManyWithoutUserNestedInput
   }
@@ -6502,6 +6524,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedUpdateManyWithoutUserNestedInput
     seatPositions?: T_SEAT_POSITIONUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -6515,6 +6538,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
   }
 
   export type M_USERUpdateManyMutationInput = {
@@ -6525,6 +6549,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type M_USERUncheckedUpdateManyInput = {
@@ -6536,6 +6561,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -6840,6 +6866,7 @@ export namespace Prisma {
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
+    insideFlag?: SortOrder
   }
 
   export type M_USERAvgOrderByAggregateInput = {
@@ -6855,6 +6882,7 @@ export namespace Prisma {
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
+    insideFlag?: SortOrder
   }
 
   export type M_USERMinOrderByAggregateInput = {
@@ -6866,6 +6894,7 @@ export namespace Prisma {
     password?: SortOrder
     adminFlag?: SortOrder
     deleteFlag?: SortOrder
+    insideFlag?: SortOrder
   }
 
   export type M_USERSumOrderByAggregateInput = {
@@ -7469,6 +7498,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
     seatPositions?: T_SEAT_POSITIONCreateNestedManyWithoutUserInput
   }
 
@@ -7481,6 +7511,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
     seatPositions?: T_SEAT_POSITIONUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7539,6 +7570,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatPositions?: T_SEAT_POSITIONUpdateManyWithoutUserNestedInput
   }
 
@@ -7551,6 +7583,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatPositions?: T_SEAT_POSITIONUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -7587,6 +7620,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTCreateNestedManyWithoutUserInput
   }
 
@@ -7599,6 +7633,7 @@ export namespace Prisma {
     password: string
     adminFlag: boolean
     deleteFlag: boolean
+    insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7657,6 +7692,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUpdateManyWithoutUserNestedInput
   }
 
@@ -7669,6 +7705,7 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     adminFlag?: BoolFieldUpdateOperationsInput | boolean
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedUpdateManyWithoutUserNestedInput
   }
 
