@@ -157,7 +157,8 @@ exports.Prisma.M_USERScalarFieldEnum = {
   showName: 'showName',
   password: 'password',
   adminFlag: 'adminFlag',
-  deleteFlag: 'deleteFlag'
+  deleteFlag: 'deleteFlag',
+  insideFlag: 'insideFlag'
 };
 
 exports.Prisma.SortOrder = {

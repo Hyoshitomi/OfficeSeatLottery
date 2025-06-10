@@ -75,6 +75,7 @@ model M_USER {
   password       String
   adminFlag      Boolean
   deleteFlag     Boolean
+  insideFlag     Boolean
 
   seatAppointments M_SEAT_APPOINT[]
   seatPositions T_SEAT_POSITION[] @relation("UserToSeatPosition")
