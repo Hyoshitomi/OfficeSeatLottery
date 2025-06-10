@@ -50,7 +50,7 @@ export async function GET() {
         deleteFlag: false,
         userId: { notIn: registeredUserIds }
       },
-      orderBy: { employeeNumber: 'asc' }
+      orderBy: { userId: 'asc' }
     });
 
     // employeeList形式に変換
