@@ -12,7 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { MultiSelect } from "@/components/ui/multi-select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { useEmployees } from "@/hooks/use-employees"
+import { useEmployees } from "@/hooks/use-all-employees"
 
 // 曜日データを外部に移動
 const weekdays = [

@@ -73,7 +73,7 @@ jest.mock('@/hooks/use-lottery', () => ({
 describe('Home', () => {
   const mockUseSession = useSession;
   const { useProgress } = require('@/hooks/use-progress');
-  const { useEmployees } = require('@/hooks/use-employees');
+  const { useEmployees } = require('@/hooks/use-rogin-employees');
   const { useLottery } = require('@/hooks/use-lottery');
   const { LotteryButton } = require('@/components/lottery/lottery-button');
 
