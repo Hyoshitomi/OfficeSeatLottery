@@ -4,8 +4,10 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-import { FormInput } from "@/components/form/form-input"
+// --- 修正点 1: FormInputをインポート ---
+import { FormInput } from "@/components/form/form-input" 
 import { FormRadioGroup } from "@/components/form/form-radio"
+import { FormTextarea } from "@/components/form/form-textarea"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
 
@@ -60,22 +62,26 @@ export function InquiryForm() {
 
   const inquiryType = form.watch("inquiryType")
 
-  // 送信処理（useCallbackで最適化）
   const onSubmit = useCallback(
     form.handleSubmit(
-      async () => {
+      async (values) => {
         try {
-          // ここでAPI送信処理など
-          // await fetch(...)
+          // --- 注意点: APIエンドポイントが /api/contact になっていることを確認 ---
+          const response = await fetch("/api/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(values),
+          })
 
-          toast.success("送信が完了しました。")
+          if (!response.ok) throw new Error("API request failed")
+
+          toast.success("送信が完了しました。対応には最大1営業日かかります。")
           form.reset()
         } catch (_error) {
           toast.error("送信に失敗しました。もう一度お試しください。")
         }
       },
       (errors) => {
-        // バリデーションエラー時
         const [firstError] = Object.values(errors)
         if (firstError && firstError.message) {
           toast.error(firstError.message)
@@ -87,7 +93,6 @@ export function InquiryForm() {
     [form]
   )
 
-  // フォーム項目のレンダリング
   const renderFields = useMemo(
     () =>
       fieldDefs.map((def) => (
@@ -116,12 +121,12 @@ export function InquiryForm() {
         />
 
         {inquiryType === "other" && (
-          <FormInput
+          <FormTextarea
             control={form.control}
             name="request"
             label="問い合わせ内容"
             placeholder="お問い合わせ内容を入力してください"
-            type="text"
+            rows={5}
           />
         )}
 
