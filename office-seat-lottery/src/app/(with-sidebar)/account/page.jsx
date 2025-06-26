@@ -63,7 +63,7 @@ export default function Home() {
   const handlePasswordChange = async () => {
     const timer = startProgress()
     try {
-      const res = await fetch("/api/user", {
+      const res = await fetch("/api/user/login", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

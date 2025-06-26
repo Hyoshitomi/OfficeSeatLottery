@@ -8,7 +8,7 @@ import { LotteryButton } from "@/components/lottery/lottery-button"
 import { LotteryResult } from "@/components/lottery/lottery-result"
 import { SiteHeader } from "@/components/sidebar/site-header"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { useEmployees } from "@/hooks/use-employees"
+import { useEmployees } from "@/hooks/use-rogin-employees"
 import { useLottery } from "@/hooks/use-lottery"
 import { useProgress } from "@/hooks/use-progress"
 

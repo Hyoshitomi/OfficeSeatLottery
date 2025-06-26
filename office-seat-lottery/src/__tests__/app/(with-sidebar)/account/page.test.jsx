@@ -190,7 +190,7 @@ describe('AccountPage', () => {
     fireEvent.click(saveButton);
 
     await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith('/api/user', {
+      expect(fetch).toHaveBeenCalledWith('/api/user/login', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

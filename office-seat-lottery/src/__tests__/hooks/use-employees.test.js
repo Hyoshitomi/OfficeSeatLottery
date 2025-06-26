@@ -1,6 +1,6 @@
 import { renderHook, waitFor, act } from '@testing-library/react'
 
-import { useEmployees } from '@/hooks/use-employees'
+import { useEmployees } from '@/hooks/use-rogin-employees'
 
 // sonnerのモック
 jest.mock('sonner', () => ({
@@ -61,7 +61,7 @@ describe('useEmployees', () => {
     })
     
     expect(result.current.isAdmin).toBe(true)
-    expect(fetch).toHaveBeenCalledWith('/api/user')
+    expect(fetch).toHaveBeenCalledWith('/api/user/login')
   })
 
   it('社員リスト取得に失敗した場合、エラーハンドリングされる', async () => {
