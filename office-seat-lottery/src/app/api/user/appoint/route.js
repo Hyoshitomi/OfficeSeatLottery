@@ -17,10 +17,10 @@ export async function GET() {
     });
 
     // フォーマット変換
-    const employeeList = users.map(user => ({
-      value: user.employeeNumber,
-      label: `${user.lastName} ${user.firstName}`,
-      icon: null,
+    const employeeList = users.map((u) => ({
+      id: u.userId,
+      value: u.employeeNumber,
+      label: `${u.lastName} ${u.firstName}`,
     }));
 
     return NextResponse.json(employeeList, { status: 200 });
