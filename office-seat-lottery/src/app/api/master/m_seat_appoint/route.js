@@ -5,9 +5,22 @@ const prisma = new PrismaClient()
 
 export async function GET() {
   try {
+    // 現在日時
+    const now = new Date()
+
     const records = await prisma.m_SEAT_APPOINT.findMany({
-      orderBy: { id: 'asc' },
+      where: {
+        // ① endDate が現在日時を超えているレコードのみ取得
+        endDate: { gt: now }
+      },
+      orderBy: [
+        // ② endDate が近い順 → 9999-12-31 は末尾
+        { endDate: 'asc' },
+        // ③ 同じ endDate 内で安定した並びを保つ
+        { id: 'asc' }
+      ]
     })
+
     return NextResponse.json(records)
   } catch (err) {
     console.error('GET /api/master/m_seat_appoint error:', err)

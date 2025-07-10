@@ -13,7 +13,8 @@ const Utils = {
    * @returns {Date} - UTCの日の開始時刻。
    */
   toStartOfUTCDay: (date) => {
-    return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+    // ローカルタイムの日付をUTCの開始時刻に変換
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   },
 
   /**
@@ -360,11 +361,12 @@ const ReservationService = {
  * @returns {Promise<NextResponse>} - レスポンスオブジェクト。
  */
 export async function POST(request) {
-  const now = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+  const now = new Date(); // 現在の日付を取得
+  const utcNow = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())); // UTCの日付を取得
 
   try {
     const body = await request.json();
-    const result = await ReservationService.createReservations(body, now);
+    const result = await ReservationService.createReservations(body, utcNow);
 
     if (result.status === 200) {
       return NextResponse.json({
