@@ -14,7 +14,7 @@ function LoginPageContent() {
 
   // callbackUrlが/loginまたは/login?xxxの場合はトップページに変更
   if (callbackUrl.startsWith('/login')) {
-    callbackUrl = '/';
+    callbackUrl = '/map';
   }
 
   return (
