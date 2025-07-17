@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useSession } from "next-auth/react"
 import {
   DndContext,
   KeyboardSensor,
@@ -63,6 +64,8 @@ export const schema = z.object({
   created: z.string(),
   updated: z.string().nullable(),
 })
+import { useEmployees } from "@/hooks/use-all-employees"
+
 
 // Create a separate component for the drag handle
 function DragHandle({ id }) {
@@ -84,16 +87,26 @@ function DragHandle({ id }) {
 // Editable cell component
 function EditableCell({ value, onChange, type = "text", options = [] }) {
   if (type === "select") {
+    // ❶ 受け取った値を必ず文字列に
+    const stringValue =
+      value === null || value === undefined ? "" : String(value);
+
     return (
-      <Select value={value} onValueChange={onChange}>
-        <SelectTrigger
-          className="h-8 border-transparent bg-transparent shadow-none hover:bg-input/30 focus-visible:border focus-visible:bg-background">
+      <Select
+        value={stringValue}
+        // ❷ 文字列で受け取り、必要に応じて数値に戻す
+        onValueChange={(val) => onChange(Number(val))}
+      >
+        <SelectTrigger className="h-8 border-transparent bg-transparent shadow-none
+                                  hover:bg-input/30 focus-visible:border
+                                  focus-visible:bg-background">
+          {/* 選択済みラベルが自動で入る */}
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          {options.map((option) => (
-            <SelectItem key={option} value={option}>
-              {option}
+          {options.map((o) => (
+            <SelectItem key={o.id} value={String(o.id)}>
+              {o.label}
             </SelectItem>
           ))}
         </SelectContent>
@@ -110,6 +123,8 @@ function EditableCell({ value, onChange, type = "text", options = [] }) {
 }
 
 export function DataTable({ data: initialData }) {
+  const { data: session } = useSession()
+  const user = session?.user
   const [data, setData] = React.useState(() => initialData)
   // 変更のあった行データを保持する state
   const [edited, setEdited] = React.useState({})       // 編集履歴
@@ -124,6 +139,7 @@ export function DataTable({ data: initialData }) {
   })
   const [hasChanges, setHasChanges] = React.useState(false)
   const sortableId = React.useId()
+  const { employeeList, selectedEmployees, setSelectedEmployees } = useEmployees(user)
 
   const sensors = useSensors(
     useSensor(MouseSensor, {}),
@@ -212,7 +228,7 @@ export function DataTable({ data: initialData }) {
     },
     {
       accessorKey: "appointId",
-      header: "Appoint ID",
+      header: "予約ID",
       cell: ({ row }) => (
         <div className="w-10">
           <span className="text-sm text-muted-foreground">{row.original.appointId.toString()}</span>
@@ -222,7 +238,7 @@ export function DataTable({ data: initialData }) {
     },
     {
       accessorKey: "seatId",
-      header: "Seat ID",
+      header: "予約座席",
       cell: ({ row }) => (
         <div className="w-15">
           <EditableCell
@@ -233,18 +249,23 @@ export function DataTable({ data: initialData }) {
     },
     {
       accessorKey: "userId",
-      header: "User ID",
+      header: "予約者",
       cell: ({ row }) => (
-        <div className="w-15">
+        <div className="w-20">
           <EditableCell
             value={row.original.userId.toString()}
-            onChange={(value) => updateData(row.original.id, "userId", Number.parseInt(value) || 0)} />
+            type="select"
+            options={employeeList}
+            onChange={(v) =>
+              updateData(row.original.id, "userId", v)
+            }
+          />
         </div>
       ),
     },
     {
       accessorKey: "startDate",
-      header: "Start Date",
+      header: "適用開始日",
       cell: ({ row }) => (
         <div className="w-40">
           <EditableCell
@@ -259,7 +280,7 @@ export function DataTable({ data: initialData }) {
     },
     {
       accessorKey: "endDate",
-      header: "End Date",
+      header: "適用終了日",
       cell: ({ row }) => (
         <div className="w-40">
           <EditableCell
@@ -273,7 +294,7 @@ export function DataTable({ data: initialData }) {
     },
     {
       accessorKey: "created",
-      header: "Created",
+      header: "作成日時",
       cell: ({ row }) => (
         <div className="w-20">
           <span className="text-sm text-muted-foreground">{new Date(row.original.created)
@@ -283,7 +304,7 @@ export function DataTable({ data: initialData }) {
     },
     {
       accessorKey: "updated",
-      header: "Updated",
+      header: "更新日時",
       cell: ({ row }) => (
         <div className="w-20">
           <span className="text-sm text-muted-foreground">
