@@ -1,66 +1,97 @@
-import { NextResponse } from 'next/server'
-import { PrismaClient } from '@/generated/prisma'
+import { NextResponse } from 'next/server';
+import { PrismaClient } from '@/generated/prisma';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
+/**
+ * GET  : 有効な座席予約の取得
+ * POST : 座席予約の一括更新／削除
+ */
+
+/* ------------------------------------------------------------------ */
+/* GET                                                                */
+/* ------------------------------------------------------------------ */
 export async function GET() {
   try {
+    const now = new Date();
+
     const records = await prisma.m_SEAT_APPOINT.findMany({
-      orderBy: { id: 'asc' },
-    })
-    return NextResponse.json(records)
+      where: {
+        endDate: { gt: now },           // ① 現在より未来の予約のみ
+      },
+      orderBy: [
+        { endDate: 'asc' },             // ② 終了日時が近い順
+        { id: 'asc' },                  // ③ 同一日時内で安定した並び
+      ],
+    });
+
+    return NextResponse.json(records);
   } catch (err) {
-    console.error('GET /api/master/m_seat_appoint error:', err)
+    console.error('GET /api/master/m_seat_appoint error:', err);
     return NextResponse.json(
       { error: 'データ取得に失敗しました' },
-      { status: 500 }
-    )
+      { status: 500 },
+    );
   }
 }
 
+/* ------------------------------------------------------------------ */
+/* POST                                                               */
+/* ------------------------------------------------------------------ */
 export async function POST(request) {
   try {
-    // リクエストボディから updates と deletes を取得
-    const { updates, deletes } = await request.json()
+    const { updates = [], deletes = [] } = await request.json();
 
-    // 更新処理の配列を生成
-    const updateOps = updates.map(item =>
-      prisma.m_SEAT_APPOINT.update({
+    /* ----------------------------- 更新 ---------------------------- */
+    const updateOps = updates.map((item) => {
+      // userId を変更する場合のみ data に含める
+      const updateData = {
+        appointId: item.appointId,
+        seatId: item.seatId,
+        startDate: new Date(item.startDate),
+        endDate: new Date(item.endDate),
+        updated: new Date(),
+      };
+      if (item.userId !== undefined && item.userId !== null) {
+        updateData.userId = item.userId;
+      }
+
+      return prisma.m_SEAT_APPOINT.update({
         where: { id: item.id },
-        data: {
-          appointId: item.appointId,
-          seatId: item.seatId,
-          userId: item.userId,
-          startDate: new Date(item.startDate),
-          endDate: new Date(item.endDate),
-          updated: new Date(),
-        },
-      })
-    )
+        data: updateData,
+      });
+    });
 
-    // 削除処理（ID 配列が空でない場合のみ実行）
-    const deleteOp = deletes && deletes.length > 0
-      ? prisma.m_SEAT_APPOINT.deleteMany({
-          where: { id: { in: deletes } },
-        })
-      : Promise.resolve({ count: 0 })
+    /* ----------------------------- 削除 ---------------------------- */
+    const deleteOp =
+      deletes.length > 0
+        ? prisma.m_SEAT_APPOINT.deleteMany({
+            where: { id: { in: deletes } },
+          })
+        : null;
 
-    // 更新と削除を並列実行
-    const [updatedResults, deleteResult] = await Promise.all([
-      prisma.$transaction(updateOps),
-      deleteOp,
-    ])
+    /* ------------------------- トランザクション -------------------- */
+    const tx = [
+      ...updateOps,
+      ...(deleteOp ? [deleteOp] : []),
+    ];
+
+    const results = await prisma.$transaction(tx);
+
+    // 最後に deleteOp があれば結果は配列末尾、なければ null
+    const deletedCount =
+      deleteOp ? (results[results.length - 1] ).count : 0;
 
     return NextResponse.json({
       success: true,
-      updatedCount: updatedResults.length,
-      deletedCount: deleteResult.count,
-    })
+      updatedCount: updates.length,
+      deletedCount,
+    });
   } catch (err) {
-    console.error('POST /api/master/m_seat_appoint error:', err)
+    console.error('POST /api/master/m_seat_appoint error:', err);
     return NextResponse.json(
       { error: 'データ更新／削除に失敗しました' },
-      { status: 500 }
-    )
+      { status: 500 },
+    );
   }
 }
