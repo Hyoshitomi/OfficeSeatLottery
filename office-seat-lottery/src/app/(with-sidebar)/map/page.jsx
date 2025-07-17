@@ -6,7 +6,6 @@ import { toast } from 'sonner'
 
 import { ProgressLoader } from '@/components/common/progress-loader'
 import SeatCanvas from '@/components/seat/seat-canvas'
-import SeatCanvasMobile from '@/components/seat/seat-canvas-mobile'
 import { SiteHeader } from '@/components/sidebar/site-header'
 import SidebarRight from '@/components/sidebar/right-sidebar-lottery'
 
