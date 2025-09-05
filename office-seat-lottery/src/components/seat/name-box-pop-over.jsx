@@ -1,14 +1,43 @@
-'use client'
-import { useState, useEffect } from 'react'
-import { toast } from "sonner"
+// name-box-pop-over.jsx
+'use client';
 
-import { Button } from '@/components/ui/button'
+import { useEffect, useMemo, useState, useCallback } from 'react';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '@/components/ui/select';
 
+/**
+ * ステータス選択肢（既存仕様に合わせる）
+ */
 const statusOptions = [
   { value: 'movable', label: '使用' },
   { value: 'unused', label: '不使用' },
-]
+];
 
+/**
+ * タイトル: NameBoxPopOver / ボックス編集・操作ポップオーバー
+ * 要約: moveモードでは名称/状態の編集、通常モードでは時間要件を満たす場合に解放操作を提供します。
+ * 補足: 予約画面（appoint）ではポップオーバーを表示しません。
+ * @param {{
+ *  id: string|number,
+ *  name: string,
+ *  status: string,
+ *  x: number, y: number,
+ *  move?: boolean,
+ *  appoint?: boolean,
+ *  onUpdate?: (id:string|number, updates:{name?:string,status?:string,x?:number,y?:number}) => void,
+ *  onDelete?: (id:string|number) => void,
+ *  onExit?: (id:string|number) => void
+ * }} props - プロパティ群。
+ * @returns {import('react').ReactElement|null}
+ */
 export default function NameBoxPopOver({
   id,
   name,
@@ -16,22 +45,23 @@ export default function NameBoxPopOver({
   x,
   y,
   move = false,
-  onUpdate, 
-  onDelete, 
+  onUpdate,
+  onDelete,
   onExit,
   appoint = false,
 }) {
-  const [editName, setEditName] = useState(name)
-  const [editStatus, setEditStatus] = useState(status || 'movable') // デフォルトは'movable'（1）
-  const [showConfirm, setShowConfirm] = useState(false)
-  const [isAfter, setIsAfter] = useState(false)
+  const [editName, setEditName] = useState(name);
+  const [editStatus, setEditStatus] = useState(status || 'movable');
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [isAfter, setIsAfter] = useState(false);
 
+  // 9時以降かを判定（マウント時）
   useEffect(() => {
-    // マウント時に現在時刻が9時以降かどうか判定
-    const now = new Date()
-    setIsAfter(now.getHours() >= 9)
-  }, [])
+    const now = new Date();
+    setIsAfter(now.getHours() >= 9);
+  }, []);
 
+  // moveモードでは名称/状態変更をデバウンスして親に反映
   useEffect(() => {
     if (move) {
       const t = setTimeout(() => {
@@ -45,17 +75,16 @@ export default function NameBoxPopOver({
       return () => clearTimeout(t)
     }
     return undefined
-  }, [id, editName, editStatus, x, y, onUpdate, move])
-  
-  // 予約画面時にはポップオーバーを表示しない
-  if (appoint) return null
+  }, [id, editName, editStatus, x, y, onUpdate, move]);
 
-  // move=false 
+  // 予約画面では表示しない
+  if (appoint) return null;
+
+  // 非move（通常時）
   if (!move) {
-    // statusが'movable' かつ 9時以降のみ解放ボタン表示し、それ以外は表示しない
-    if (status !== 'movable' || !isAfter) {
-      return null
-    }
+    // 使用中かつ9時以降のみ解放UIを表示
+    if (status !== 'movable' || !isAfter) return null;
+
     return (
       <div className="absolute top-0 ml-2 z-50 flex flex-col gap-2 min-w-[240px] bg-white shadow-lg border rounded p-3">
         {!showConfirm ? (
@@ -95,7 +124,8 @@ export default function NameBoxPopOver({
     )
   }
 
-  // move=trueの場合は従来の編集UI表示
+
+  // move（編集時）
   return (
     <div className="absolute top-0 ml-2 z-50 flex flex-col gap-2 min-w-[180px] bg-white shadow-lg border rounded p-3">
       <label className="text-xs text-gray-500">座席名</label>

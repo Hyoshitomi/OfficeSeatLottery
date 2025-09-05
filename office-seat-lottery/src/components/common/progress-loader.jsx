@@ -1,17 +1,24 @@
-import { Progress } from "@/components/ui/progress"
+import { Progress } from '@/components/ui/progress';
 
+/**
+ * タイトル: ProgressLoader / プログレスローダー
+ * 要約: 処理の進行状況を視覚的に示すためのプログレスバーとテキストを表示します。
+ * @param {{
+ *   progress?: number
+ * }} props
+ * @param {number} [props.progress=0] - プログレスバーの進行度（0～100）。未指定、null、undefinedの場合は0として扱われます。
+ * @returns {import('react').ReactElement} プログレスバーと進行状況テキストを含むJSX要素。
+ */
+export function ProgressLoader({ progress }) {
+  // progressがnullやundefinedの場合でも安全に0にフォールバックする
+  const safeProgress = progress ?? 0;
 
-export function ProgressLoader({ progress = 0 }) { // デフォルト値を設定
-  const safeProgress = progress || 0 // undefined/nullの場合は0にする
-  
   return (
-    <div className="flex items-center justify-center h-full w-full">
-      <div className="w-2/3 max-w-md">
-        <Progress value={safeProgress} className="h-4" />
-        <div className="text-center mt-2 text-sm text-gray-500">
-          {safeProgress < 100 ? `読み込み中... (${Math.floor(safeProgress)}%)` : "完了"}
-        </div>
-      </div>
+    <div className="flex w-full flex-col items-center justify-center space-y-3">
+      <Progress value={safeProgress} className="w-[60%]" />
+      <p className="text-sm text-muted-foreground">
+        処理を実行中です... ({Math.round(safeProgress)}%)
+      </p>
     </div>
-  )
+  );
 }
