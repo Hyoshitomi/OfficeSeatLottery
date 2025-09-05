@@ -29,10 +29,35 @@ export type M_SEAT_APPOINT = $Result.DefaultSelection<Prisma.$M_SEAT_APPOINTPayl
  */
 export type T_SEAT_POSITION = $Result.DefaultSelection<Prisma.$T_SEAT_POSITIONPayload>
 /**
+ * Model M_AUTO_LOTTERY_MEMBER
+ * 
+ */
+export type M_AUTO_LOTTERY_MEMBER = $Result.DefaultSelection<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>
+/**
  * Model M_USER
  * 
  */
 export type M_USER = $Result.DefaultSelection<Prisma.$M_USERPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const Weekday: {
+  Monday: 'Monday',
+  Tuesday: 'Tuesday',
+  Wednesday: 'Wednesday',
+  Thursday: 'Thursday',
+  Friday: 'Friday'
+};
+
+export type Weekday = (typeof Weekday)[keyof typeof Weekday]
+
+}
+
+export type Weekday = $Enums.Weekday
+
+export const Weekday: typeof $Enums.Weekday
 
 /**
  * ##  Prisma Client ʲˢ
@@ -188,6 +213,16 @@ export class PrismaClient<
     * ```
     */
   get t_SEAT_POSITION(): Prisma.T_SEAT_POSITIONDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.m_AUTO_LOTTERY_MEMBER`: Exposes CRUD operations for the **M_AUTO_LOTTERY_MEMBER** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more M_AUTO_LOTTERY_MEMBERS
+    * const m_AUTO_LOTTERY_MEMBERS = await prisma.m_AUTO_LOTTERY_MEMBER.findMany()
+    * ```
+    */
+  get m_AUTO_LOTTERY_MEMBER(): Prisma.M_AUTO_LOTTERY_MEMBERDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.m_USER`: Exposes CRUD operations for the **M_USER** model.
@@ -641,6 +676,7 @@ export namespace Prisma {
     M_SEAT: 'M_SEAT',
     M_SEAT_APPOINT: 'M_SEAT_APPOINT',
     T_SEAT_POSITION: 'T_SEAT_POSITION',
+    M_AUTO_LOTTERY_MEMBER: 'M_AUTO_LOTTERY_MEMBER',
     M_USER: 'M_USER'
   };
 
@@ -660,7 +696,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "m_SEAT" | "m_SEAT_APPOINT" | "t_SEAT_POSITION" | "m_USER"
+      modelProps: "m_SEAT" | "m_SEAT_APPOINT" | "t_SEAT_POSITION" | "m_AUTO_LOTTERY_MEMBER" | "m_USER"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -886,6 +922,80 @@ export namespace Prisma {
           }
         }
       }
+      M_AUTO_LOTTERY_MEMBER: {
+        payload: Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>
+        fields: Prisma.M_AUTO_LOTTERY_MEMBERFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>
+          }
+          findFirst: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>
+          }
+          findMany: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>[]
+          }
+          create: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>
+          }
+          createMany: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>[]
+          }
+          delete: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>
+          }
+          update: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>
+          }
+          deleteMany: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>[]
+          }
+          upsert: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload>
+          }
+          aggregate: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateM_AUTO_LOTTERY_MEMBER>
+          }
+          groupBy: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERGroupByArgs<ExtArgs>
+            result: $Utils.Optional<M_AUTO_LOTTERY_MEMBERGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.M_AUTO_LOTTERY_MEMBERCountArgs<ExtArgs>
+            result: $Utils.Optional<M_AUTO_LOTTERY_MEMBERCountAggregateOutputType> | number
+          }
+        }
+      }
       M_USER: {
         payload: Prisma.$M_USERPayload<ExtArgs>
         fields: Prisma.M_USERFieldRefs
@@ -1047,6 +1157,7 @@ export namespace Prisma {
     m_SEAT?: M_SEATOmit
     m_SEAT_APPOINT?: M_SEAT_APPOINTOmit
     t_SEAT_POSITION?: T_SEAT_POSITIONOmit
+    m_AUTO_LOTTERY_MEMBER?: M_AUTO_LOTTERY_MEMBEROmit
     m_USER?: M_USEROmit
   }
 
@@ -1184,11 +1295,13 @@ export namespace Prisma {
   export type M_USERCountOutputType = {
     seatAppointments: number
     seatPositions: number
+    autoLotteryMembers: number
   }
 
   export type M_USERCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     seatAppointments?: boolean | M_USERCountOutputTypeCountSeatAppointmentsArgs
     seatPositions?: boolean | M_USERCountOutputTypeCountSeatPositionsArgs
+    autoLotteryMembers?: boolean | M_USERCountOutputTypeCountAutoLotteryMembersArgs
   }
 
   // Custom InputTypes
@@ -1214,6 +1327,13 @@ export namespace Prisma {
    */
   export type M_USERCountOutputTypeCountSeatPositionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: T_SEAT_POSITIONWhereInput
+  }
+
+  /**
+   * M_USERCountOutputType without action
+   */
+  export type M_USERCountOutputTypeCountAutoLotteryMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
   }
 
 
@@ -4643,6 +4763,1102 @@ export namespace Prisma {
 
 
   /**
+   * Model M_AUTO_LOTTERY_MEMBER
+   */
+
+  export type AggregateM_AUTO_LOTTERY_MEMBER = {
+    _count: M_AUTO_LOTTERY_MEMBERCountAggregateOutputType | null
+    _avg: M_AUTO_LOTTERY_MEMBERAvgAggregateOutputType | null
+    _sum: M_AUTO_LOTTERY_MEMBERSumAggregateOutputType | null
+    _min: M_AUTO_LOTTERY_MEMBERMinAggregateOutputType | null
+    _max: M_AUTO_LOTTERY_MEMBERMaxAggregateOutputType | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERAvgAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERSumAggregateOutputType = {
+    id: number | null
+    userId: number | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERMinAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    Weekday: $Enums.Weekday | null
+    created: Date | null
+    updated: Date | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERMaxAggregateOutputType = {
+    id: number | null
+    userId: number | null
+    Weekday: $Enums.Weekday | null
+    created: Date | null
+    updated: Date | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERCountAggregateOutputType = {
+    id: number
+    userId: number
+    Weekday: number
+    created: number
+    updated: number
+    _all: number
+  }
+
+
+  export type M_AUTO_LOTTERY_MEMBERAvgAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERSumAggregateInputType = {
+    id?: true
+    userId?: true
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERMinAggregateInputType = {
+    id?: true
+    userId?: true
+    Weekday?: true
+    created?: true
+    updated?: true
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    Weekday?: true
+    created?: true
+    updated?: true
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERCountAggregateInputType = {
+    id?: true
+    userId?: true
+    Weekday?: true
+    created?: true
+    updated?: true
+    _all?: true
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which M_AUTO_LOTTERY_MEMBER to aggregate.
+     */
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of M_AUTO_LOTTERY_MEMBERS to fetch.
+     */
+    orderBy?: M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput | M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` M_AUTO_LOTTERY_MEMBERS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` M_AUTO_LOTTERY_MEMBERS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned M_AUTO_LOTTERY_MEMBERS
+    **/
+    _count?: true | M_AUTO_LOTTERY_MEMBERCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: M_AUTO_LOTTERY_MEMBERAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: M_AUTO_LOTTERY_MEMBERSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: M_AUTO_LOTTERY_MEMBERMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: M_AUTO_LOTTERY_MEMBERMaxAggregateInputType
+  }
+
+  export type GetM_AUTO_LOTTERY_MEMBERAggregateType<T extends M_AUTO_LOTTERY_MEMBERAggregateArgs> = {
+        [P in keyof T & keyof AggregateM_AUTO_LOTTERY_MEMBER]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateM_AUTO_LOTTERY_MEMBER[P]>
+      : GetScalarType<T[P], AggregateM_AUTO_LOTTERY_MEMBER[P]>
+  }
+
+
+
+
+  export type M_AUTO_LOTTERY_MEMBERGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    orderBy?: M_AUTO_LOTTERY_MEMBEROrderByWithAggregationInput | M_AUTO_LOTTERY_MEMBEROrderByWithAggregationInput[]
+    by: M_AUTO_LOTTERY_MEMBERScalarFieldEnum[] | M_AUTO_LOTTERY_MEMBERScalarFieldEnum
+    having?: M_AUTO_LOTTERY_MEMBERScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: M_AUTO_LOTTERY_MEMBERCountAggregateInputType | true
+    _avg?: M_AUTO_LOTTERY_MEMBERAvgAggregateInputType
+    _sum?: M_AUTO_LOTTERY_MEMBERSumAggregateInputType
+    _min?: M_AUTO_LOTTERY_MEMBERMinAggregateInputType
+    _max?: M_AUTO_LOTTERY_MEMBERMaxAggregateInputType
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERGroupByOutputType = {
+    id: number
+    userId: number
+    Weekday: $Enums.Weekday
+    created: Date
+    updated: Date | null
+    _count: M_AUTO_LOTTERY_MEMBERCountAggregateOutputType | null
+    _avg: M_AUTO_LOTTERY_MEMBERAvgAggregateOutputType | null
+    _sum: M_AUTO_LOTTERY_MEMBERSumAggregateOutputType | null
+    _min: M_AUTO_LOTTERY_MEMBERMinAggregateOutputType | null
+    _max: M_AUTO_LOTTERY_MEMBERMaxAggregateOutputType | null
+  }
+
+  type GetM_AUTO_LOTTERY_MEMBERGroupByPayload<T extends M_AUTO_LOTTERY_MEMBERGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<M_AUTO_LOTTERY_MEMBERGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof M_AUTO_LOTTERY_MEMBERGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], M_AUTO_LOTTERY_MEMBERGroupByOutputType[P]>
+            : GetScalarType<T[P], M_AUTO_LOTTERY_MEMBERGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type M_AUTO_LOTTERY_MEMBERSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    Weekday?: boolean
+    created?: boolean
+    updated?: boolean
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["m_AUTO_LOTTERY_MEMBER"]>
+
+  export type M_AUTO_LOTTERY_MEMBERSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    Weekday?: boolean
+    created?: boolean
+    updated?: boolean
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["m_AUTO_LOTTERY_MEMBER"]>
+
+  export type M_AUTO_LOTTERY_MEMBERSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    Weekday?: boolean
+    created?: boolean
+    updated?: boolean
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["m_AUTO_LOTTERY_MEMBER"]>
+
+  export type M_AUTO_LOTTERY_MEMBERSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    Weekday?: boolean
+    created?: boolean
+    updated?: boolean
+  }
+
+  export type M_AUTO_LOTTERY_MEMBEROmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "Weekday" | "created" | "updated", ExtArgs["result"]["m_AUTO_LOTTERY_MEMBER"]>
+  export type M_AUTO_LOTTERY_MEMBERInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }
+  export type M_AUTO_LOTTERY_MEMBERIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }
+  export type M_AUTO_LOTTERY_MEMBERIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | M_USERDefaultArgs<ExtArgs>
+  }
+
+  export type $M_AUTO_LOTTERY_MEMBERPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "M_AUTO_LOTTERY_MEMBER"
+    objects: {
+      user: Prisma.$M_USERPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      userId: number
+      Weekday: $Enums.Weekday
+      created: Date
+      updated: Date | null
+    }, ExtArgs["result"]["m_AUTO_LOTTERY_MEMBER"]>
+    composites: {}
+  }
+
+  type M_AUTO_LOTTERY_MEMBERGetPayload<S extends boolean | null | undefined | M_AUTO_LOTTERY_MEMBERDefaultArgs> = $Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload, S>
+
+  type M_AUTO_LOTTERY_MEMBERCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<M_AUTO_LOTTERY_MEMBERFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: M_AUTO_LOTTERY_MEMBERCountAggregateInputType | true
+    }
+
+  export interface M_AUTO_LOTTERY_MEMBERDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['M_AUTO_LOTTERY_MEMBER'], meta: { name: 'M_AUTO_LOTTERY_MEMBER' } }
+    /**
+     * Find zero or one M_AUTO_LOTTERY_MEMBER that matches the filter.
+     * @param {M_AUTO_LOTTERY_MEMBERFindUniqueArgs} args - Arguments to find a M_AUTO_LOTTERY_MEMBER
+     * @example
+     * // Get one M_AUTO_LOTTERY_MEMBER
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends M_AUTO_LOTTERY_MEMBERFindUniqueArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERFindUniqueArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one M_AUTO_LOTTERY_MEMBER that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {M_AUTO_LOTTERY_MEMBERFindUniqueOrThrowArgs} args - Arguments to find a M_AUTO_LOTTERY_MEMBER
+     * @example
+     * // Get one M_AUTO_LOTTERY_MEMBER
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends M_AUTO_LOTTERY_MEMBERFindUniqueOrThrowArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERFindUniqueOrThrowArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first M_AUTO_LOTTERY_MEMBER that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {M_AUTO_LOTTERY_MEMBERFindFirstArgs} args - Arguments to find a M_AUTO_LOTTERY_MEMBER
+     * @example
+     * // Get one M_AUTO_LOTTERY_MEMBER
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends M_AUTO_LOTTERY_MEMBERFindFirstArgs>(args?: SelectSubset<T, M_AUTO_LOTTERY_MEMBERFindFirstArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first M_AUTO_LOTTERY_MEMBER that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {M_AUTO_LOTTERY_MEMBERFindFirstOrThrowArgs} args - Arguments to find a M_AUTO_LOTTERY_MEMBER
+     * @example
+     * // Get one M_AUTO_LOTTERY_MEMBER
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends M_AUTO_LOTTERY_MEMBERFindFirstOrThrowArgs>(args?: SelectSubset<T, M_AUTO_LOTTERY_MEMBERFindFirstOrThrowArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more M_AUTO_LOTTERY_MEMBERS that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {M_AUTO_LOTTERY_MEMBERFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all M_AUTO_LOTTERY_MEMBERS
+     * const m_AUTO_LOTTERY_MEMBERS = await prisma.m_AUTO_LOTTERY_MEMBER.findMany()
+     * 
+     * // Get first 10 M_AUTO_LOTTERY_MEMBERS
+     * const m_AUTO_LOTTERY_MEMBERS = await prisma.m_AUTO_LOTTERY_MEMBER.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const m_AUTO_LOTTERY_MEMBERWithIdOnly = await prisma.m_AUTO_LOTTERY_MEMBER.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends M_AUTO_LOTTERY_MEMBERFindManyArgs>(args?: SelectSubset<T, M_AUTO_LOTTERY_MEMBERFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a M_AUTO_LOTTERY_MEMBER.
+     * @param {M_AUTO_LOTTERY_MEMBERCreateArgs} args - Arguments to create a M_AUTO_LOTTERY_MEMBER.
+     * @example
+     * // Create one M_AUTO_LOTTERY_MEMBER
+     * const M_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.create({
+     *   data: {
+     *     // ... data to create a M_AUTO_LOTTERY_MEMBER
+     *   }
+     * })
+     * 
+     */
+    create<T extends M_AUTO_LOTTERY_MEMBERCreateArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERCreateArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many M_AUTO_LOTTERY_MEMBERS.
+     * @param {M_AUTO_LOTTERY_MEMBERCreateManyArgs} args - Arguments to create many M_AUTO_LOTTERY_MEMBERS.
+     * @example
+     * // Create many M_AUTO_LOTTERY_MEMBERS
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends M_AUTO_LOTTERY_MEMBERCreateManyArgs>(args?: SelectSubset<T, M_AUTO_LOTTERY_MEMBERCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many M_AUTO_LOTTERY_MEMBERS and returns the data saved in the database.
+     * @param {M_AUTO_LOTTERY_MEMBERCreateManyAndReturnArgs} args - Arguments to create many M_AUTO_LOTTERY_MEMBERS.
+     * @example
+     * // Create many M_AUTO_LOTTERY_MEMBERS
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many M_AUTO_LOTTERY_MEMBERS and only return the `id`
+     * const m_AUTO_LOTTERY_MEMBERWithIdOnly = await prisma.m_AUTO_LOTTERY_MEMBER.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends M_AUTO_LOTTERY_MEMBERCreateManyAndReturnArgs>(args?: SelectSubset<T, M_AUTO_LOTTERY_MEMBERCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a M_AUTO_LOTTERY_MEMBER.
+     * @param {M_AUTO_LOTTERY_MEMBERDeleteArgs} args - Arguments to delete one M_AUTO_LOTTERY_MEMBER.
+     * @example
+     * // Delete one M_AUTO_LOTTERY_MEMBER
+     * const M_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.delete({
+     *   where: {
+     *     // ... filter to delete one M_AUTO_LOTTERY_MEMBER
+     *   }
+     * })
+     * 
+     */
+    delete<T extends M_AUTO_LOTTERY_MEMBERDeleteArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERDeleteArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one M_AUTO_LOTTERY_MEMBER.
+     * @param {M_AUTO_LOTTERY_MEMBERUpdateArgs} args - Arguments to update one M_AUTO_LOTTERY_MEMBER.
+     * @example
+     * // Update one M_AUTO_LOTTERY_MEMBER
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends M_AUTO_LOTTERY_MEMBERUpdateArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERUpdateArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more M_AUTO_LOTTERY_MEMBERS.
+     * @param {M_AUTO_LOTTERY_MEMBERDeleteManyArgs} args - Arguments to filter M_AUTO_LOTTERY_MEMBERS to delete.
+     * @example
+     * // Delete a few M_AUTO_LOTTERY_MEMBERS
+     * const { count } = await prisma.m_AUTO_LOTTERY_MEMBER.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends M_AUTO_LOTTERY_MEMBERDeleteManyArgs>(args?: SelectSubset<T, M_AUTO_LOTTERY_MEMBERDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more M_AUTO_LOTTERY_MEMBERS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {M_AUTO_LOTTERY_MEMBERUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many M_AUTO_LOTTERY_MEMBERS
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends M_AUTO_LOTTERY_MEMBERUpdateManyArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more M_AUTO_LOTTERY_MEMBERS and returns the data updated in the database.
+     * @param {M_AUTO_LOTTERY_MEMBERUpdateManyAndReturnArgs} args - Arguments to update many M_AUTO_LOTTERY_MEMBERS.
+     * @example
+     * // Update many M_AUTO_LOTTERY_MEMBERS
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more M_AUTO_LOTTERY_MEMBERS and only return the `id`
+     * const m_AUTO_LOTTERY_MEMBERWithIdOnly = await prisma.m_AUTO_LOTTERY_MEMBER.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends M_AUTO_LOTTERY_MEMBERUpdateManyAndReturnArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one M_AUTO_LOTTERY_MEMBER.
+     * @param {M_AUTO_LOTTERY_MEMBERUpsertArgs} args - Arguments to update or create a M_AUTO_LOTTERY_MEMBER.
+     * @example
+     * // Update or create a M_AUTO_LOTTERY_MEMBER
+     * const m_AUTO_LOTTERY_MEMBER = await prisma.m_AUTO_LOTTERY_MEMBER.upsert({
+     *   create: {
+     *     // ... data to create a M_AUTO_LOTTERY_MEMBER
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the M_AUTO_LOTTERY_MEMBER we want to update
+     *   }
+     * })
+     */
+    upsert<T extends M_AUTO_LOTTERY_MEMBERUpsertArgs>(args: SelectSubset<T, M_AUTO_LOTTERY_MEMBERUpsertArgs<ExtArgs>>): Prisma__M_AUTO_LOTTERY_MEMBERClient<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of M_AUTO_LOTTERY_MEMBERS.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {M_AUTO_LOTTERY_MEMBERCountArgs} args - Arguments to filter M_AUTO_LOTTERY_MEMBERS to count.
+     * @example
+     * // Count the number of M_AUTO_LOTTERY_MEMBERS
+     * const count = await prisma.m_AUTO_LOTTERY_MEMBER.count({
+     *   where: {
+     *     // ... the filter for the M_AUTO_LOTTERY_MEMBERS we want to count
+     *   }
+     * })
+    **/
+    count<T extends M_AUTO_LOTTERY_MEMBERCountArgs>(
+      args?: Subset<T, M_AUTO_LOTTERY_MEMBERCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], M_AUTO_LOTTERY_MEMBERCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a M_AUTO_LOTTERY_MEMBER.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {M_AUTO_LOTTERY_MEMBERAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends M_AUTO_LOTTERY_MEMBERAggregateArgs>(args: Subset<T, M_AUTO_LOTTERY_MEMBERAggregateArgs>): Prisma.PrismaPromise<GetM_AUTO_LOTTERY_MEMBERAggregateType<T>>
+
+    /**
+     * Group by M_AUTO_LOTTERY_MEMBER.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {M_AUTO_LOTTERY_MEMBERGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends M_AUTO_LOTTERY_MEMBERGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: M_AUTO_LOTTERY_MEMBERGroupByArgs['orderBy'] }
+        : { orderBy?: M_AUTO_LOTTERY_MEMBERGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, M_AUTO_LOTTERY_MEMBERGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetM_AUTO_LOTTERY_MEMBERGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the M_AUTO_LOTTERY_MEMBER model
+   */
+  readonly fields: M_AUTO_LOTTERY_MEMBERFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for M_AUTO_LOTTERY_MEMBER.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__M_AUTO_LOTTERY_MEMBERClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends M_USERDefaultArgs<ExtArgs> = {}>(args?: Subset<T, M_USERDefaultArgs<ExtArgs>>): Prisma__M_USERClient<$Result.GetResult<Prisma.$M_USERPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the M_AUTO_LOTTERY_MEMBER model
+   */
+  interface M_AUTO_LOTTERY_MEMBERFieldRefs {
+    readonly id: FieldRef<"M_AUTO_LOTTERY_MEMBER", 'Int'>
+    readonly userId: FieldRef<"M_AUTO_LOTTERY_MEMBER", 'Int'>
+    readonly Weekday: FieldRef<"M_AUTO_LOTTERY_MEMBER", 'Weekday'>
+    readonly created: FieldRef<"M_AUTO_LOTTERY_MEMBER", 'DateTime'>
+    readonly updated: FieldRef<"M_AUTO_LOTTERY_MEMBER", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * M_AUTO_LOTTERY_MEMBER findUnique
+   */
+  export type M_AUTO_LOTTERY_MEMBERFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * Filter, which M_AUTO_LOTTERY_MEMBER to fetch.
+     */
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER findUniqueOrThrow
+   */
+  export type M_AUTO_LOTTERY_MEMBERFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * Filter, which M_AUTO_LOTTERY_MEMBER to fetch.
+     */
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER findFirst
+   */
+  export type M_AUTO_LOTTERY_MEMBERFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * Filter, which M_AUTO_LOTTERY_MEMBER to fetch.
+     */
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of M_AUTO_LOTTERY_MEMBERS to fetch.
+     */
+    orderBy?: M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput | M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for M_AUTO_LOTTERY_MEMBERS.
+     */
+    cursor?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` M_AUTO_LOTTERY_MEMBERS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` M_AUTO_LOTTERY_MEMBERS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of M_AUTO_LOTTERY_MEMBERS.
+     */
+    distinct?: M_AUTO_LOTTERY_MEMBERScalarFieldEnum | M_AUTO_LOTTERY_MEMBERScalarFieldEnum[]
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER findFirstOrThrow
+   */
+  export type M_AUTO_LOTTERY_MEMBERFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * Filter, which M_AUTO_LOTTERY_MEMBER to fetch.
+     */
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of M_AUTO_LOTTERY_MEMBERS to fetch.
+     */
+    orderBy?: M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput | M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for M_AUTO_LOTTERY_MEMBERS.
+     */
+    cursor?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` M_AUTO_LOTTERY_MEMBERS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` M_AUTO_LOTTERY_MEMBERS.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of M_AUTO_LOTTERY_MEMBERS.
+     */
+    distinct?: M_AUTO_LOTTERY_MEMBERScalarFieldEnum | M_AUTO_LOTTERY_MEMBERScalarFieldEnum[]
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER findMany
+   */
+  export type M_AUTO_LOTTERY_MEMBERFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * Filter, which M_AUTO_LOTTERY_MEMBERS to fetch.
+     */
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of M_AUTO_LOTTERY_MEMBERS to fetch.
+     */
+    orderBy?: M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput | M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing M_AUTO_LOTTERY_MEMBERS.
+     */
+    cursor?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` M_AUTO_LOTTERY_MEMBERS from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` M_AUTO_LOTTERY_MEMBERS.
+     */
+    skip?: number
+    distinct?: M_AUTO_LOTTERY_MEMBERScalarFieldEnum | M_AUTO_LOTTERY_MEMBERScalarFieldEnum[]
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER create
+   */
+  export type M_AUTO_LOTTERY_MEMBERCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * The data needed to create a M_AUTO_LOTTERY_MEMBER.
+     */
+    data: XOR<M_AUTO_LOTTERY_MEMBERCreateInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateInput>
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER createMany
+   */
+  export type M_AUTO_LOTTERY_MEMBERCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many M_AUTO_LOTTERY_MEMBERS.
+     */
+    data: M_AUTO_LOTTERY_MEMBERCreateManyInput | M_AUTO_LOTTERY_MEMBERCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER createManyAndReturn
+   */
+  export type M_AUTO_LOTTERY_MEMBERCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * The data used to create many M_AUTO_LOTTERY_MEMBERS.
+     */
+    data: M_AUTO_LOTTERY_MEMBERCreateManyInput | M_AUTO_LOTTERY_MEMBERCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER update
+   */
+  export type M_AUTO_LOTTERY_MEMBERUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * The data needed to update a M_AUTO_LOTTERY_MEMBER.
+     */
+    data: XOR<M_AUTO_LOTTERY_MEMBERUpdateInput, M_AUTO_LOTTERY_MEMBERUncheckedUpdateInput>
+    /**
+     * Choose, which M_AUTO_LOTTERY_MEMBER to update.
+     */
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER updateMany
+   */
+  export type M_AUTO_LOTTERY_MEMBERUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update M_AUTO_LOTTERY_MEMBERS.
+     */
+    data: XOR<M_AUTO_LOTTERY_MEMBERUpdateManyMutationInput, M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyInput>
+    /**
+     * Filter which M_AUTO_LOTTERY_MEMBERS to update
+     */
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    /**
+     * Limit how many M_AUTO_LOTTERY_MEMBERS to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER updateManyAndReturn
+   */
+  export type M_AUTO_LOTTERY_MEMBERUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * The data used to update M_AUTO_LOTTERY_MEMBERS.
+     */
+    data: XOR<M_AUTO_LOTTERY_MEMBERUpdateManyMutationInput, M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyInput>
+    /**
+     * Filter which M_AUTO_LOTTERY_MEMBERS to update
+     */
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    /**
+     * Limit how many M_AUTO_LOTTERY_MEMBERS to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER upsert
+   */
+  export type M_AUTO_LOTTERY_MEMBERUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * The filter to search for the M_AUTO_LOTTERY_MEMBER to update in case it exists.
+     */
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    /**
+     * In case the M_AUTO_LOTTERY_MEMBER found by the `where` argument doesn't exist, create a new M_AUTO_LOTTERY_MEMBER with this data.
+     */
+    create: XOR<M_AUTO_LOTTERY_MEMBERCreateInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateInput>
+    /**
+     * In case the M_AUTO_LOTTERY_MEMBER was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<M_AUTO_LOTTERY_MEMBERUpdateInput, M_AUTO_LOTTERY_MEMBERUncheckedUpdateInput>
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER delete
+   */
+  export type M_AUTO_LOTTERY_MEMBERDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    /**
+     * Filter which M_AUTO_LOTTERY_MEMBER to delete.
+     */
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER deleteMany
+   */
+  export type M_AUTO_LOTTERY_MEMBERDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which M_AUTO_LOTTERY_MEMBERS to delete
+     */
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    /**
+     * Limit how many M_AUTO_LOTTERY_MEMBERS to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * M_AUTO_LOTTERY_MEMBER without action
+   */
+  export type M_AUTO_LOTTERY_MEMBERDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model M_USER
    */
 
@@ -4874,6 +6090,7 @@ export namespace Prisma {
     insideFlag?: boolean
     seatAppointments?: boolean | M_USER$seatAppointmentsArgs<ExtArgs>
     seatPositions?: boolean | M_USER$seatPositionsArgs<ExtArgs>
+    autoLotteryMembers?: boolean | M_USER$autoLotteryMembersArgs<ExtArgs>
     _count?: boolean | M_USERCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["m_USER"]>
 
@@ -4917,6 +6134,7 @@ export namespace Prisma {
   export type M_USERInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     seatAppointments?: boolean | M_USER$seatAppointmentsArgs<ExtArgs>
     seatPositions?: boolean | M_USER$seatPositionsArgs<ExtArgs>
+    autoLotteryMembers?: boolean | M_USER$autoLotteryMembersArgs<ExtArgs>
     _count?: boolean | M_USERCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type M_USERIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4927,6 +6145,7 @@ export namespace Prisma {
     objects: {
       seatAppointments: Prisma.$M_SEAT_APPOINTPayload<ExtArgs>[]
       seatPositions: Prisma.$T_SEAT_POSITIONPayload<ExtArgs>[]
+      autoLotteryMembers: Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       userId: number
@@ -5334,6 +6553,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     seatAppointments<T extends M_USER$seatAppointmentsArgs<ExtArgs> = {}>(args?: Subset<T, M_USER$seatAppointmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$M_SEAT_APPOINTPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     seatPositions<T extends M_USER$seatPositionsArgs<ExtArgs> = {}>(args?: Subset<T, M_USER$seatPositionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$T_SEAT_POSITIONPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    autoLotteryMembers<T extends M_USER$autoLotteryMembersArgs<ExtArgs> = {}>(args?: Subset<T, M_USER$autoLotteryMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$M_AUTO_LOTTERY_MEMBERPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5808,6 +7028,30 @@ export namespace Prisma {
   }
 
   /**
+   * M_USER.autoLotteryMembers
+   */
+  export type M_USER$autoLotteryMembersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the M_AUTO_LOTTERY_MEMBER
+     */
+    select?: M_AUTO_LOTTERY_MEMBERSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the M_AUTO_LOTTERY_MEMBER
+     */
+    omit?: M_AUTO_LOTTERY_MEMBEROmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: M_AUTO_LOTTERY_MEMBERInclude<ExtArgs> | null
+    where?: M_AUTO_LOTTERY_MEMBERWhereInput
+    orderBy?: M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput | M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput[]
+    cursor?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: M_AUTO_LOTTERY_MEMBERScalarFieldEnum | M_AUTO_LOTTERY_MEMBERScalarFieldEnum[]
+  }
+
+  /**
    * M_USER without action
    */
   export type M_USERDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5876,6 +7120,17 @@ export namespace Prisma {
   };
 
   export type T_SEAT_POSITIONScalarFieldEnum = (typeof T_SEAT_POSITIONScalarFieldEnum)[keyof typeof T_SEAT_POSITIONScalarFieldEnum]
+
+
+  export const M_AUTO_LOTTERY_MEMBERScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    Weekday: 'Weekday',
+    created: 'created',
+    updated: 'updated'
+  };
+
+  export type M_AUTO_LOTTERY_MEMBERScalarFieldEnum = (typeof M_AUTO_LOTTERY_MEMBERScalarFieldEnum)[keyof typeof M_AUTO_LOTTERY_MEMBERScalarFieldEnum]
 
 
   export const M_USERScalarFieldEnum: {
@@ -5961,6 +7216,20 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Weekday'
+   */
+  export type EnumWeekdayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Weekday'>
+    
+
+
+  /**
+   * Reference to a field of type 'Weekday[]'
+   */
+  export type ListEnumWeekdayFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Weekday[]'>
     
 
 
@@ -6194,6 +7463,64 @@ export namespace Prisma {
     updated?: DateTimeNullableWithAggregatesFilter<"T_SEAT_POSITION"> | Date | string | null
   }
 
+  export type M_AUTO_LOTTERY_MEMBERWhereInput = {
+    AND?: M_AUTO_LOTTERY_MEMBERWhereInput | M_AUTO_LOTTERY_MEMBERWhereInput[]
+    OR?: M_AUTO_LOTTERY_MEMBERWhereInput[]
+    NOT?: M_AUTO_LOTTERY_MEMBERWhereInput | M_AUTO_LOTTERY_MEMBERWhereInput[]
+    id?: IntFilter<"M_AUTO_LOTTERY_MEMBER"> | number
+    userId?: IntFilter<"M_AUTO_LOTTERY_MEMBER"> | number
+    Weekday?: EnumWeekdayFilter<"M_AUTO_LOTTERY_MEMBER"> | $Enums.Weekday
+    created?: DateTimeFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string
+    updated?: DateTimeNullableFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string | null
+    user?: XOR<M_USERScalarRelationFilter, M_USERWhereInput>
+  }
+
+  export type M_AUTO_LOTTERY_MEMBEROrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    Weekday?: SortOrder
+    created?: SortOrder
+    updated?: SortOrderInput | SortOrder
+    user?: M_USEROrderByWithRelationInput
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    userId_Weekday?: M_AUTO_LOTTERY_MEMBERUserIdWeekdayCompoundUniqueInput
+    AND?: M_AUTO_LOTTERY_MEMBERWhereInput | M_AUTO_LOTTERY_MEMBERWhereInput[]
+    OR?: M_AUTO_LOTTERY_MEMBERWhereInput[]
+    NOT?: M_AUTO_LOTTERY_MEMBERWhereInput | M_AUTO_LOTTERY_MEMBERWhereInput[]
+    userId?: IntFilter<"M_AUTO_LOTTERY_MEMBER"> | number
+    Weekday?: EnumWeekdayFilter<"M_AUTO_LOTTERY_MEMBER"> | $Enums.Weekday
+    created?: DateTimeFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string
+    updated?: DateTimeNullableFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string | null
+    user?: XOR<M_USERScalarRelationFilter, M_USERWhereInput>
+  }, "id" | "userId_Weekday">
+
+  export type M_AUTO_LOTTERY_MEMBEROrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    Weekday?: SortOrder
+    created?: SortOrder
+    updated?: SortOrderInput | SortOrder
+    _count?: M_AUTO_LOTTERY_MEMBERCountOrderByAggregateInput
+    _avg?: M_AUTO_LOTTERY_MEMBERAvgOrderByAggregateInput
+    _max?: M_AUTO_LOTTERY_MEMBERMaxOrderByAggregateInput
+    _min?: M_AUTO_LOTTERY_MEMBERMinOrderByAggregateInput
+    _sum?: M_AUTO_LOTTERY_MEMBERSumOrderByAggregateInput
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERScalarWhereWithAggregatesInput = {
+    AND?: M_AUTO_LOTTERY_MEMBERScalarWhereWithAggregatesInput | M_AUTO_LOTTERY_MEMBERScalarWhereWithAggregatesInput[]
+    OR?: M_AUTO_LOTTERY_MEMBERScalarWhereWithAggregatesInput[]
+    NOT?: M_AUTO_LOTTERY_MEMBERScalarWhereWithAggregatesInput | M_AUTO_LOTTERY_MEMBERScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"M_AUTO_LOTTERY_MEMBER"> | number
+    userId?: IntWithAggregatesFilter<"M_AUTO_LOTTERY_MEMBER"> | number
+    Weekday?: EnumWeekdayWithAggregatesFilter<"M_AUTO_LOTTERY_MEMBER"> | $Enums.Weekday
+    created?: DateTimeWithAggregatesFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string
+    updated?: DateTimeNullableWithAggregatesFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string | null
+  }
+
   export type M_USERWhereInput = {
     AND?: M_USERWhereInput | M_USERWhereInput[]
     OR?: M_USERWhereInput[]
@@ -6209,6 +7536,7 @@ export namespace Prisma {
     insideFlag?: BoolFilter<"M_USER"> | boolean
     seatAppointments?: M_SEAT_APPOINTListRelationFilter
     seatPositions?: T_SEAT_POSITIONListRelationFilter
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERListRelationFilter
   }
 
   export type M_USEROrderByWithRelationInput = {
@@ -6223,6 +7551,7 @@ export namespace Prisma {
     insideFlag?: SortOrder
     seatAppointments?: M_SEAT_APPOINTOrderByRelationAggregateInput
     seatPositions?: T_SEAT_POSITIONOrderByRelationAggregateInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBEROrderByRelationAggregateInput
   }
 
   export type M_USERWhereUniqueInput = Prisma.AtLeast<{
@@ -6240,6 +7569,7 @@ export namespace Prisma {
     insideFlag?: BoolFilter<"M_USER"> | boolean
     seatAppointments?: M_SEAT_APPOINTListRelationFilter
     seatPositions?: T_SEAT_POSITIONListRelationFilter
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERListRelationFilter
   }, "userId" | "employeeNumber">
 
   export type M_USEROrderByWithAggregationInput = {
@@ -6475,6 +7805,58 @@ export namespace Prisma {
     updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type M_AUTO_LOTTERY_MEMBERCreateInput = {
+    Weekday: $Enums.Weekday
+    created: Date | string
+    updated?: Date | string | null
+    user: M_USERCreateNestedOneWithoutAutoLotteryMembersInput
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedCreateInput = {
+    id?: number
+    userId: number
+    Weekday: $Enums.Weekday
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUpdateInput = {
+    Weekday?: EnumWeekdayFieldUpdateOperationsInput | $Enums.Weekday
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    user?: M_USERUpdateOneRequiredWithoutAutoLotteryMembersNestedInput
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    Weekday?: EnumWeekdayFieldUpdateOperationsInput | $Enums.Weekday
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERCreateManyInput = {
+    id?: number
+    userId: number
+    Weekday: $Enums.Weekday
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUpdateManyMutationInput = {
+    Weekday?: EnumWeekdayFieldUpdateOperationsInput | $Enums.Weekday
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    userId?: IntFieldUpdateOperationsInput | number
+    Weekday?: EnumWeekdayFieldUpdateOperationsInput | $Enums.Weekday
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type M_USERCreateInput = {
     employeeNumber: string
     lastName: string
@@ -6486,6 +7868,7 @@ export namespace Prisma {
     insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTCreateNestedManyWithoutUserInput
     seatPositions?: T_SEAT_POSITIONCreateNestedManyWithoutUserInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERCreateNestedManyWithoutUserInput
   }
 
   export type M_USERUncheckedCreateInput = {
@@ -6500,6 +7883,7 @@ export namespace Prisma {
     insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedCreateNestedManyWithoutUserInput
     seatPositions?: T_SEAT_POSITIONUncheckedCreateNestedManyWithoutUserInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type M_USERUpdateInput = {
@@ -6513,6 +7897,7 @@ export namespace Prisma {
     insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUpdateManyWithoutUserNestedInput
     seatPositions?: T_SEAT_POSITIONUpdateManyWithoutUserNestedInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUpdateManyWithoutUserNestedInput
   }
 
   export type M_USERUncheckedUpdateInput = {
@@ -6527,6 +7912,7 @@ export namespace Prisma {
     insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedUpdateManyWithoutUserNestedInput
     seatPositions?: T_SEAT_POSITIONUncheckedUpdateManyWithoutUserNestedInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type M_USERCreateManyInput = {
@@ -6837,6 +8223,62 @@ export namespace Prisma {
     userId?: SortOrder
   }
 
+  export type EnumWeekdayFilter<$PrismaModel = never> = {
+    equals?: $Enums.Weekday | EnumWeekdayFieldRefInput<$PrismaModel>
+    in?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    not?: NestedEnumWeekdayFilter<$PrismaModel> | $Enums.Weekday
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUserIdWeekdayCompoundUniqueInput = {
+    userId: number
+    Weekday: $Enums.Weekday
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    Weekday?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERAvgOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    Weekday?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    Weekday?: SortOrder
+    created?: SortOrder
+    updated?: SortOrder
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERSumOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+  }
+
+  export type EnumWeekdayWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Weekday | EnumWeekdayFieldRefInput<$PrismaModel>
+    in?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    not?: NestedEnumWeekdayWithAggregatesFilter<$PrismaModel> | $Enums.Weekday
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWeekdayFilter<$PrismaModel>
+    _max?: NestedEnumWeekdayFilter<$PrismaModel>
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6855,6 +8297,16 @@ export namespace Prisma {
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERListRelationFilter = {
+    every?: M_AUTO_LOTTERY_MEMBERWhereInput
+    some?: M_AUTO_LOTTERY_MEMBERWhereInput
+    none?: M_AUTO_LOTTERY_MEMBERWhereInput
+  }
+
+  export type M_AUTO_LOTTERY_MEMBEROrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type M_USERCountOrderByAggregateInput = {
@@ -7087,6 +8539,24 @@ export namespace Prisma {
     update?: XOR<XOR<M_USERUpdateToOneWithWhereWithoutSeatPositionsInput, M_USERUpdateWithoutSeatPositionsInput>, M_USERUncheckedUpdateWithoutSeatPositionsInput>
   }
 
+  export type M_USERCreateNestedOneWithoutAutoLotteryMembersInput = {
+    create?: XOR<M_USERCreateWithoutAutoLotteryMembersInput, M_USERUncheckedCreateWithoutAutoLotteryMembersInput>
+    connectOrCreate?: M_USERCreateOrConnectWithoutAutoLotteryMembersInput
+    connect?: M_USERWhereUniqueInput
+  }
+
+  export type EnumWeekdayFieldUpdateOperationsInput = {
+    set?: $Enums.Weekday
+  }
+
+  export type M_USERUpdateOneRequiredWithoutAutoLotteryMembersNestedInput = {
+    create?: XOR<M_USERCreateWithoutAutoLotteryMembersInput, M_USERUncheckedCreateWithoutAutoLotteryMembersInput>
+    connectOrCreate?: M_USERCreateOrConnectWithoutAutoLotteryMembersInput
+    upsert?: M_USERUpsertWithoutAutoLotteryMembersInput
+    connect?: M_USERWhereUniqueInput
+    update?: XOR<XOR<M_USERUpdateToOneWithWhereWithoutAutoLotteryMembersInput, M_USERUpdateWithoutAutoLotteryMembersInput>, M_USERUncheckedUpdateWithoutAutoLotteryMembersInput>
+  }
+
   export type M_SEAT_APPOINTCreateNestedManyWithoutUserInput = {
     create?: XOR<M_SEAT_APPOINTCreateWithoutUserInput, M_SEAT_APPOINTUncheckedCreateWithoutUserInput> | M_SEAT_APPOINTCreateWithoutUserInput[] | M_SEAT_APPOINTUncheckedCreateWithoutUserInput[]
     connectOrCreate?: M_SEAT_APPOINTCreateOrConnectWithoutUserInput | M_SEAT_APPOINTCreateOrConnectWithoutUserInput[]
@@ -7101,6 +8571,13 @@ export namespace Prisma {
     connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
   }
 
+  export type M_AUTO_LOTTERY_MEMBERCreateNestedManyWithoutUserInput = {
+    create?: XOR<M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput> | M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput[] | M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput | M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput[]
+    createMany?: M_AUTO_LOTTERY_MEMBERCreateManyUserInputEnvelope
+    connect?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+  }
+
   export type M_SEAT_APPOINTUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<M_SEAT_APPOINTCreateWithoutUserInput, M_SEAT_APPOINTUncheckedCreateWithoutUserInput> | M_SEAT_APPOINTCreateWithoutUserInput[] | M_SEAT_APPOINTUncheckedCreateWithoutUserInput[]
     connectOrCreate?: M_SEAT_APPOINTCreateOrConnectWithoutUserInput | M_SEAT_APPOINTCreateOrConnectWithoutUserInput[]
@@ -7113,6 +8590,13 @@ export namespace Prisma {
     connectOrCreate?: T_SEAT_POSITIONCreateOrConnectWithoutUserInput | T_SEAT_POSITIONCreateOrConnectWithoutUserInput[]
     createMany?: T_SEAT_POSITIONCreateManyUserInputEnvelope
     connect?: T_SEAT_POSITIONWhereUniqueInput | T_SEAT_POSITIONWhereUniqueInput[]
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput> | M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput[] | M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput | M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput[]
+    createMany?: M_AUTO_LOTTERY_MEMBERCreateManyUserInputEnvelope
+    connect?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -7151,6 +8635,20 @@ export namespace Prisma {
     deleteMany?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
   }
 
+  export type M_AUTO_LOTTERY_MEMBERUpdateManyWithoutUserNestedInput = {
+    create?: XOR<M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput> | M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput[] | M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput | M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput[]
+    upsert?: M_AUTO_LOTTERY_MEMBERUpsertWithWhereUniqueWithoutUserInput | M_AUTO_LOTTERY_MEMBERUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: M_AUTO_LOTTERY_MEMBERCreateManyUserInputEnvelope
+    set?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    disconnect?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    delete?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    connect?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    update?: M_AUTO_LOTTERY_MEMBERUpdateWithWhereUniqueWithoutUserInput | M_AUTO_LOTTERY_MEMBERUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: M_AUTO_LOTTERY_MEMBERUpdateManyWithWhereWithoutUserInput | M_AUTO_LOTTERY_MEMBERUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: M_AUTO_LOTTERY_MEMBERScalarWhereInput | M_AUTO_LOTTERY_MEMBERScalarWhereInput[]
+  }
+
   export type M_SEAT_APPOINTUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<M_SEAT_APPOINTCreateWithoutUserInput, M_SEAT_APPOINTUncheckedCreateWithoutUserInput> | M_SEAT_APPOINTCreateWithoutUserInput[] | M_SEAT_APPOINTUncheckedCreateWithoutUserInput[]
     connectOrCreate?: M_SEAT_APPOINTCreateOrConnectWithoutUserInput | M_SEAT_APPOINTCreateOrConnectWithoutUserInput[]
@@ -7177,6 +8675,20 @@ export namespace Prisma {
     update?: T_SEAT_POSITIONUpdateWithWhereUniqueWithoutUserInput | T_SEAT_POSITIONUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput | T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: T_SEAT_POSITIONScalarWhereInput | T_SEAT_POSITIONScalarWhereInput[]
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput> | M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput[] | M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput | M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput[]
+    upsert?: M_AUTO_LOTTERY_MEMBERUpsertWithWhereUniqueWithoutUserInput | M_AUTO_LOTTERY_MEMBERUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: M_AUTO_LOTTERY_MEMBERCreateManyUserInputEnvelope
+    set?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    disconnect?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    delete?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    connect?: M_AUTO_LOTTERY_MEMBERWhereUniqueInput | M_AUTO_LOTTERY_MEMBERWhereUniqueInput[]
+    update?: M_AUTO_LOTTERY_MEMBERUpdateWithWhereUniqueWithoutUserInput | M_AUTO_LOTTERY_MEMBERUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: M_AUTO_LOTTERY_MEMBERUpdateManyWithWhereWithoutUserInput | M_AUTO_LOTTERY_MEMBERUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: M_AUTO_LOTTERY_MEMBERScalarWhereInput | M_AUTO_LOTTERY_MEMBERScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -7307,6 +8819,23 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedEnumWeekdayFilter<$PrismaModel = never> = {
+    equals?: $Enums.Weekday | EnumWeekdayFieldRefInput<$PrismaModel>
+    in?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    not?: NestedEnumWeekdayFilter<$PrismaModel> | $Enums.Weekday
+  }
+
+  export type NestedEnumWeekdayWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Weekday | EnumWeekdayFieldRefInput<$PrismaModel>
+    in?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    notIn?: $Enums.Weekday[] | ListEnumWeekdayFieldRefInput<$PrismaModel>
+    not?: NestedEnumWeekdayWithAggregatesFilter<$PrismaModel> | $Enums.Weekday
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWeekdayFilter<$PrismaModel>
+    _max?: NestedEnumWeekdayFilter<$PrismaModel>
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -7500,6 +9029,7 @@ export namespace Prisma {
     deleteFlag: boolean
     insideFlag: boolean
     seatPositions?: T_SEAT_POSITIONCreateNestedManyWithoutUserInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERCreateNestedManyWithoutUserInput
   }
 
   export type M_USERUncheckedCreateWithoutSeatAppointmentsInput = {
@@ -7513,6 +9043,7 @@ export namespace Prisma {
     deleteFlag: boolean
     insideFlag: boolean
     seatPositions?: T_SEAT_POSITIONUncheckedCreateNestedManyWithoutUserInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type M_USERCreateOrConnectWithoutSeatAppointmentsInput = {
@@ -7572,6 +9103,7 @@ export namespace Prisma {
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
     insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatPositions?: T_SEAT_POSITIONUpdateManyWithoutUserNestedInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUpdateManyWithoutUserNestedInput
   }
 
   export type M_USERUncheckedUpdateWithoutSeatAppointmentsInput = {
@@ -7585,6 +9117,7 @@ export namespace Prisma {
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
     insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatPositions?: T_SEAT_POSITIONUncheckedUpdateManyWithoutUserNestedInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type M_SEATCreateWithoutSeatPositionsInput = {
@@ -7622,6 +9155,7 @@ export namespace Prisma {
     deleteFlag: boolean
     insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTCreateNestedManyWithoutUserInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERCreateNestedManyWithoutUserInput
   }
 
   export type M_USERUncheckedCreateWithoutSeatPositionsInput = {
@@ -7635,6 +9169,7 @@ export namespace Prisma {
     deleteFlag: boolean
     insideFlag: boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedCreateNestedManyWithoutUserInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type M_USERCreateOrConnectWithoutSeatPositionsInput = {
@@ -7694,6 +9229,7 @@ export namespace Prisma {
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
     insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUpdateManyWithoutUserNestedInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUpdateManyWithoutUserNestedInput
   }
 
   export type M_USERUncheckedUpdateWithoutSeatPositionsInput = {
@@ -7707,6 +9243,77 @@ export namespace Prisma {
     deleteFlag?: BoolFieldUpdateOperationsInput | boolean
     insideFlag?: BoolFieldUpdateOperationsInput | boolean
     seatAppointments?: M_SEAT_APPOINTUncheckedUpdateManyWithoutUserNestedInput
+    autoLotteryMembers?: M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type M_USERCreateWithoutAutoLotteryMembersInput = {
+    employeeNumber: string
+    lastName: string
+    firstName: string
+    showName?: string | null
+    password: string
+    adminFlag: boolean
+    deleteFlag: boolean
+    insideFlag: boolean
+    seatAppointments?: M_SEAT_APPOINTCreateNestedManyWithoutUserInput
+    seatPositions?: T_SEAT_POSITIONCreateNestedManyWithoutUserInput
+  }
+
+  export type M_USERUncheckedCreateWithoutAutoLotteryMembersInput = {
+    userId?: number
+    employeeNumber: string
+    lastName: string
+    firstName: string
+    showName?: string | null
+    password: string
+    adminFlag: boolean
+    deleteFlag: boolean
+    insideFlag: boolean
+    seatAppointments?: M_SEAT_APPOINTUncheckedCreateNestedManyWithoutUserInput
+    seatPositions?: T_SEAT_POSITIONUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type M_USERCreateOrConnectWithoutAutoLotteryMembersInput = {
+    where: M_USERWhereUniqueInput
+    create: XOR<M_USERCreateWithoutAutoLotteryMembersInput, M_USERUncheckedCreateWithoutAutoLotteryMembersInput>
+  }
+
+  export type M_USERUpsertWithoutAutoLotteryMembersInput = {
+    update: XOR<M_USERUpdateWithoutAutoLotteryMembersInput, M_USERUncheckedUpdateWithoutAutoLotteryMembersInput>
+    create: XOR<M_USERCreateWithoutAutoLotteryMembersInput, M_USERUncheckedCreateWithoutAutoLotteryMembersInput>
+    where?: M_USERWhereInput
+  }
+
+  export type M_USERUpdateToOneWithWhereWithoutAutoLotteryMembersInput = {
+    where?: M_USERWhereInput
+    data: XOR<M_USERUpdateWithoutAutoLotteryMembersInput, M_USERUncheckedUpdateWithoutAutoLotteryMembersInput>
+  }
+
+  export type M_USERUpdateWithoutAutoLotteryMembersInput = {
+    employeeNumber?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    adminFlag?: BoolFieldUpdateOperationsInput | boolean
+    deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
+    seatAppointments?: M_SEAT_APPOINTUpdateManyWithoutUserNestedInput
+    seatPositions?: T_SEAT_POSITIONUpdateManyWithoutUserNestedInput
+  }
+
+  export type M_USERUncheckedUpdateWithoutAutoLotteryMembersInput = {
+    userId?: IntFieldUpdateOperationsInput | number
+    employeeNumber?: StringFieldUpdateOperationsInput | string
+    lastName?: StringFieldUpdateOperationsInput | string
+    firstName?: StringFieldUpdateOperationsInput | string
+    showName?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: StringFieldUpdateOperationsInput | string
+    adminFlag?: BoolFieldUpdateOperationsInput | boolean
+    deleteFlag?: BoolFieldUpdateOperationsInput | boolean
+    insideFlag?: BoolFieldUpdateOperationsInput | boolean
+    seatAppointments?: M_SEAT_APPOINTUncheckedUpdateManyWithoutUserNestedInput
+    seatPositions?: T_SEAT_POSITIONUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type M_SEAT_APPOINTCreateWithoutUserInput = {
@@ -7763,6 +9370,29 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput = {
+    Weekday: $Enums.Weekday
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput = {
+    id?: number
+    Weekday: $Enums.Weekday
+    created: Date | string
+    updated?: Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERCreateOrConnectWithoutUserInput = {
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    create: XOR<M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput>
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERCreateManyUserInputEnvelope = {
+    data: M_AUTO_LOTTERY_MEMBERCreateManyUserInput | M_AUTO_LOTTERY_MEMBERCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type M_SEAT_APPOINTUpsertWithWhereUniqueWithoutUserInput = {
     where: M_SEAT_APPOINTWhereUniqueInput
     update: XOR<M_SEAT_APPOINTUpdateWithoutUserInput, M_SEAT_APPOINTUncheckedUpdateWithoutUserInput>
@@ -7793,6 +9423,33 @@ export namespace Prisma {
   export type T_SEAT_POSITIONUpdateManyWithWhereWithoutUserInput = {
     where: T_SEAT_POSITIONScalarWhereInput
     data: XOR<T_SEAT_POSITIONUpdateManyMutationInput, T_SEAT_POSITIONUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUpsertWithWhereUniqueWithoutUserInput = {
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    update: XOR<M_AUTO_LOTTERY_MEMBERUpdateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedUpdateWithoutUserInput>
+    create: XOR<M_AUTO_LOTTERY_MEMBERCreateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedCreateWithoutUserInput>
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUpdateWithWhereUniqueWithoutUserInput = {
+    where: M_AUTO_LOTTERY_MEMBERWhereUniqueInput
+    data: XOR<M_AUTO_LOTTERY_MEMBERUpdateWithoutUserInput, M_AUTO_LOTTERY_MEMBERUncheckedUpdateWithoutUserInput>
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUpdateManyWithWhereWithoutUserInput = {
+    where: M_AUTO_LOTTERY_MEMBERScalarWhereInput
+    data: XOR<M_AUTO_LOTTERY_MEMBERUpdateManyMutationInput, M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERScalarWhereInput = {
+    AND?: M_AUTO_LOTTERY_MEMBERScalarWhereInput | M_AUTO_LOTTERY_MEMBERScalarWhereInput[]
+    OR?: M_AUTO_LOTTERY_MEMBERScalarWhereInput[]
+    NOT?: M_AUTO_LOTTERY_MEMBERScalarWhereInput | M_AUTO_LOTTERY_MEMBERScalarWhereInput[]
+    id?: IntFilter<"M_AUTO_LOTTERY_MEMBER"> | number
+    userId?: IntFilter<"M_AUTO_LOTTERY_MEMBER"> | number
+    Weekday?: EnumWeekdayFilter<"M_AUTO_LOTTERY_MEMBER"> | $Enums.Weekday
+    created?: DateTimeFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string
+    updated?: DateTimeNullableFilter<"M_AUTO_LOTTERY_MEMBER"> | Date | string | null
   }
 
   export type M_SEAT_APPOINTCreateManySeatInput = {
@@ -7883,6 +9540,13 @@ export namespace Prisma {
     updated?: Date | string | null
   }
 
+  export type M_AUTO_LOTTERY_MEMBERCreateManyUserInput = {
+    id?: number
+    Weekday: $Enums.Weekday
+    created: Date | string
+    updated?: Date | string | null
+  }
+
   export type M_SEAT_APPOINTUpdateWithoutUserInput = {
     appointId?: IntFieldUpdateOperationsInput | number
     startDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -7931,6 +9595,26 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     seatId?: StringFieldUpdateOperationsInput | string
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUpdateWithoutUserInput = {
+    Weekday?: EnumWeekdayFieldUpdateOperationsInput | $Enums.Weekday
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedUpdateWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Weekday?: EnumWeekdayFieldUpdateOperationsInput | $Enums.Weekday
+    created?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type M_AUTO_LOTTERY_MEMBERUncheckedUpdateManyWithoutUserInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    Weekday?: EnumWeekdayFieldUpdateOperationsInput | $Enums.Weekday
     created?: DateTimeFieldUpdateOperationsInput | Date | string
     updated?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
