@@ -62,7 +62,7 @@ export default function MapPage() {
   }
 
   return (
-    <AdminGuard user={session?.user} title="予約">
+    <AdminGuard user={session?.user}>
       <SiteHeader title={showReservation ? "予約日を選択してください" : "座席を選択してください"} />
       {showReservation ? (
         // 予約設定画面

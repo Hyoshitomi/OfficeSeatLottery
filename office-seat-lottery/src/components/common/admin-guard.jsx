@@ -36,8 +36,7 @@ export function AdminGuard({ user, title, children }) {
 
   return (
     <>
-      <SiteHeader title={title} />
-      <main className="p-4 sm:p-6">{children}</main>
+      <main>{children}</main>
     </>
   );
 }
