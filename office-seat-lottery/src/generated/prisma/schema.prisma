@@ -12,6 +12,15 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+// 平日限定の曜日Enum（英語表記）
+enum Weekday {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+}
+
 // 座席テーブル
 model M_SEAT {
   seatId     String @id
@@ -64,6 +73,22 @@ model T_SEAT_POSITION {
   @@index([userId])
 }
 
+// 抽選対象メンバー
+model M_AUTO_LOTTERY_MEMBER {
+  id      Int       @id @default(autoincrement())
+  userId  Int
+  Weekday Weekday
+  created DateTime
+  updated DateTime?
+
+  // リレーション: ユーザー
+  user M_USER @relation(fields: [userId], references: [userId])
+
+  @@unique([userId, Weekday])
+  @@index([Weekday])
+  @@index([userId])
+}
+
 // ユーザー情報
 model M_USER {
   userId         Int     @id @default(autoincrement())
@@ -76,8 +101,9 @@ model M_USER {
   deleteFlag     Boolean
   insideFlag     Boolean
 
-  seatAppointments M_SEAT_APPOINT[]
-  seatPositions    T_SEAT_POSITION[] @relation("UserToSeatPosition")
+  seatAppointments   M_SEAT_APPOINT[]
+  seatPositions      T_SEAT_POSITION[]       @relation("UserToSeatPosition")
+  autoLotteryMembers M_AUTO_LOTTERY_MEMBER[] // 逆参照: 抽選対象メンバー
 
   @@index([employeeNumber])
 }

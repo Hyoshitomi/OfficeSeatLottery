@@ -149,6 +149,14 @@ exports.Prisma.T_SEAT_POSITIONScalarFieldEnum = {
   updated: 'updated'
 };
 
+exports.Prisma.M_AUTO_LOTTERY_MEMBERScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  Weekday: 'Weekday',
+  created: 'created',
+  updated: 'updated'
+};
+
 exports.Prisma.M_USERScalarFieldEnum = {
   userId: 'userId',
   employeeNumber: 'employeeNumber',
@@ -175,12 +183,19 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.Weekday = exports.$Enums.Weekday = {
+  Monday: 'Monday',
+  Tuesday: 'Tuesday',
+  Wednesday: 'Wednesday',
+  Thursday: 'Thursday',
+  Friday: 'Friday'
+};
 
 exports.Prisma.ModelName = {
   M_SEAT: 'M_SEAT',
   M_SEAT_APPOINT: 'M_SEAT_APPOINT',
   T_SEAT_POSITION: 'T_SEAT_POSITION',
+  M_AUTO_LOTTERY_MEMBER: 'M_AUTO_LOTTERY_MEMBER',
   M_USER: 'M_USER'
 };
 

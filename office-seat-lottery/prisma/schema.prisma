@@ -12,6 +12,15 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+// 平日限定の曜日Enum（英語表記）
+enum Weekday {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+}
+
 // 座席テーブル
 model M_SEAT {
   seatId      String  @id
@@ -22,26 +31,25 @@ model M_SEAT {
   imageY      Int
 
   seatAppointments M_SEAT_APPOINT[]
-  seatPositions T_SEAT_POSITION[] @relation("SeatToSeatPosition")
+  seatPositions    T_SEAT_POSITION[] @relation("SeatToSeatPosition")
 
   @@index([status])
   @@index([tableId])
 }
 
-
 // 予約座席テーブル
 model M_SEAT_APPOINT {
-  id        Int      @id @default(autoincrement())
-  appointId Int      
-  seatId    String
-  userId    Int
-  startDate DateTime
-  endDate   DateTime
-  created   DateTime
-  updated   DateTime?
+  id         Int      @id @default(autoincrement())
+  appointId  Int
+  seatId     String
+  userId     Int
+  startDate  DateTime
+  endDate    DateTime
+  created    DateTime
+  updated    DateTime?
 
-  seat      M_SEAT   @relation(fields: [seatId], references: [seatId])
-  user      M_USER   @relation(fields: [userId], references: [userId])
+  seat       M_SEAT   @relation(fields: [seatId], references: [seatId])
+  user       M_USER   @relation(fields: [userId], references: [userId])
 
   @@index([seatId])
   @@index([userId])
@@ -49,15 +57,15 @@ model M_SEAT_APPOINT {
 
 // 座席抽選結果
 model T_SEAT_POSITION {
-  id            Int      @id @default(autoincrement())
-  date          DateTime
-  seatId        String
-  userId        Int
-  created       DateTime
-  updated       DateTime?
+  id          Int      @id @default(autoincrement())
+  date        DateTime
+  seatId      String
+  userId      Int
+  created     DateTime
+  updated     DateTime?
 
-  seat          M_SEAT   @relation("SeatToSeatPosition", fields: [seatId], references: [seatId])
-  user          M_USER   @relation("UserToSeatPosition", fields: [userId], references: [userId])
+  seat        M_SEAT   @relation("SeatToSeatPosition", fields: [seatId], references: [seatId])
+  user        M_USER   @relation("UserToSeatPosition", fields: [userId], references: [userId])
 
   @@unique([date, userId])
   @@index([date])
@@ -65,20 +73,37 @@ model T_SEAT_POSITION {
   @@index([userId])
 }
 
+// 抽選対象メンバー
+model M_AUTO_LOTTERY_MEMBER {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  Weekday  Weekday
+  created  DateTime
+  updated  DateTime?
+
+  // リレーション: ユーザー
+  user     M_USER   @relation(fields: [userId], references: [userId])
+
+  @@unique([userId, Weekday])
+  @@index([Weekday])
+  @@index([userId])
+}
+
 // ユーザー情報
 model M_USER {
-  userId         Int     @id @default(autoincrement())
-  employeeNumber String  @unique
-  lastName       String
-  firstName      String
-  showName       String?
-  password       String
-  adminFlag      Boolean
-  deleteFlag     Boolean
-  insideFlag     Boolean
+  userId          Int     @id @default(autoincrement())
+  employeeNumber  String  @unique
+  lastName        String
+  firstName       String
+  showName        String?
+  password        String
+  adminFlag       Boolean
+  deleteFlag      Boolean
+  insideFlag      Boolean
 
-  seatAppointments M_SEAT_APPOINT[]
-  seatPositions T_SEAT_POSITION[] @relation("UserToSeatPosition")
+  seatAppointments     M_SEAT_APPOINT[]
+  seatPositions        T_SEAT_POSITION[] @relation("UserToSeatPosition")
+  autoLotteryMembers   M_AUTO_LOTTERY_MEMBER[] // 逆参照: 抽選対象メンバー
 
   @@index([employeeNumber])
 }

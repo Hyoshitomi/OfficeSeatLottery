@@ -84,7 +84,7 @@ export default function MapImgPage() {
   const handleBackToDateSelection = () => setShowSeatMap(false)
 
   return (
-    <AdminGuard user={session?.user} title="座席図編集">
+    <AdminGuard user={session?.user}>
       <SiteHeader 
         title={selectedDate 
           ? `${format(selectedDate, "yyyy年MM月dd日")}の座席図` 

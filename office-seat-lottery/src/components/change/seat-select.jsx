@@ -1,40 +1,56 @@
-// SeatSelect.jsx
-'use client'
+'use client';
 
-import { useMemo } from 'react'
-import { MultiSelect } from '@/components/ui/multi-select'
+import { useMemo } from 'react';
+import { MultiSelect } from '@/components/ui/multi-select';
 
+// 定数として選択上限を定義
+const SELECTION_LIMIT = 1;
+
+/**
+ * タイトル: SeatSelect / 座席選択コンポーネント
+ * 要約: 利用可能な座席リストから、指定された上限数まで座席を選択するためのUIを提供します。
+ * @param {{
+ *   usingSeatslist:   Array<{id: string | number, name: string}>,
+ *   selectedSeat:     Array<string | number>,
+ *   setEmployeesSeat: (selected: Array<string | number>) => void
+ * }} props
+ * @param {Array<{id: string | number, name: string}>} [props.usingSeatslist=[]] - 選択肢となる座席のリスト。
+ * @param {Array<string | number>} [props.selectedSeat=[]] - 現在選択されている座席のIDの配列。
+ * @param {(selected: Array<string | number>) => void} props.setEmployeesSeat - 選択が変更されたときに呼び出されるセッター関数。
+ * @returns {import('react').ReactElement} 座席選択用のMultiSelectコンポーネント。
+ */
 export function SeatSelect({
   usingSeatslist = [],
-  selectedSeat = [],          // 例: ["B3"]
-  setEmployeesSeat,           // setter
+  selectedSeat = [],
+  setEmployeesSeat,
 }) {
-  const atLimit = selectedSeat.length >= 1
+  // 選択数が上限に達したかどうかを判定
+  const isLimitReached = selectedSeat.length >= SELECTION_LIMIT;
 
-  // ① value を付与し、上限到達時は残りを disabled
+  /**
+   * MultiSelectコンポーネントに渡すための選択肢リストをメモ化。
+   * 上限に達した場合、選択中の項目以外は無効化（disabled）する。
+   */
   const seatOptions = useMemo(
     () =>
-      usingSeatslist.map((opt) => ({
-        ...opt,
-        value: opt.id,                          // ← 必須！！
-        disabled: atLimit && !selectedSeat.includes(opt.id),
+      usingSeatslist.map((option) => ({
+        ...option,
+        value: option.id, // MultiSelectが要求するvalueプロパティ
+        disabled: isLimitReached && !selectedSeat.includes(option.id),
       })),
-    [usingSeatslist, atLimit, selectedSeat]
-  )
+    [usingSeatslist, isLimitReached, selectedSeat],
+  );
 
   return (
-    <div className="pt-4">
-      <MultiSelect
-        id="seat-select"
-        options={seatOptions}
-        value={selectedSeat}                    // ② 完全に制御する
-        onValueChange={setEmployeesSeat}
-        maxCount={1}
-        maxSelections={1}
-        placeholder="選択してください"
-        variant="inverted"
-        className="w-full"
-      />
-    </div>
-  )
+    <MultiSelect
+      options={seatOptions}
+      value={selectedSeat}
+      onValueChange={setEmployeesSeat}
+      maxCount={SELECTION_LIMIT}
+      maxSelections={SELECTION_LIMIT}
+      placeholder={`席を${SELECTION_LIMIT}つ選択してください`}
+      variant="inverted"
+      className="w-full"
+    />
+  );
 }
