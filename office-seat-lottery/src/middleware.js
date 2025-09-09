@@ -25,6 +25,6 @@ export default async function middleware(req) {
 
 export const config = {
   matcher: [
-    "/((?!api/auth|api/contact|_next/static|_next/image|.*\\.png$).*)",
+    "/((?!api/auth|api/contact|api/auto-lottery|_next/static|_next/image|.*\\.png$).*)",
   ],
 };

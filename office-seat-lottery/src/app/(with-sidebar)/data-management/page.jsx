@@ -40,7 +40,7 @@ export default function Page() {
   }, [])
 
   return (
-    <AdminGuard user={session?.user} title="予約編集">
+    <AdminGuard user={session?.user}>
       <SiteHeader title="予約編集" />
       <div className="flex flex-1 flex-col">
         <div className="@container/main flex flex-1 flex-col">

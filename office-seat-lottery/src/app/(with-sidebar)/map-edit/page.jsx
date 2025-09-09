@@ -70,7 +70,7 @@ export default function MapEditPage() {
   }
 
   return (
-    <AdminGuard user={session?.user} title="座席図編集">
+    <AdminGuard user={session?.user}>
       <SiteHeader title="座席図編集" />
       <div className="flex flex-row h-[calc(100vh-56px)]">
         <div className="flex-1 flex flex-col items-center justify-center">
