@@ -8,13 +8,31 @@ const prisma = new PrismaClient();
  */
 const Utils = {
   /**
-   * UTCで日付の開始時刻を取得します。
-   * @param {Date} date - 処理する日付。
+   * 日付文字列またはDateオブジェクトからUTCの日付開始時刻を取得します。
+   * @param {string | Date} dateInput - 日付を示す文字列またはDateオブジェクト。
    * @returns {Date} - UTCの日の開始時刻。
    */
-  toStartOfUTCDay: (date) => {
-    // ローカルタイムの日付をUTCの開始時刻に変換
-    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  toStartOfUTCDay: (dateInput) => {
+    // "YYYY-MM-DD"形式の文字列を直接パースする
+    if (typeof dateInput === 'string' && dateInput.includes('-')) {
+        const [year, month, day] = dateInput.split('-').map(Number);
+        if (!isNaN(year) && !isNaN(month) && !isNaN(day)) {
+            return new Date(Date.UTC(year, month - 1, day));
+        }
+    }
+    
+    // 上記で処理できない場合 (ISO文字列など) はDateコンストラクタで処理
+    const date = new Date(dateInput);
+
+    if (isNaN(date.getTime())) {
+      return new Date(NaN); // 不正な場合は無効なDateを返す
+    }
+
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth();
+    const day = date.getUTCDate();
+    
+    return new Date(Date.UTC(year, month, day));
   },
 
   /**
@@ -135,12 +153,11 @@ const ReservationDataBuilder = {
     const data = [];
 
     if (selectedDays && selectedDays.length > 0) {
-      // 曜日予約の場合
-      for (const targetDate of targetDates) {
-        const formattedDate = Utils.toStartOfUTCDay(targetDate);
+      for (const targetDateStr of targetDates) {
+        const formattedDate = Utils.toStartOfUTCDay(targetDateStr);
         data.push({
           id: currentId++,
-          appointId: reservationConfig.startId, // 全ての予約で同じappointIdを使用
+          appointId: reservationConfig.startId,
           seatId,
           userId,
           startDate: formattedDate,
@@ -150,12 +167,11 @@ const ReservationDataBuilder = {
         });
       }
     } else if (dateRange) {
-      // 日付範囲予約の場合
-      const formattedStartDate = Utils.toStartOfUTCDay(new Date(dateRange.from));
-      const formattedEndDate = Utils.toStartOfUTCDay(new Date(dateRange.to || dateRange.from));
+      const formattedStartDate = Utils.toStartOfUTCDay(dateRange.from);
+      const formattedEndDate = Utils.toStartOfUTCDay(dateRange.to || dateRange.from);
       data.push({
         id: currentId++,
-        appointId: reservationConfig.startId, // 全ての予約で同じappointIdを使用
+        appointId: reservationConfig.startId,
         seatId,
         userId,
         startDate: formattedStartDate,
@@ -254,9 +270,7 @@ const ReservationChecker = {
     for (const newData of createData) {
       const conflict = existingReservations.find(existing =>
         existing.seatId === newData.seatId &&
-        (
-          (newData.startDate.getTime() <= existing.endDate.getTime() && newData.endDate.getTime() >= existing.startDate.getTime())
-        )
+        (newData.startDate.getTime() <= existing.endDate.getTime() && newData.endDate.getTime() >= existing.startDate.getTime())
       );
 
       if (conflict) {
@@ -307,7 +321,7 @@ const ReservationService = {
     const reservationConfig = {
       selectedDays,
       dateRange,
-      targetDates, // targetDatesはリクエストボディから直接渡されることを想定
+      targetDates,
       startId,
       now
     };
@@ -335,7 +349,7 @@ const ReservationService = {
     if (duplicateCheck.isDuplicate) {
       return {
         status: 400,
-        error: `座席ID: ${duplicateCheck.seatId} の ${duplicateCheck.date.toLocaleDateString('ja-JP')} は既に予約済みです`
+        error: `座席ID: ${duplicateCheck.seatId} の ${duplicateCheck.date.toLocaleDateString('ja-JP', { timeZone: 'Asia/Tokyo' })} は既に予約済みです`
       };
     }
 
@@ -361,8 +375,7 @@ const ReservationService = {
  * @returns {Promise<NextResponse>} - レスポンスオブジェクト。
  */
 export async function POST(request) {
-  const now = new Date(); // 現在の日付を取得
-  const utcNow = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate())); // UTCの日付を取得
+  const utcNow = new Date();
 
   try {
     const body = await request.json();
@@ -380,7 +393,8 @@ export async function POST(request) {
     }
 
   } catch (error) {
-    console.error("サーバーエラーが発生しました:", error); // デバッグ用にエラーをログ出力
+    // サーバーサイドでの予期せぬエラーはログに残す
+    console.error("API Route Error:", error); 
     return NextResponse.json({
       error: 'サーバーエラーが発生しました'
     }, { status: 500 });
