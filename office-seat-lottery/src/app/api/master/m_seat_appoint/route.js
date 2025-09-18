@@ -13,16 +13,52 @@ const prisma = new PrismaClient();
 /* ------------------------------------------------------------------ */
 export async function GET() {
   try {
-    const now = new Date();
+    // 今日の日付の0時0分0秒を取得
+    const startOfToday = new Date();
+    startOfToday.setHours(0, 0, 0, 0);
 
+    // ① endDateが今日以降のレコードを全て取得
     const records = await prisma.m_SEAT_APPOINT.findMany({
       where: {
-        endDate: { gt: now },           // ① 現在より未来の予約のみ
+        endDate: { gte: startOfToday }, // 'gt' (より大きい) から 'gte' (以上) へ変更
       },
-      orderBy: [
-        { endDate: 'asc' },             // ② 終了日時が近い順
-        { id: 'asc' },                  // ③ 同一日時内で安定した並び
-      ],
+    });
+
+    // ② 取得したデータを要件に従って並び替え
+    records.sort((a, b) => {
+      const aIsPermanent = new Date(a.endDate).getFullYear() === 9999;
+      const bIsPermanent = new Date(b.endDate).getFullYear() === 9999;
+
+      // 優先度3: endDateが9999/12/31のデータを最後に回す
+      if (aIsPermanent !== bIsPermanent) {
+        return aIsPermanent ? 1 : -1;
+      }
+
+      // --- ここからは a, b ともにendDateが9999/12/31でない、または両方ともそうである場合の処理 ---
+
+      // 9999/12/31同士のデータの順序はIDで安定させる
+      if (aIsPermanent && bIsPermanent) {
+        return a.id - b.id;
+      }
+
+      // --- ここからは a, b ともにendDateが9999/12/31でない場合の処理 ---
+
+      const aStartsInFuture = new Date(a.startDate) >= startOfToday;
+      const bStartsInFuture = new Date(b.startDate) >= startOfToday;
+      
+      // 優先度1: startDateが今日以降のものを先に表示
+      if (aStartsInFuture !== bStartsInFuture) {
+        return aStartsInFuture ? -1 : 1;
+      }
+      
+      // 優先度2: 各グループ（未来開始/過去開始）内でstartDateの昇順にソート
+      const startDateDiff = new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+      if (startDateDiff !== 0) {
+        return startDateDiff;
+      }
+
+      // startDateも同じ場合はIDで安定した順序を保証
+      return a.id - b.id;
     });
 
     return NextResponse.json(records);
@@ -34,6 +70,7 @@ export async function GET() {
     );
   }
 }
+
 
 /* ------------------------------------------------------------------ */
 /* POST                                                               */
