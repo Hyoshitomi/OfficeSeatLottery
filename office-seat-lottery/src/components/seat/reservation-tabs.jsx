@@ -44,8 +44,8 @@ const useReservation = () => {
       if (response.ok) {
         return { success: true, message: '予約が正常に登録されました' }
       } 
-        setReservationError(result.error)
-        return { success: false, error: result.error }
+      setReservationError(result.error)
+      return { success: false, error: result.error }
       
     } catch (_error) {
       const errorMessage = '予約登録中にエラーが発生しました'
@@ -60,10 +60,11 @@ const useReservation = () => {
 // 日付フォーマット用のユーティリティ関数
 const formatDateRange = (range) => {
   if (!range || !range.from) return ""
+  const options = { timeZone: 'Asia/Tokyo', year: 'numeric', month: 'long', day: 'numeric' };
   if (!range.to || range.from.getTime() === range.to.getTime()) {
-    return range.from.toLocaleDateString("ja-JP")
+    return range.from.toLocaleDateString("ja-JP", options)
   } 
-  return `${range.from.toLocaleDateString("ja-JP")} 〜 ${range.to.toLocaleDateString("ja-JP")}`
+  return `${range.from.toLocaleDateString("ja-JP", options)} 〜 ${range.to.toLocaleDateString("ja-JP", options)}`
 }
 
 // 曜日予約コンポーネント
@@ -133,7 +134,6 @@ const WeeklyReservationTab = ({
   )
 }
 
-// 日付予約コンポーネント
 const DateReservationTab = ({ 
   selectedEmployees, 
   dateRange, 
@@ -161,6 +161,7 @@ const DateReservationTab = ({
               locale={ja}
               numberOfMonths={2}
               className="rounded-md border"
+              timeZone="Asia/Tokyo"
             />
           </div>
         </div>
@@ -251,9 +252,19 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
   }
 
   const handleDateReservation = async () => {
+    const toJstDateString = (date) => {
+      if (!date) return null;
+      return new Date(date).toLocaleDateString('sv-SE', { timeZone: 'Asia/Tokyo' });
+    };
+
+    const formattedDateRange = {
+      from: toJstDateString(dateRange?.from),
+      to: toJstDateString(dateRange?.to)
+    };
+
     const result = await makeReservation({
       selectedEmployees,
-      dateRange,
+      dateRange: formattedDateRange,
       selectedSeatIds
     })
     
@@ -293,7 +304,7 @@ export default function ReservationTabs({ selectedSeatIds = [], onBack }) {
             </div>
           </div>
 
-          <Tabs defaultValue="weekly" className="w-full">
+          <Tabs defaultValue="date" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
               <TabsTrigger value="weekly">曜日予約</TabsTrigger>
               <TabsTrigger value="date">日付予約</TabsTrigger>
